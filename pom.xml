@@ -16,20 +16,20 @@
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx</artifactId>
-				<version>1.2.0</version>
+				<version>1.6.5</version>
 			</dependency>
 
 			<!-- desktop-specific dependencies -->
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx-backend-lwjgl</artifactId>
-				<version>1.2.0</version>
+				<version>1.6.5</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx-platform</artifactId>
-				<version>1.2.0</version>
+				<version>1.6.5</version>
 				<classifier>natives-desktop</classifier>
 			</dependency>
 
@@ -37,7 +37,7 @@
 			<dependency>
 				<groupId>com.badlogicgames.gdx</groupId>
 				<artifactId>gdx</artifactId>
-				<version>1.2.0</version>
+				<version>1.6.5</version>
 				<classifier>sources</classifier>
 				<scope>provided</scope>
 			</dependency>
