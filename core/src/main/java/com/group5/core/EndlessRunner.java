@@ -1,34 +1,26 @@
 package com.group5.core;
 
-import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.group5.core.screens.MainGameScreen;
 
 /**
  * Main game class for the endless runner.
  */
-public final class EndlessRunner implements ApplicationListener {
-    /**
-     * A texture.
-     */
-    private Texture texture;
+public final class EndlessRunner extends Game {
 
     /**
      * The SpriteBatch to draw stuff with.
      */
     private SpriteBatch batch;
 
-    /**
-     * The amount of time that has elapsed.
-     */
-    private float elapsed;
-
     @Override
     public void create() {
-        texture = new Texture(Gdx.files.internal("libgdx-logo.png"));
         batch = new SpriteBatch();
+        setScreen(new MainGameScreen(batch));
     }
 
     @Override
@@ -37,14 +29,7 @@ public final class EndlessRunner implements ApplicationListener {
 
     @Override
     public void render() {
-        elapsed += Gdx.graphics.getDeltaTime();
-        Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(texture,
-                100 + 100 * (float) Math.cos(elapsed),
-                100 + 25 * (float) Math.sin(elapsed));
-        batch.end();
+        super.render();
     }
 
     @Override
