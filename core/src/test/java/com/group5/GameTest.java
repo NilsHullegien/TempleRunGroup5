@@ -10,6 +10,6 @@ public class GameTest {
 
     @Test
     public void testSomething() {
-        Assert.assertEquals(0.0, 0.0, 0.0);
+        Assert.assertEquals(1.0, 1.0, 0.0);
     }
 }
