@@ -13,8 +13,8 @@ public class CollisionChecker {
 	 */
 	public static boolean checkCollision(WorldObject w){
 		for(WorldObject obj: WorldController.getWorld().getObjects()){
-			if(!(obj.equals(w))){
-				return(overlap(w,obj));
+			if(!(obj.equals(w)) && overlap(w,obj)){
+				return true;
 			}
 		}
 		return false;
