@@ -8,8 +8,8 @@ import org.junit.Test;
  */
 public class GameTest {
 
-    @Test
-    public void testSomething() {
-        Assert.assertEquals(1.0, 1.0, 0.0);
-    }
+//    @Test
+//    public void testSomething() {
+//        Assert.assertEquals(1.0, 1.0, 0.0);
+//    }
 }
