@@ -1,19 +1,22 @@
 package com.group5.core.screens;
 
+import worldObjects.FloorTile;
+import worldObjects.Player;
+import worldObjects.World;
+import worldObjects.WorldObject;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import controller.WorldController;
+
 /**
  * Main game screen.
  */
-public class MainGameScreen implements Screen {
-    /**
-     * A texture.
-     */
-    private Texture texture;
+public class RunGame implements Screen {
 
     /**
      * A spritebatch
@@ -24,16 +27,24 @@ public class MainGameScreen implements Screen {
      * The amount of time that has elapsed.
      */
     private float elapsed;
+    
 
-    public MainGameScreen(SpriteBatch batch) {
+    public RunGame(SpriteBatch batch) {
         this.batch = batch;
-        this.texture = new Texture(Gdx.files.internal("libgdx-logo.png"));
+
+ 
+        WorldController.createWorld();
+
+        WorldController.add(new Player(100,100));
+        WorldController.add(new FloorTile(0,0));
+        
+      
         this.elapsed = 0;
     }
 
     @Override
     public void show() {
-
+    	
     }
 
     @Override
@@ -46,10 +57,14 @@ public class MainGameScreen implements Screen {
         elapsed += delta;
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        
         batch.begin();
-        batch.draw(texture,
-                100 + 100 * (float) Math.cos(elapsed),
-                100 + 25 * (float) Math.sin(elapsed));
+        World w = WorldController.getWorld();
+        for(WorldObject obj: w.getObjects()){
+        	batch.draw(new Texture(obj.getTexture()), obj.getX(), obj.getY());
+        }
+        w.updatePosFloorTiles();
+        w.updatePosPlayer();
         batch.end();
     }
 
