@@ -16,7 +16,7 @@ import controller.WorldController;
 /**
  * Main game screen.
  */
-public class MainGameScreen implements Screen {
+public class RunGame implements Screen {
 
     /**
      * A spritebatch
@@ -29,7 +29,7 @@ public class MainGameScreen implements Screen {
     private float elapsed;
     
 
-    public MainGameScreen(SpriteBatch batch) {
+    public RunGame(SpriteBatch batch) {
         this.batch = batch;
 
  

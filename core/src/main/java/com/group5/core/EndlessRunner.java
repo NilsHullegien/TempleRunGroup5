@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.group5.core.screens.MainGameScreen;
+import com.group5.core.screens.RunGame;
 
 /**
  * Main game class for the endless runner.
@@ -20,7 +20,7 @@ public final class EndlessRunner extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        setScreen(new MainGameScreen(batch));
+        setScreen(new RunGame(batch));
     }
 
     @Override
