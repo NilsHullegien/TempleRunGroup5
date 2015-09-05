@@ -8,7 +8,6 @@ import com.group5.core.world.FloorTile;
 import com.group5.core.world.World;
 
 import com.group5.core.controllers.CollisionChecker;
-import com.group5.core.controllers.WorldController;
 
 public class CollisionCheckerTest {
 

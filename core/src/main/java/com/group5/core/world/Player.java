@@ -5,11 +5,10 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
 
 import com.group5.core.controllers.CollisionChecker;
+import com.group5.core.util.KeyMap;
 
 public class Player extends WorldObject {
-
-	
-	private  FileHandle tex;
+    private Vector2 speed;
 	
 	/**
 	 * The player is the character that is directly controlled by the user
@@ -17,29 +16,35 @@ public class Player extends WorldObject {
 	 * @param y		Starting y-coordinate
 	 */
 	public Player(float x, float y) {
-		super(x, y);
-		tex = Gdx.files.internal("playerBlock.png");
+		super(Gdx.files.internal("playerBlock.png"), x, y);
+        speed = new Vector2(0, 0);
 	}
 
-	
-	/**
-	 * Update the location of the player with respect a given vector, unless you are colliding with an object
-	 * @param vec		Given vector
-	 */
-	public void updatePos(Vector2 vec){
-		if(!(CollisionChecker.checkCollision(this))){
-			setX(getX()- vec.x);
-			setY(getY() - vec.y);
-			
-		}
-		
-	}
-	
-	public FileHandle getTexture(){
-		return tex;
-	}
-	
-	
-	
-	
+    @Override
+    public void update(float delta, World world) {
+        if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
+            speed.add(200.f, 0.f);
+        } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {
+            speed.x = 0.f;
+        }
+        if (Gdx.input.isKeyJustPressed(KeyMap.LEFT)) {
+            speed.add(-200.f, 0.f);
+        } else if (!Gdx.input.isKeyPressed(KeyMap.LEFT) && speed.x < 0.f) {
+            speed.x = 0.f;
+        }
+
+        // TODO: There's a cleaner way to handle this
+        float oldX = getX();
+        setX(oldX + speed.x * delta + world.getGravity().x * delta);
+        if (world.getCollider().checkCollision(this)) {
+            setX(oldX);
+        }
+
+        float oldY = getY();
+        setY(oldY + speed.y * delta + world.getGravity().y * delta);
+        if (world.getCollider().checkCollision(this)) {
+            setY(oldY);
+        }
+    }
+
 }

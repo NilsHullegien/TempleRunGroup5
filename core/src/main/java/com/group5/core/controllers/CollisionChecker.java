@@ -2,24 +2,29 @@ package com.group5.core.controllers;
 
 import com.badlogic.gdx.graphics.Texture;
 
+import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
 
 public class CollisionChecker {
+	private World world;
+
+	public CollisionChecker(World world) {
+		this.world = world;
+	}
 
 	/**
 	 * Checks if an object collides with any object in the game
 	 * @param w		Object which needs to be checked
 	 * @return		True when the object is colliding with another object
 	 */
-	public static boolean checkCollision(WorldObject w){
-		for(WorldObject obj: WorldController.getWorld().getObjects()){
-			if(!(obj.equals(w)) && overlap(w,obj)){
+	public boolean checkCollision(WorldObject w){
+		for (WorldObject obj : world.getObjects()) {
+			if (obj != w && overlap(w,obj)) {
 				return true;
 			}
 		}
-		return false;
-		
-	}
+        return false;
+    }
 	
 	/**
 	 * Check if two objects overlap
@@ -27,13 +32,18 @@ public class CollisionChecker {
 	 * @param w2	Second object
 	 * @return		True if the two objects overlap
 	 */
-	public static boolean overlap(WorldObject w1, WorldObject w2){
-		Texture t1 = new Texture(w1.getTexture());
-		Texture t2 = new Texture(w2.getTexture());
-		if (w1.getX() < w2.getX() + t2.getWidth() && w1.getY() < w2.getY() + t2.getHeight() && w1.getY() + t1.getHeight() > w2.getY())
-            return true;
-        else
-            return false;
+	public boolean overlap(WorldObject w1, WorldObject w2){
+        // TODO: Base this on custom bounding boxes instead of texture size
+		Texture t1 = w1.getTexture();
+		Texture t2 = w2.getTexture();
+		return ((w1.getX() < (w2.getX() + t2.getWidth()) &&
+                w1.getY() < (w2.getY() + t2.getHeight()) &&
+                w1.getX() >= w2.getX() &&
+                w1.getY() >= w2.getY())) ||
+                ((w2.getX() < (w1.getX() + t1.getWidth()) &&
+                        w2.getY() < (w1.getY() + t1.getHeight()) &&
+                        w2.getX() >= w1.getX() &&
+                        w2.getY() >= w1.getY()));
 	}
 	
 	

@@ -1,5 +1,6 @@
 package com.group5.core.screens;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
@@ -7,11 +8,8 @@ import com.group5.core.world.WorldObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import com.group5.core.controllers.WorldController;
 
 /**
  * Main game screen.
@@ -23,23 +21,24 @@ public class MainGameScreen implements Screen {
      */
     private SpriteBatch batch;
 
-    /**
-     * The amount of time that has elapsed.
-     */
-    private float elapsed;
+    private World world;
+
+    private OrthographicCamera camera;
+
+    private Player player;
     
 
     public MainGameScreen(SpriteBatch batch) {
         this.batch = batch;
+        this.world = new World();
+        this.player = new Player(100, 100);
 
- 
-        WorldController.createWorld();
+        world.add(player);
+        world.add(new FloorTile(0,0));
 
-        WorldController.add(new Player(100,100));
-        WorldController.add(new FloorTile(0,0));
-        
-      
-        this.elapsed = 0;
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2.f + player.getX(), camera.viewportHeight / 2.f + player.getY(), 0);
+        camera.update();
     }
 
     @Override
@@ -54,17 +53,19 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        elapsed += delta;
         Gdx.gl.glClearColor(0, 0, 0, 0);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        world.update(delta);
+
+        camera.position.set(camera.viewportWidth / 2.f + player.getX() - 100.f, camera.viewportHeight / 2.f, 0);
+        camera.update();
+
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        World w = WorldController.getWorld();
-        for(WorldObject obj: w.getObjects()){
-        	batch.draw(new Texture(obj.getTexture()), obj.getX(), obj.getY());
+        for (WorldObject obj: world.getObjects()){
+        	batch.draw(obj.getTexture(), obj.getX(), obj.getY());
         }
-        w.updatePosFloorTiles();
-        w.updatePosPlayer();
         batch.end();
     }
 
