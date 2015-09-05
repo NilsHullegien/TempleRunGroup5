@@ -1,11 +1,10 @@
-package worldObjects;
+package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
-import controller.CollisionChecker;
+import com.group5.core.controllers.CollisionChecker;
 
 public class Player extends WorldObject {
 

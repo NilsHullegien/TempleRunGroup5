@@ -1,4 +1,4 @@
-package worldObjects;
+package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;

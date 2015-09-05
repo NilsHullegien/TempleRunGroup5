@@ -1,4 +1,4 @@
-package worldObjects;
+package com.group5.core.world;
 
 import java.util.ArrayList;
 

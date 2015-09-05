@@ -1,7 +1,7 @@
-package controller;
+package com.group5.core.controllers;
 
-import worldObjects.World;
-import worldObjects.WorldObject;
+import com.group5.core.world.World;
+import com.group5.core.world.WorldObject;
 
 /**
  * This class ensures that the model is always updated and responds correctly to user input
@@ -11,7 +11,7 @@ import worldObjects.WorldObject;
 public class WorldController {
 
 	
-	private static World w;
+	public static World w;
 	
 	/**
 	 * Create a new empty world

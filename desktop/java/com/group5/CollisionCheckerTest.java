@@ -4,15 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import worldObjects.FloorTile;
-import worldObjects.Player;
-import worldObjects.World;
-import worldObjects.WorldObject;
+import com.group5.core.world.FloorTile;
+import com.group5.core.world.World;
 
-import com.badlogic.gdx.graphics.Texture;
-
-import controller.CollisionChecker;
-import controller.WorldController;
+import com.group5.core.controllers.CollisionChecker;
+import com.group5.core.controllers.WorldController;
 
 public class CollisionCheckerTest {
 

@@ -1,8 +1,4 @@
-package worldObjects;
-
-import com.badlogic.gdx.math.Vector2;
-
-import controller.CollisionChecker;
+package com.group5.core.world;
 
 public abstract class WorldObject implements WorldObjectInterface{
 

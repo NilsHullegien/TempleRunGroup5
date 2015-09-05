@@ -1,9 +1,9 @@
 package com.group5.core.screens;
 
-import worldObjects.FloorTile;
-import worldObjects.Player;
-import worldObjects.World;
-import worldObjects.WorldObject;
+import com.group5.core.world.FloorTile;
+import com.group5.core.world.Player;
+import com.group5.core.world.World;
+import com.group5.core.world.WorldObject;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,12 +11,12 @@ import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import controller.WorldController;
+import com.group5.core.controllers.WorldController;
 
 /**
  * Main game screen.
  */
-public class RunGame implements Screen {
+public class MainGameScreen implements Screen {
 
     /**
      * A spritebatch
@@ -29,7 +29,7 @@ public class RunGame implements Screen {
     private float elapsed;
     
 
-    public RunGame(SpriteBatch batch) {
+    public MainGameScreen(SpriteBatch batch) {
         this.batch = batch;
 
  

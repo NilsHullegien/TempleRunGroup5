@@ -1,8 +1,8 @@
-package controller;
+package com.group5.core.controllers;
 
 import com.badlogic.gdx.graphics.Texture;
 
-import worldObjects.WorldObject;
+import com.group5.core.world.WorldObject;
 
 public class CollisionChecker {
 
