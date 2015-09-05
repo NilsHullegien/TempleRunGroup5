@@ -1,27 +1,31 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.math.Vector2;
-
-import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.util.KeyMap;
 
+/**
+ * Represents a game character controlled by the user.
+ */
 public class Player extends WorldObject {
+    /**
+     * The current speed the player is moving at.
+     */
     private Vector2 speed;
-	
-	/**
-	 * The player is the character that is directly controlled by the user
-	 * @param x		Starting x-coordinate
-	 * @param y		Starting y-coordinate
-	 */
-	public Player(float x, float y) {
-		super(Gdx.files.internal("playerBlock.png"), x, y);
+
+    /**
+     * Constructs a new Player positioned at the given coordinates.
+     *
+     * @param x Starting x-coordinate
+     * @param y Starting y-coordinate
+     */
+    public Player(final float x, final float y) {
+        super(Gdx.files.internal("playerBlock.png"), x, y);
         speed = new Vector2(0, 0);
-	}
+    }
 
     @Override
-    public void update(float delta, World world) {
+    public void update(final float delta, final World world) {
         if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
             speed.add(200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {

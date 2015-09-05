@@ -1,8 +1,5 @@
 package com.group5;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 /**
  * A placeholder JUnit test.
  */
