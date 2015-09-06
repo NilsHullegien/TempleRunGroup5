@@ -4,7 +4,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -13,17 +12,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.group5.core.screens.RunGame;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.GL30;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MainMenu implements Screen {
@@ -31,10 +22,15 @@ public class MainMenu implements Screen {
 	private Texture backgroundTexture;
 	private Sprite backgroundSprite;
 	private SpriteBatch batch;
+	private SpriteBatch gBatch;
 	
 	private Skin skin;
 	private Stage stage = new Stage();
 	
+	
+	public MainMenu (SpriteBatch gBatch){
+		this.gBatch = gBatch;
+	}
 	
 	/**
 	 * Load the MainMenu background.
@@ -54,7 +50,7 @@ public class MainMenu implements Screen {
         
         newGameButton.addListener(new ClickListener(){
         	public void clicked(InputEvent event, float x, float y) {
-        		((Game)Gdx.app.getApplicationListener()).setScreen(new RunGame());
+        		((Game)Gdx.app.getApplicationListener()).setScreen(new RunGame(gBatch));
         	}
         });
         TextButton highscoreButton = new TextButton("Highscore", skin); // Use the initialized skin
