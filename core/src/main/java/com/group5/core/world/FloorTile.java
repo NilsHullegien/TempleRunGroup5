@@ -21,4 +21,16 @@ public class FloorTile extends WorldObject {
     public void update(final float delta, final World w) {
 
     }
+    
+    /**
+     * Check whether an object is the same object as this instance
+     */
+    @Override
+	public boolean equals(Object obj) {
+		if(!(Player.class.isInstance(obj)))
+			return false;
+		FloorTile that = (FloorTile)obj;
+		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
+	}
+    
 }

@@ -77,11 +77,14 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
-
+    
     /**
      * Updates the state of the object according to the world's state.
      * @param delta the time that has passed since the previous frame.
      * @param world the world that the object is currently situated in.
      */
     public abstract void update(final float delta, final World world);
+    
+    public abstract boolean equals(Object obj);
+    
 }
