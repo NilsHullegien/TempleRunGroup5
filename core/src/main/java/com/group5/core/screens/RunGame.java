@@ -29,12 +29,11 @@ public class RunGame implements Screen {
     private float elapsed;
     
 
-    public RunGame(SpriteBatch batch) {
-        this.batch = batch;
+    public RunGame() {
+    	batch = new SpriteBatch();
 
  
         WorldController.createWorld();
-
         WorldController.add(new Player(100,100));
         WorldController.add(new FloorTile(0,0));
         

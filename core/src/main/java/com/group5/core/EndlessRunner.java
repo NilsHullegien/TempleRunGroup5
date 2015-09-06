@@ -27,20 +27,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * Main game class for the endless runner.
  */
 public final class EndlessRunner extends Game {
-
-    /**
-     * The SpriteBatch to draw stuff with.
-     */
 	
-	Skin skin;
-
     @Override
     public void create() {
        setScreen(new MainMenu());
     }
     
-
-
     @Override
     public void resize(final int width, final int height) {
     }
