@@ -27,7 +27,7 @@ public class FloorTile extends WorldObject {
      */
     @Override
 	public boolean equals(Object obj) {
-		if(!(FloorTile.class.isInstance(obj)))
+		if(!(obj instanceof FloorTile))
 			return false;
 		FloorTile that = (FloorTile)obj;
 		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
