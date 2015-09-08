@@ -2,37 +2,17 @@ package com.group5.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.group5.core.screens.MainGameScreen;
+import com.group5.core.screens.MainMenu;
 
 /**
- * Main game class for the endless runner.
+ * Startup class for the Game, from here all textures are loaded
+ * and the mainmenu is started.
  */
 public final class EndlessRunner extends Game {
 
-    /**
-     * The SpriteBatch to draw stuff with.
-     */
-    private SpriteBatch batch;
-
-    @Override
+	@Override
     public void create() {
-        batch = new SpriteBatch();
-        setScreen(new MainGameScreen(batch));
-    }
-
-    @Override
-    public void resize(final int width, final int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
-    }
+       SpriteBatch batch = new SpriteBatch();
+       setScreen(new MainMenu(batch));
+       }
 }
