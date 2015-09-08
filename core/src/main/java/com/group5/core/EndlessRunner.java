@@ -15,6 +15,10 @@ public final class EndlessRunner extends Game {
      */
     private static EndlessRunner game;
 
+    private static void setGame(EndlessRunner g) {
+        EndlessRunner.game = g;
+    }
+
     /**
      * Returns the current game instance.
      * @return the current game instance
@@ -43,7 +47,7 @@ public final class EndlessRunner extends Game {
 
     @Override
     public void create() {
-        game = this;
+        EndlessRunner.setGame(this);
         batch = new SpriteBatch();
         textureCache = new TextureCache();
         setScreen(new MainGameScreen(batch));

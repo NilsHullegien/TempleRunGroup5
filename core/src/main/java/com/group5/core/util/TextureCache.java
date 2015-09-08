@@ -15,6 +15,9 @@ public class TextureCache {
      */
     private HashMap<String, Texture> textures;
 
+    /**
+     * Constructs a new, empty texture cache.
+     */
     public TextureCache() {
         textures = new HashMap<String, Texture>();
     }
@@ -27,7 +30,7 @@ public class TextureCache {
      * @param textureFile the file path at which the texture is found.
      * @return the requested Texture
      */
-    public Texture load(String textureFile) {
+    public Texture load(final String textureFile) {
         if (textures.containsKey(textureFile)) {
             return textures.get(textureFile);
         } else {
@@ -52,7 +55,7 @@ public class TextureCache {
      * Uncaches the given texture file if already loaded.
      * @param textureFile the texture to be uncached.
      */
-    public void uncache(String textureFile) {
+    public void uncache(final String textureFile) {
         if (textures.containsKey(textureFile)) {
             Texture t = textures.get(textureFile);
             t.dispose();
