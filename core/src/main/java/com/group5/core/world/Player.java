@@ -66,6 +66,6 @@ public class Player extends WorldObject {
             }
         Player that = (Player) obj;
         return ((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-        }
+    }
 
 }

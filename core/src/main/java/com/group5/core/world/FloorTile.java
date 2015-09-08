@@ -40,5 +40,5 @@ public class FloorTile extends WorldObject {
             }
         FloorTile that = (FloorTile) obj;
         return ((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-        }
+    }
 }
