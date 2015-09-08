@@ -27,6 +27,9 @@ public class FloorTile extends WorldObject {
      */
     @Override
 	public boolean equals(Object obj) {
+    	if(obj == null){
+    		return false;
+    	}
 		if(!(obj instanceof FloorTile))
 			return false;
 		FloorTile that = (FloorTile)obj;

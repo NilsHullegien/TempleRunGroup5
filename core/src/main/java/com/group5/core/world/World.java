@@ -2,6 +2,7 @@ package com.group5.core.world;
 
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.controllers.CollisionChecker;
+import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,18 @@ public class World {
     private Vector2 gravity;
 
     /**
+     * The spawner that spawns new objects into the world.
+     */
+    private Spawner spawner;
+    
+    /**
      * Constructs a new, empty world with a default gravity.
      */
     public World() {
         collider = new CollisionChecker(this);
         gravity = new Vector2(0, -150.f);
         objects = new ArrayList<WorldObject>();
+        spawner = new Spawner(this);
     }
 
     /**
@@ -68,10 +75,19 @@ public class World {
     }
 
     /**
+     * Returns the world's spawner.
+     * @return Spawner which spawns new objects into the world.
+     */
+    public Spawner getSpawner(){
+    	return spawner;
+    }
+    
+    /**
      * Updates all objects present in the world.
      * @param delta the time that has passed since the previous frame.
      */
     public void update(final float delta) {
+    	spawner.spawnBlocks();
         for (WorldObject w : objects) {
             w.update(delta, this);
         }
