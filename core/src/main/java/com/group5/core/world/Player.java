@@ -52,12 +52,20 @@ public class Player extends WorldObject {
         }
     }
 
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Player))
-			return false;
-		Player that = (Player)obj;
-		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-	}
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash * super.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Player)) {
+            return false;
+            }
+        Player that = (Player) obj;
+        return ((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
+        }
 
 }

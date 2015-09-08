@@ -2,11 +2,12 @@ package com.group5.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.group5.core.screens.MainGameScreen;
+import com.group5.core.screens.MainMenu;
 import com.group5.core.util.TextureCache;
 
 /**
- * Main game class for the endless runner.
+ * Startup class for the Game, from here all textures are loaded
+ * and the mainmenu is started.
  */
 public class EndlessRunner extends Game {
 
@@ -54,7 +55,7 @@ public class EndlessRunner extends Game {
         EndlessRunner.setGame(this);
         batch = new SpriteBatch();
         textureCache = new TextureCache();
-        setScreen(new MainGameScreen(batch));
+        setScreen(new MainMenu(batch));
     }
 
     @Override

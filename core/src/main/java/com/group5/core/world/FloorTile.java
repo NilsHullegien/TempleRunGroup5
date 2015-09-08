@@ -22,16 +22,23 @@ public class FloorTile extends WorldObject {
     public void update(final float delta, final World w) {
 
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash * super.hashCode();
+        return hash;
+    }
+
     /**
-     * Check whether an object is the same object as this instance
+     * Check whether an object is the same object as this instance.
      */
     @Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof FloorTile))
-			return false;
-		FloorTile that = (FloorTile)obj;
-		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-	}
-    
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof FloorTile)) {
+            return false;
+            }
+        FloorTile that = (FloorTile) obj;
+        return ((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
+        }
 }
