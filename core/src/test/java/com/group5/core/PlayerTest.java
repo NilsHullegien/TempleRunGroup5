@@ -1,4 +1,4 @@
-package com.group5;
+package com.group5.core;
 
 import static org.junit.Assert.*;
 

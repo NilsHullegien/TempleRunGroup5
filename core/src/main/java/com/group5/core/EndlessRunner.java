@@ -8,14 +8,18 @@ import com.group5.core.util.TextureCache;
 /**
  * Main game class for the endless runner.
  */
-public final class EndlessRunner extends Game {
+public class EndlessRunner extends Game {
 
     /**
      * The current game instance.
      */
     private static EndlessRunner game;
 
-    private static void setGame(EndlessRunner g) {
+    /**
+     * Sets the current game instance.
+     * @param g the new current game instance
+     */
+    static void setGame(final EndlessRunner g) {
         EndlessRunner.game = g;
     }
 

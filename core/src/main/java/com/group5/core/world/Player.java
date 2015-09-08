@@ -22,12 +22,12 @@ public class Player extends WorldObject {
      */
     public Player(final float x, final float y) {
         super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
-        speed = new Vector2(0, 0);
+        speed = new Vector2(250, 0);
     }
 
     @Override
     public void update(final float delta, final World world) {
-        if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
+        /*if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
             speed.add(200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {
             speed.x = 0.f;
@@ -36,7 +36,7 @@ public class Player extends WorldObject {
             speed.add(-200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.LEFT) && speed.x < 0.f) {
             speed.x = 0.f;
-        }
+        }*/
 
         // TODO: There's a cleaner way to handle this
         float oldX = getX();
