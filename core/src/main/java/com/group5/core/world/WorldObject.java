@@ -30,12 +30,12 @@ public abstract class WorldObject {
      * @param xCoord x coordinate of the object
      * @param yCoord y coordinate of the object
      */
-    public WorldObject(final FileHandle tex,
+    public WorldObject(final Texture tex,
                        final float xCoord,
                        final float yCoord) {
         this.x = xCoord;
         this.y = yCoord;
-        this.texture = new Texture(tex);
+        this.texture = tex;
     }
 
     /**
