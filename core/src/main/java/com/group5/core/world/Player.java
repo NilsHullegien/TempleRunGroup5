@@ -2,6 +2,7 @@ package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.group5.core.EndlessRunner;
 import com.group5.core.util.KeyMap;
 
 /**
@@ -20,7 +21,7 @@ public class Player extends WorldObject {
      * @param y Starting y-coordinate
      */
     public Player(final float x, final float y) {
-        super(Gdx.files.internal("playerBlock.png"), x, y);
+        super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
         speed = new Vector2(0, 0);
     }
 

@@ -1,6 +1,7 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
+import com.group5.core.EndlessRunner;
 
 /**
  * Represents a tile of flooring.
@@ -14,7 +15,7 @@ public class FloorTile extends WorldObject {
      * @param y Starting y-coordinate
      */
     public FloorTile(final float x, final float y) {
-        super(Gdx.files.internal("floorTile.png"), x, y);
+        super(EndlessRunner.get().getTextureCache().load("floorTile.png"), x, y);
     }
 
     @Override
