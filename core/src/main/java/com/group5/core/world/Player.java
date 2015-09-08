@@ -68,10 +68,34 @@ public class Player extends WorldObject {
         return super.equals(obj) && this.speed.equals(that.speed);
     }
     
+    /**
+     * The function that let the player jump up.
+     * (falling down is done by the gravity).
+     * NOTE: the actual movement of the player is done in the
+     * updateJumpPosition(float) method.
+     * @param jumpTime The time the player jumps 
+     */
     public void jump(float jumpTime) {
-    	updateJumpPosition(50);
+    	//Basic speed is the starting speed of the player
+    	//This it will go down to 0
+    	double basicSpeed = jumpTime/10;
+    	double basicInterval = 2;
+    	double heightIncr = basicSpeed - basicInterval;
+    	double basicDecr;
+    	if(heightIncr >= 0) {
+    		basicDecr =  Math.pow(basicInterval, 2);
+    		heightIncr = basicSpeed - basicDecr;
+    		updateJumpPosition((float) heightIncr);
+    
+    	}
+    	
+    	
     }
     
+    /**
+     * Updates the position of the player
+     * @param y
+     */
     public void updateJumpPosition(float y) {
     	setY(getY() + y);
     }
