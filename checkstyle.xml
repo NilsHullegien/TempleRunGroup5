@@ -96,7 +96,8 @@
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->
         <module name="AvoidStarImport"/>
-        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <module name="IllegalImport"/>
+        <!-- defaults to sun.* packages -->
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
 
@@ -151,7 +152,6 @@
 
         <!-- Checks for class design                         -->
         <!-- See http://checkstyle.sf.net/config_design.html -->
-        <module name="DesignForExtension"/>
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
@@ -165,6 +165,10 @@
         <module name="TodoComment"/>
         <module name="UpperEll"/>
 
+        <module name="SuppressWarningsHolder" />
+
     </module>
+
+    <module name="SuppressWarningsFilter"/>
 
 </module>

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.group5.core.screens.RunGame;
+import com.group5.core.screens.MainGameScreen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -50,7 +50,7 @@ public class MainMenu implements Screen {
         
         newGameButton.addListener(new ClickListener(){
         	public void clicked(InputEvent event, float x, float y) {
-        		((Game)Gdx.app.getApplicationListener()).setScreen(new RunGame(gBatch));
+        		((Game)Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(gBatch));
         	}
         });
         TextButton highscoreButton = new TextButton("Highscore", skin); // Use the initialized skin
@@ -72,7 +72,6 @@ public class MainMenu implements Screen {
         stage.addActor(quitButton);
 	}
 	
-
 	@Override
 	public void show() {
         Gdx.input.setInputProcessor(stage);
