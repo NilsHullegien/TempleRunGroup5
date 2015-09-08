@@ -93,8 +93,9 @@ public abstract class WorldObject {
             return false;
         }
         WorldObject that = (WorldObject) obj;
-        return texture == that.texture &&
-                Math.abs(that.getX() - this.getX()) < 0.01f && Math.abs(that.getY() - this.getY()) < 0.01f;
+        return (texture == that.texture
+                && Math.abs(that.getX() - this.getX()) < 0.01f
+                && Math.abs(that.getY() - this.getY()) < 0.01f);
     }
 
     /**

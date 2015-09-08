@@ -44,11 +44,6 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera camera;
 
     /**
-     * The main game player.
-     */
-    private Player player;
-
-    /**
      * Stage of this screen.
      */
     private Stage stage = new Stage();
@@ -114,8 +109,8 @@ public class MainGameScreen implements Screen {
         for (WorldObject obj : world.getObjects()) {
             batch.draw(obj.getTexture(), obj.getX(), obj.getY());
         }
-        
-        if (!(world.getGameStatus())){
+
+        if (!(world.getGameStatus())) {
             stage.getActors().get(0).setVisible(true);
         }
         batch.end();
@@ -176,7 +171,8 @@ public class MainGameScreen implements Screen {
         labelSkin.add("default", font);
 
         //create texture
-        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5, (int)Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5
+                , (int) Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         labelSkin.add("background", new Texture(pixmap));
@@ -187,7 +183,7 @@ public class MainGameScreen implements Screen {
         labelStyle.fontColor = Color.RED;
         labelSkin.add("default", labelStyle);
     }
- 
+
     /**
      * Create the skin for the buttons in the game over menu.
      */
@@ -198,7 +194,8 @@ public class MainGameScreen implements Screen {
         buttonSkin.add("default", font);
 
         //create texture
-        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5, (int)Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5
+                , (int) Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         buttonSkin.add("background", new Texture(pixmap));

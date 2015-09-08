@@ -1,6 +1,5 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.Gdx;
 import com.group5.core.EndlessRunner;
 
 /**

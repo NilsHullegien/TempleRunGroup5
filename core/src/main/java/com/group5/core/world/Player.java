@@ -1,9 +1,7 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.EndlessRunner;
-import com.group5.core.util.KeyMap;
 
 /**
  * Represents a game character controlled by the user.
