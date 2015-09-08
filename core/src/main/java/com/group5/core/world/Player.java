@@ -2,6 +2,7 @@ package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.group5.core.EndlessRunner;
 import com.group5.core.util.KeyMap;
 
 /**
@@ -20,13 +21,13 @@ public class Player extends WorldObject {
      * @param y Starting y-coordinate
      */
     public Player(final float x, final float y) {
-        super(Gdx.files.internal("playerBlock.png"), x, y);
-        speed = new Vector2(0, 0);
+        super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
+        speed = new Vector2(250, 0);
     }
 
     @Override
     public void update(final float delta, final World world) {
-        if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
+        /*if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
             speed.add(200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {
             speed.x = 0.f;
@@ -35,7 +36,7 @@ public class Player extends WorldObject {
             speed.add(-200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.LEFT) && speed.x < 0.f) {
             speed.x = 0.f;
-        }
+        }*/
 
         // TODO: There's a cleaner way to handle this
         float oldX = getX();
@@ -51,12 +52,20 @@ public class Player extends WorldObject {
         }
     }
 
-	@Override
-	public boolean equals(Object obj) {
-		if(!(obj instanceof Player))
-			return false;
-		Player that = (Player)obj;
-		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-	}
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash * super.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Player)) {
+            return false;
+            }
+        Player that = (Player) obj;
+        return ((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
+        }
 
 }

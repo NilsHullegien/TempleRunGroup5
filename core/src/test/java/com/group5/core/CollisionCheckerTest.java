@@ -1,4 +1,4 @@
-package com.group5;
+package com.group5.core;
 
 import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.world.FloorTile;

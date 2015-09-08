@@ -30,12 +30,12 @@ public abstract class WorldObject {
      * @param xCoord x coordinate of the object
      * @param yCoord y coordinate of the object
      */
-    public WorldObject(final FileHandle tex,
+    public WorldObject(final Texture tex,
                        final float xCoord,
                        final float yCoord) {
         this.x = xCoord;
         this.y = yCoord;
-        this.texture = new Texture(tex);
+        this.texture = tex;
     }
 
     /**
@@ -77,14 +77,11 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
-    
+
     /**
      * Updates the state of the object according to the world's state.
      * @param delta the time that has passed since the previous frame.
      * @param world the world that the object is currently situated in.
      */
     public abstract void update(final float delta, final World world);
-    
-    public abstract boolean equals(Object obj);
-    
 }
