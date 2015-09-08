@@ -101,5 +101,13 @@ public class World {
             w.update(delta, this);
         }
     }
+    
+    /**
+     * Check whether the player is still alive.
+     * @return True if the player is still alive, else false.
+     */
+    public boolean getGameStatus(){
+        return (!(player.getY() < 0.f));
+    }
 
 }

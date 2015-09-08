@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.group5.core.EndlessRunner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
@@ -113,6 +114,10 @@ public class MainGameScreen implements Screen {
         for (WorldObject obj : world.getObjects()) {
             batch.draw(obj.getTexture(), obj.getX(), obj.getY());
         }
+        
+        if (!(world.getGameStatus())){
+            stage.getActors().get(0).setVisible(true);
+        }
         batch.end();
         stage.act();
         stage.draw();
@@ -142,7 +147,7 @@ public class MainGameScreen implements Screen {
         menuButton.setPosition(0, 0);
         menuButton.addListener(new ClickListener() {
             public void clicked(final InputEvent event, final float x, final float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(null));
+                EndlessRunner.get().create();
             }
         });
 
@@ -156,6 +161,7 @@ public class MainGameScreen implements Screen {
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
         t.add(t2);
+        t.setVisible(false);
         stage.addActor(t);
     }
 
