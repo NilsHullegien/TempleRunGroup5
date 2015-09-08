@@ -53,6 +53,7 @@ public class TextureCache {
 
     /**
      * Uncaches the given texture file if already loaded.
+     *
      * @param textureFile the texture to be uncached.
      */
     public void uncache(final String textureFile) {

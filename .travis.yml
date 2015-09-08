@@ -2,3 +2,6 @@ language: java
 
 jdk:
   - oraclejdk8
+
+script:
+  - mvn test checkstyle:check findbugs:check pmd:check
