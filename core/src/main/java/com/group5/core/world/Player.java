@@ -67,5 +67,13 @@ public class Player extends WorldObject {
         Player that = (Player) obj;
         return super.equals(obj) && this.speed.equals(that.speed);
     }
+    
+    public void jump(float jumpTime) {
+    	updateJumpPosition(50);
+    }
+    
+    public void updateJumpPosition(float y) {
+    	setY(getY() + y);
+    }
 
 }
