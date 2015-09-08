@@ -31,20 +31,16 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera camera;
 
     /**
-     * The main game player.
-     */
-    private Player player;
-
-    /**
      * Constructs a new main game screen that plays the actual game.
      * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
+        Player player = new Player(100, 100);
         this.batch = b;
         this.world = new World();
-        this.player = new Player(100, 100);
+        this.world.setPlayer(player);
 
-        world.add(player);
+        world.setPlayer(player);
         world.add(new FloorTile(0, 0));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
@@ -71,7 +67,7 @@ public class MainGameScreen implements Screen {
 
         world.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + player.getX() - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
