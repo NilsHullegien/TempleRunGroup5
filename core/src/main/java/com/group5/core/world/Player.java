@@ -21,7 +21,8 @@ public class Player extends AnimatedWorldObject {
      * @param y Starting y-coordinate
      */
     public Player(final float x, final float y) {
-        super(EndlessRunner.get().getTextureCache().load("chickentime.png"), x, y, 6, 5, 2);
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
+        , x, y, 6, 5, 2);
         speed = new Vector2(250, 0);
         speed = new Vector2(0, 0);
     }

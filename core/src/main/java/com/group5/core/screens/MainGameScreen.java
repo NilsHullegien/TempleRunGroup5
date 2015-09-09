@@ -73,7 +73,7 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-        	obj.doRender(batch);
+        obj.doRender(batch);
         }
         batch.end();
         world.update(delta);
