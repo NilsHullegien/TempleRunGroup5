@@ -57,7 +57,7 @@ public class CollisionCheckerTest {
      */
     @Test
     public void checkCollisionTest(){
-    	world.add(new Player(0,0));
+    	world.add(new FloorTile(0,0));
     	//only one object, so no collision
     	assertFalse(checker.checkCollision(world.getObjects().get(0)));
  
@@ -73,10 +73,6 @@ public class CollisionCheckerTest {
     	//two objects that overlap, so there will be a collision
     	assertTrue(checker.checkCollision(world.getObjects().get(0)));
     	assertTrue(checker.checkCollision(world.getObjects().get(2)));
-    	 
-    	
-    	
-    	
     }
     
 
