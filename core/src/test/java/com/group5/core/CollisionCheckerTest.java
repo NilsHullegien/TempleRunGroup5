@@ -5,7 +5,6 @@ import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +50,7 @@ public class CollisionCheckerTest {
         assertFalse(checker.overlap(w1, w2));
 
     }
-    
+
     /**
      * Test whether the checkCollision method correctly recognises when an object collides with another object
      */
@@ -61,19 +60,16 @@ public class CollisionCheckerTest {
     	//only one object, so no collision
     	assertFalse(checker.checkCollision(world.getObjects().get(0)));
  
-    	
     	//two objects, but they don't touch
     	world.add(new FloorTile(0,64));
        	assertFalse(checker.checkCollision(world.getObjects().get(0)));
        	assertFalse(checker.checkCollision(world.getObjects().get(1)));
         
-    	
-    	
     	world.add(new FloorTile(0,0));
     	//two objects that overlap, so there will be a collision
     	assertTrue(checker.checkCollision(world.getObjects().get(0)));
     	assertTrue(checker.checkCollision(world.getObjects().get(2)));
     }
-    
+
 
 }

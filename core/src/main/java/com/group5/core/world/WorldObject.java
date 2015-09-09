@@ -27,7 +27,7 @@ public abstract class WorldObject {
     /**
      * Constructs a new world object with the given coordinates and texture.
      *
-     * @param tex location of the texture of the object
+     * @param tex    location of the texture of the object
      * @param xCoord x coordinate of the object
      * @param yCoord y coordinate of the object
      */
@@ -42,6 +42,7 @@ public abstract class WorldObject {
 
     /**
      * Returns the object's x coordinate.
+     *
      * @return the object's x coordinate
      */
     public float getX() {
@@ -50,6 +51,7 @@ public abstract class WorldObject {
 
     /**
      * Sets the object's x coordinate.
+     *
      * @param newX the new x coordinate
      */
     public void setX(final float newX) {
@@ -58,6 +60,7 @@ public abstract class WorldObject {
 
     /**
      * Returns the object's y coordinate.
+     *
      * @return the object's y coordinate
      */
     public float getY() {
@@ -66,6 +69,7 @@ public abstract class WorldObject {
 
     /**
      * Sets the object's y coordinate.
+     *
      * @param newY the new y coordinate
      */
     public void setY(final float newY) {
@@ -74,6 +78,7 @@ public abstract class WorldObject {
 
     /**
      * Returns the object's texture.
+     *
      * @return the object's texture
      */
     public Texture getTexture() {
@@ -99,12 +104,14 @@ public abstract class WorldObject {
             return false;
         }
         WorldObject that = (WorldObject) obj;
-        return texture == that.texture &&
-                Math.abs(that.getX() - this.getX()) < 0.01f && Math.abs(that.getY() - this.getY()) < 0.01f;
+        return texture == that.texture
+                && Math.abs(that.getX() - this.getX()) < 0.01f
+                && Math.abs(that.getY() - this.getY()) < 0.01f;
     }
 
     /**
      * Updates the state of the object according to the world's state.
+     *
      * @param delta the time that has passed since the previous frame.
      * @param world the world that the object is currently situated in.
      */
