@@ -8,7 +8,7 @@ import com.group5.core.util.KeyMap;
 /**
  * Represents a game character controlled by the user.
  */
-public class Player extends WorldObject {
+public class Player extends AnimatedWorldObject {
     /**
      * The current speed the player is moving at.
      */
@@ -21,13 +21,14 @@ public class Player extends WorldObject {
      * @param y Starting y-coordinate
      */
     public Player(final float x, final float y) {
-        super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png"), x, y, 6, 5, 2);
         speed = new Vector2(250, 0);
+        speed = new Vector2(0, 0);
     }
 
-    @Override
+    @Override	
     public void update(final float delta, final World world) {
-        /*if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
+        if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
             speed.add(200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {
             speed.x = 0.f;
@@ -36,7 +37,7 @@ public class Player extends WorldObject {
             speed.add(-200.f, 0.f);
         } else if (!Gdx.input.isKeyPressed(KeyMap.LEFT) && speed.x < 0.f) {
             speed.x = 0.f;
-        }*/
+        }
 
         // TODO: There's a cleaner way to handle this
         float oldX = getX();
@@ -50,6 +51,8 @@ public class Player extends WorldObject {
         if (world.getCollider().checkCollision(this)) {
             setY(oldY);
         }
+        //update the animation
+        super.update(delta, world);
     }
 
     @Override
@@ -67,5 +70,6 @@ public class Player extends WorldObject {
         Player that = (Player) obj;
         return super.equals(obj) && this.speed.equals(that.speed);
     }
+   
 
 }

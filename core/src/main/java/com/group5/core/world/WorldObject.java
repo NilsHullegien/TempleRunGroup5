@@ -1,6 +1,7 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 
 /**
@@ -11,18 +12,18 @@ public abstract class WorldObject {
     /**
      * The world-relative x coordinate of the object.
      */
-    private float x;
+    protected float x;
 
     /**
      * The world-relative y coordinate of the object.
      */
-    private float y;
+     protected float y;
 
     /**
      * The texture of the object.
      */
     private Texture texture;
-
+    
     /**
      * Constructs a new world object with the given coordinates and texture.
      *
@@ -37,6 +38,7 @@ public abstract class WorldObject {
         this.y = yCoord;
         this.texture = tex;
     }
+   
 
     /**
      * Returns the object's x coordinate.
@@ -76,6 +78,10 @@ public abstract class WorldObject {
      */
     public Texture getTexture() {
         return this.texture;
+    }
+    
+    public void doRender(SpriteBatch batch){
+    	batch.draw(getTexture(),x,y);
     }
 
     @Override

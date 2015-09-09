@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
@@ -64,9 +65,7 @@ public class MainGameScreen implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         world.update(delta);
-
         camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
@@ -74,9 +73,10 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-            batch.draw(obj.getTexture(), obj.getX(), obj.getY());
+        	obj.doRender(batch);
         }
         batch.end();
+        world.update(delta);
     }
 
     @Override
