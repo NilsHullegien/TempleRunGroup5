@@ -62,13 +62,7 @@ public class Spawner {
 	 * @return the x coordinate of the player.
 	 */
 	public float getPlayerPosition(){
-		Player player = null;
-		for(WorldObject w : world.getObjects()){
-			if(w instanceof Player){
-				player = (Player) w;
-			}
-		}
-		return player.getX();
+		return world.getPlayer().getX();
 	}
 	
 	/**
