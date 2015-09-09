@@ -39,14 +39,16 @@ public class Spawner {
 	}
 	
 	/**
-	 * Private method for the spawner to find the last floor position.
+	 * Method for the spawner to find the last floor position.
 	 * @return 0 or the right most floor x coordinate of the last added floor.
 	 */
-	private float getLastFloor(){
+	public float getLastFloor(){
 		FloorTile floor = null;
 		for(WorldObject w : world.getObjects()){
 			if(w instanceof FloorTile){
+				if(floor == null || w.getX() > floor.getX()){
 					floor = (FloorTile) w;
+				}
 			}
 		}
 		if(floor == null){
@@ -56,10 +58,10 @@ public class Spawner {
 	}
 	
 	/**
-	 * Private method to get the player position.
+	 * Method to get the player position.
 	 * @return the x coordinate of the player.
 	 */
-	private float getPlayerPosition(){
+	public float getPlayerPosition(){
 		Player player = null;
 		for(WorldObject w : world.getObjects()){
 			if(w instanceof Player){

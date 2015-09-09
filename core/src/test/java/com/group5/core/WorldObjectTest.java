@@ -1,4 +1,4 @@
-package com.group5;
+package com.group5.core;
 
 import com.group5.core.world.Player;
 import com.group5.core.world.World;

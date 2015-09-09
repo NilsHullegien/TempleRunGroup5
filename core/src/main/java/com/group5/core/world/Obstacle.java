@@ -1,6 +1,7 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
+import com.group5.core.EndlessRunner;
 
 /**
  * Represents an obstacle for the player to avoid.
@@ -14,7 +15,7 @@ public class Obstacle extends WorldObject{
 	 * @param y the y coordinate of the obstacle
 	 */
 	public Obstacle(final float x, final float y) {
-		super(Gdx.files.internal("obstacle.png"), x, y);
+		super(EndlessRunner.get().getTextureCache().load("obstacle.png"), x, y);
 	}
 
 	/**
@@ -30,9 +31,11 @@ public class Obstacle extends WorldObject{
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == null){
+			return false;
+		}
 		if(obj instanceof Obstacle){
-			Obstacle that = (Obstacle) obj;
-			return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
+			return super.equals(obj);
 		}
 		return false;
 	}

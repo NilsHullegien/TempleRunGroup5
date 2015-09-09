@@ -2,22 +2,60 @@ package com.group5.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.group5.core.screens.MainGameScreen;
+import com.group5.core.screens.MainMenu;
+import com.group5.core.util.TextureCache;
 
 /**
- * Main game class for the endless runner.
+ * Startup class for the Game, from here all textures are loaded
+ * and the mainmenu is started.
  */
-public final class EndlessRunner extends Game {
+public class EndlessRunner extends Game {
+
+    /**
+     * The current game instance.
+     */
+    private static EndlessRunner game;
+
+    /**
+     * Sets the current game instance.
+     * @param g the new current game instance
+     */
+    static void setGame(final EndlessRunner g) {
+        EndlessRunner.game = g;
+    }
+
+    /**
+     * Returns the current game instance.
+     * @return the current game instance
+     */
+    public static EndlessRunner get() {
+        return game;
+    }
 
     /**
      * The SpriteBatch to draw stuff with.
      */
     private SpriteBatch batch;
 
+    /**
+     * The current texture cache.
+     */
+    private TextureCache textureCache;
+
+    /**
+     * Returns the current texture cache.
+     * @return the current texture cache.
+     */
+    public TextureCache getTextureCache() {
+        return textureCache;
+    }
+
     @Override
     public void create() {
+        EndlessRunner.setGame(this);
         batch = new SpriteBatch();
-        setScreen(new MainGameScreen(batch));
+        textureCache = new TextureCache();
+        setScreen(new MainMenu(batch));
     }
 
     @Override
@@ -34,5 +72,7 @@ public final class EndlessRunner extends Game {
 
     @Override
     public void dispose() {
+        batch.dispose();
+        textureCache.dispose();
     }
 }

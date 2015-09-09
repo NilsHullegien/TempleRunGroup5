@@ -1,7 +1,7 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+
 
 /**
  * Represents an object that has a presence in a World.
@@ -30,12 +30,12 @@ public abstract class WorldObject {
      * @param xCoord x coordinate of the object
      * @param yCoord y coordinate of the object
      */
-    public WorldObject(final FileHandle tex,
+    public WorldObject(final Texture tex,
                        final float xCoord,
                        final float yCoord) {
         this.x = xCoord;
         this.y = yCoord;
-        this.texture = new Texture(tex);
+        this.texture = tex;
     }
 
     /**
@@ -77,14 +77,30 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Float.floatToIntBits(x);
+        hash = 89 * hash + Float.floatToIntBits(y);
+        hash = 89 * hash + texture.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null || !(obj instanceof WorldObject)) {
+            return false;
+        }
+        WorldObject that = (WorldObject) obj;
+        return texture == that.texture &&
+                Math.abs(that.getX() - this.getX()) < 0.01f && Math.abs(that.getY() - this.getY()) < 0.01f;
+    }
+
     /**
      * Updates the state of the object according to the world's state.
      * @param delta the time that has passed since the previous frame.
      * @param world the world that the object is currently situated in.
      */
     public abstract void update(final float delta, final World world);
-    
-    public abstract boolean equals(Object obj);
-    
 }

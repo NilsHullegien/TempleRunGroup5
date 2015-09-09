@@ -1,6 +1,7 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.Gdx;
+import com.group5.core.EndlessRunner;
 
 /**
  * Represents a tile of flooring.
@@ -14,26 +15,27 @@ public class FloorTile extends WorldObject {
      * @param y Starting y-coordinate
      */
     public FloorTile(final float x, final float y) {
-        super(Gdx.files.internal("floorTile.png"), x, y);
+        super(EndlessRunner.get().getTextureCache().load("floorTile.png"), x, y);
     }
 
     @Override
     public void update(final float delta, final World w) {
 
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash * super.hashCode();
+        return hash;
+    }
+
     /**
-     * Check whether an object is the same object as this instance
+     * Check whether an object is the same object as this instance.
      */
     @Override
-	public boolean equals(Object obj) {
-    	if(obj == null){
-    		return false;
-    	}
-		if(!(obj instanceof FloorTile))
-			return false;
-		FloorTile that = (FloorTile)obj;
-		return((Math.abs(that.getX() - this.getX()) < 0.01f) && (Math.abs(that.getY() - this.getY()) < 0.01f));
-	}
-    
+
+    public boolean equals(final Object obj) {
+        return obj != null && obj instanceof FloorTile && super.equals(obj);
+    }
 }
