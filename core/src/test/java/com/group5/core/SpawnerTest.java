@@ -30,7 +30,7 @@ public class SpawnerTest {
 		world = new World();
 		spawner = new Spawner(world);
 		player = new Player(0, 0);
-		world.add(player);
+		world.setPlayer(player);
 	}
 
 	/**
