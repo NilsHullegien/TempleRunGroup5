@@ -52,7 +52,8 @@ public class World {
 
     /**
      * Returns the world's collider.
-     * @return the world's collider.
+     *
+     * @return the world's collider
      */
     public CollisionChecker getCollider() {
         return collider;
@@ -60,7 +61,8 @@ public class World {
 
     /**
      * Returns the world's operating gravity.
-     * @return the world's operating gravity.
+     *
+     * @return the world's operating gravity
      */
     public Vector2 getGravity() {
         return gravity;
@@ -68,6 +70,7 @@ public class World {
 
     /**
      * Returns the objects contained in the world.
+     *
      * @return the objects contained in the world.
      */
     public List<WorldObject> getObjects() {
@@ -94,6 +97,7 @@ public class World {
 
     /**
      * Updates all objects present in the world.
+     *
      * @param delta the time that has passed since the previous frame.
      */
     public void update(final float delta) {
