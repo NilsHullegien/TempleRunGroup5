@@ -2,6 +2,7 @@ package com.group5.core.world;
 
 import com.badlogic.gdx.graphics.Texture;
 
+
 /**
  * Represents an object that has a presence in a World.
  */
@@ -80,6 +81,26 @@ public abstract class WorldObject {
      */
     public Texture getTexture() {
         return this.texture;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Float.floatToIntBits(x);
+        hash = 89 * hash + Float.floatToIntBits(y);
+        hash = 89 * hash + texture.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (obj == null || !(obj instanceof WorldObject)) {
+            return false;
+        }
+        WorldObject that = (WorldObject) obj;
+        return texture == that.texture
+                && Math.abs(that.getX() - this.getX()) < 0.01f
+                && Math.abs(that.getY() - this.getY()) < 0.01f;
     }
 
     /**

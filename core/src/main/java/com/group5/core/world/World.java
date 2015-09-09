@@ -25,6 +25,13 @@ public class World {
      */
     private Vector2 gravity;
 
+
+    /**
+     * The current player in the game.
+     * A game can only have one player at any given time.
+     */
+    private Player player;
+
     /**
      * Constructs a new, empty world with a default gravity.
      */
@@ -68,6 +75,24 @@ public class World {
      */
     public List<WorldObject> getObjects() {
         return objects;
+    }
+
+    /**
+     * Set the (new) current player.
+     * @param p The new player.
+     */
+    public void setPlayer(final Player p) {
+        objects.remove(player);
+        player = p;
+        objects.add(p);
+    }
+
+    /**
+     * Return the current player.
+     * @return the current player.
+     */
+    public Player getPlayer() {
+        return player;
     }
 
     /**
