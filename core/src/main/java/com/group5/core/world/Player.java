@@ -1,5 +1,7 @@
 package com.group5.core.world;
 
+import java.awt.Frame;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.EndlessRunner;
@@ -14,6 +16,8 @@ public class Player extends WorldObject {
      */
     private Vector2 speed;
 
+    private Vector2 gravity;
+    
     /**
      * Constructs a new Player positioned at the given coordinates.
      *
@@ -23,6 +27,7 @@ public class Player extends WorldObject {
     public Player(final float x, final float y) {
         super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
         speed = new Vector2(250, 0);
+        gravity = new Vector2(0, -150.f);
     }
 
     @Override
@@ -78,26 +83,30 @@ public class Player extends WorldObject {
     public void jump(float jumpTime) {
     	//Basic speed is the starting speed of the player
     	//This it will go down to 0
-    	double basicSpeed = jumpTime/10;
-    	double basicInterval = 2;
-    	double heightIncr = basicSpeed - basicInterval;
-    	double basicDecr;
-    	if(heightIncr >= 0) {
-    		basicDecr =  Math.pow(basicInterval, 2);
-    		heightIncr = basicSpeed - basicDecr;
-    		updateJumpPosition((float) heightIncr);
-    
+    	double basicSpeed = jumpTime/20;
+    	double heightIncr = basicSpeed;
+    	double decr =  2;
+    	System.out.println(basicSpeed);
+    	while(heightIncr >= 0) {
+    		System.out.println("Height increase: " + heightIncr);
+    		heightIncr = basicSpeed - decr;
+    		decr *= 1.2;
+    		if(heightIncr < 0) break;
+    		System.out.println("jumpPosition(" + heightIncr + ")");
+    		updatePlayer((float) heightIncr);
     	}
-    	
-    	
     }
     
     /**
      * Updates the position of the player
      * @param y
      */
-    public void updateJumpPosition(float y) {
-    	setY(getY() + y);
+    public void updatePlayer(float y) {
+        setY(y - this.getGravity().y);
+    }
+    
+    public Vector2 getGravity() {
+    	return gravity;
     }
 
 }
