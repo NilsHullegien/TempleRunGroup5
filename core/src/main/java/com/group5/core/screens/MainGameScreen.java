@@ -125,7 +125,6 @@ public class MainGameScreen implements Screen {
 
         //the screen consists of one table containing one label and two buttons.
         Table t = new Table();
-        t.setPosition(0, 0);
 
         Label topText = new Label("Game over!", labelSkin);
         topText.setPosition(0, 0);
@@ -145,18 +144,16 @@ public class MainGameScreen implements Screen {
                 EndlessRunner.get().create();
             }
         });
-
-        t.setWidth(200.f);
         t.setFillParent(true);
-        t.setColor(Color.RED);
-        t.setVisible(true);
-        t.add(topText);
+        t.setColor(Color.BLUE);
+        t.setVisible(false);
+        t.add(topText).expandX().width(200.f);
         t.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
         t.add(t2);
-        t.setVisible(false);
+        //t.setVisible(false);
         stage.addActor(t);
     }
 
