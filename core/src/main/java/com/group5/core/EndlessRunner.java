@@ -1,9 +1,6 @@
 package com.group5.core;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.group5.core.screens.MainMenu;
 import com.group5.core.util.TextureCache;

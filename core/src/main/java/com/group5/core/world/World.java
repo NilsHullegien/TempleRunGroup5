@@ -29,7 +29,10 @@ public class World {
      */
     private Vector2 gravity;
 
-    
+    /**
+     * Gets the time the player held down the jumpButton.
+     * Getter and setter are provided.
+     */
     private long jumpTime;
 
     /**
@@ -39,14 +42,12 @@ public class World {
     private Player player;
 
     /**
-<<<<<<< HEAD
-     * The button pressed for jumping
+     * The button pressed for jumping.
      */
     private char jumpButton = Keys.W;
     
     /**
-     * Timer start and stop for determining 
-     * how long the player jumps
+     * Timer start and stop for determining how long the player jumps.
      */
     private long timerStart = 0L;
     /**
@@ -105,11 +106,12 @@ public class World {
      * Returns the world's spawner.
      * @return Spawner which spawns new objects into the world.
      */
-    public Spawner getSpawner(){
+    public Spawner getSpawner() {
     	return spawner;
     }
     
-     /** Set the (new) current player.
+    /**
+     * Set the (new) current player.
      * @param p The new player.
      */
     public void setPlayer(final Player p) {
@@ -137,15 +139,22 @@ public class World {
             w.update(delta, this);
         }
     }
-    
-InputProcessor ip = new InputProcessor() {
+    /**
+     * Input processor used in LibGDX.
+     * Registers when key is pressed/released
+     */
+    InputProcessor ip = new InputProcessor() {
     	
+    	/**
+    	 * Registers a released button.
+    	 * @param keycode The integer representation of the button released.
+    	 */
     	@Override
-		public boolean keyUp(int keycode) {
+		public boolean keyUp(final int keycode) {
     		System.out.println("Player Y: " + player.getY());
-			if(keycode == jumpButton) {
+			if (keycode == jumpButton) {
 				jumpTime = System.currentTimeMillis() - timerStart;
-				if(jumpTime >= 1000L) {
+				if (jumpTime >= 1000L) {
 					jumpTime = 1000L;
 				}
 				player.setIsJumping(true);
@@ -153,9 +162,13 @@ InputProcessor ip = new InputProcessor() {
 			return false;
 		}
 		
+    	/**
+    	 * Registers a pressed button.
+    	 * @param keycode The integer representation of the button pressed.
+    	 */
 		@Override
-		public boolean keyDown(int keycode) {
-			if(keycode == jumpButton && player.getY() <= 65) {
+		public boolean keyDown(final int keycode) {
+			if (keycode == jumpButton && player.getY() <= 65) {
 				System.out.println("Timer started");
 				timerStart = System.currentTimeMillis();
 			}
@@ -166,43 +179,51 @@ InputProcessor ip = new InputProcessor() {
     	//////////////////
     	//UNUSED METHODS//
 		//////////////////
-		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-			// TODO Auto-generated method stub
+		public boolean touchUp(final int screenX, final int screenY, final int pointer, final int button) {
 			return false;
 		}
 		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean touchDragged(int screenX, int screenY, int pointer) {
-			// TODO Auto-generated method stub
+		public boolean touchDragged(final int screenX, final int screenY, final int pointer) {
 			return false;
 		}
 		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-			// TODO Auto-generated method stub
+		public boolean touchDown(final int screenX, final int screenY, final int pointer, final int button) {
 			return false;
 		}
 		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean scrolled(int amount) {
-			// TODO Auto-generated method stub
+		public boolean scrolled(final int amount) {
 			return false;
 		}
 		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean mouseMoved(int screenX, int screenY) {
-			// TODO Auto-generated method stub
+		public boolean mouseMoved(final int screenX, final int screenY) {
 			return false;
 		}
 		
-	
-		
-		
+		/**
+		 * Unused.
+		 */
 		@Override
-		public boolean keyTyped(char character) {
-			// TODO Auto-generated method stub
+		public boolean keyTyped(final char character) {
 			return false;
 		}
 		
@@ -211,10 +232,19 @@ InputProcessor ip = new InputProcessor() {
 		//////////////////////
 	};
 	
-	public void setJumpTime(long newTime) {
+	/**
+	 * Sets the jumpTime variable.
+	 * @param newTime The time jumpTime needs to be set to.
+	 */
+	public void setJumpTime(final long newTime) {
 		jumpTime = newTime;
 	}
 	
+	
+	/**
+	 * Returns the jumpTime variable.
+	 * @return the jumpTime variable.
+	 */
 	public long getJumpTime() {
 		return jumpTime;
 	}

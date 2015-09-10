@@ -77,7 +77,7 @@ public class MainGameScreen implements Screen {
         for (WorldObject obj : world.getObjects()) {
             batch.draw(obj.getTexture(), obj.getX(), obj.getY());
             world.getPlayer().jump(world.getJumpTime());
-            if(world.getPlayer().getY() >= world.getJumpTime() /5) {
+            if (world.getPlayer().getY() >= world.getJumpTime() / 5) {
             	world.getPlayer().setIsJumping(false);
             }
         }
