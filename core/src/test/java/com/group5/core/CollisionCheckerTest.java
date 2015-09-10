@@ -39,11 +39,11 @@ public class CollisionCheckerTest {
         WorldObject w2 = new FloorTile(0, 0);
         assertTrue(checker.overlap(w1, w2));
 
-        w2.setY(65);
+        w2.setY(64);
         //the boundaries touch on the bottom side, but they do not overlap
         assertFalse(checker.overlap(w1, w2));
 
-        w2.setX(1025);
+        w2.setX(1024);
         w2.setY(0);
 
         // same thing for the right side
@@ -62,7 +62,7 @@ public class CollisionCheckerTest {
 
 
         //two objects, but they don't touch
-        world.add(new FloorTile(0, 65));
+        world.add(new FloorTile(0, 64));
         assertFalse(checker.checkCollision(world.getObjects().get(0)));
         assertFalse(checker.checkCollision(world.getObjects().get(1)));
 
