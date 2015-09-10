@@ -1,11 +1,8 @@
 package com.group5.core.world;
 
-import java.awt.Frame;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.EndlessRunner;
-import com.group5.core.util.KeyMap;
+import com.group5.core.controllers.CollisionChecker;
 
 /**
  * Represents a game character controlled by the user.
@@ -15,8 +12,8 @@ public class Player extends WorldObject {
      * The current speed the player is moving at.
      */
     private Vector2 speed;
-
-    private Vector2 gravity;
+    
+    private boolean isJumping = false;
     
     /**
      * Constructs a new Player positioned at the given coordinates.
@@ -27,7 +24,6 @@ public class Player extends WorldObject {
     public Player(final float x, final float y) {
         super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x, y);
         speed = new Vector2(250, 0);
-        gravity = new Vector2(0, -150.f);
     }
 
     @Override
@@ -81,32 +77,32 @@ public class Player extends WorldObject {
      * @param jumpTime The time the player jumps 
      */
     public void jump(float jumpTime) {
-    	//Basic speed is the starting speed of the player
-    	//This it will go down to 0
-    	double basicSpeed = jumpTime/20;
-    	double heightIncr = basicSpeed;
-    	double decr =  2;
-    	System.out.println(basicSpeed);
-    	while(heightIncr >= 0) {
-    		System.out.println("Height increase: " + heightIncr);
-    		heightIncr = basicSpeed - decr;
-    		decr *= 1.2;
-    		if(heightIncr < 0) break;
-    		System.out.println("jumpPosition(" + heightIncr + ")");
-    		updatePlayer((float) heightIncr);
+    	if(isJumping && getY() <= 200) {
+	    	updatePlayerPos((float)(jumpTime/5 * 0.2));
+    
     	}
+    	
     }
     
     /**
      * Updates the position of the player
-     * @param y
+     * @param y the height the player jumps 
      */
-    public void updatePlayer(float y) {
-        setY(y - this.getGravity().y);
+    public void updatePlayerPos(float y) {
+    	System.out.println("Parameter y: " + y);
+    	System.out.println("Old Position: " + getY());
+    	System.out.println("New Position: " + getY() + y);
+    	
+    	setY(getY() + y);
     }
     
-    public Vector2 getGravity() {
-    	return gravity;
+    public boolean isJumping() {
+    	return isJumping;
     }
-
+    
+    public void setIsJumping(boolean isJ) {
+    	isJumping = isJ;
+    }
+    
+    
 }

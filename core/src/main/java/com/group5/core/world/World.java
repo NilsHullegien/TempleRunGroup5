@@ -28,6 +28,8 @@ public class World {
      */
     private Vector2 gravity;
 
+    
+    private long jumpTime;
 
     /**
      * The current player in the game.
@@ -121,24 +123,21 @@ InputProcessor ip = new InputProcessor() {
     	
     	@Override
 		public boolean keyUp(int keycode) {
+    		System.out.println("Player Y: " + player.getY());
 			if(keycode == jumpButton) {
-				System.out.println("jumpButton is up!");
-				long jumpTime = System.currentTimeMillis() - timerStart;
-				System.out.println("Key held down for " + jumpTime + " ms.");
+				jumpTime = System.currentTimeMillis() - timerStart;
 				if(jumpTime >= 1000L) {
-					System.out.println("Held down for too long: (" + jumpTime + ").");
 					jumpTime = 1000L;
 				}
-				System.out.println("Value going to player.jump(): " + jumpTime);
-				getPlayer().jump(jumpTime);
+				player.setIsJumping(true);
 			}
 			return false;
 		}
 		
 		@Override
 		public boolean keyDown(int keycode) {
-			if(keycode == jumpButton) {
-				System.out.println("jumpButton pressed down");
+			if(keycode == jumpButton && player.getY() <= 65) {
+				System.out.println("Timer started");
 				timerStart = System.currentTimeMillis();
 			}
 			return false;
@@ -192,5 +191,13 @@ InputProcessor ip = new InputProcessor() {
 		//END UNUSED METHODS//
 		//////////////////////
 	};
+	
+	public void setJumpTime(long newTime) {
+		jumpTime = newTime;
+	}
+	
+	public long getJumpTime() {
+		return jumpTime;
+	}
 
 }
