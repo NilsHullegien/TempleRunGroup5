@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.controllers.CollisionChecker;
+import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,7 @@ public class World {
     private Player player;
 
     /**
+<<<<<<< HEAD
      * The button pressed for jumping
      */
     private char jumpButton = Keys.W;
@@ -47,6 +49,10 @@ public class World {
      * how long the player jumps
      */
     private long timerStart = 0L;
+    /**
+     * The spawner that spawns new objects into the world.
+     */
+    private Spawner spawner;
     
     /**
      * Constructs a new, empty world with a default gravity.
@@ -56,6 +62,7 @@ public class World {
         gravity = new Vector2(0, -150.f);
         objects = new ArrayList<WorldObject>();
         Gdx.input.setInputProcessor(ip);
+        spawner = new Spawner(this);
     }
 
     /**
@@ -69,7 +76,8 @@ public class World {
 
     /**
      * Returns the world's collider.
-     * @return the world's collider.
+     *
+     * @return the world's collider
      */
     public CollisionChecker getCollider() {
         return collider;
@@ -77,7 +85,8 @@ public class World {
 
     /**
      * Returns the world's operating gravity.
-     * @return the world's operating gravity.
+     *
+     * @return the world's operating gravity
      */
     public Vector2 getGravity() {
         return gravity;
@@ -85,6 +94,7 @@ public class World {
 
     /**
      * Returns the objects contained in the world.
+     *
      * @return the objects contained in the world.
      */
     public List<WorldObject> getObjects() {
@@ -92,7 +102,14 @@ public class World {
     }
 
     /**
-     * Set the (new) current player.
+     * Returns the world's spawner.
+     * @return Spawner which spawns new objects into the world.
+     */
+    public Spawner getSpawner(){
+    	return spawner;
+    }
+    
+     /** Set the (new) current player.
      * @param p The new player.
      */
     public void setPlayer(final Player p) {
@@ -111,9 +128,11 @@ public class World {
 
     /**
      * Updates all objects present in the world.
+     *
      * @param delta the time that has passed since the previous frame.
      */
     public void update(final float delta) {
+    	spawner.spawnBlocks();
         for (WorldObject w : objects) {
             w.update(delta, this);
         }

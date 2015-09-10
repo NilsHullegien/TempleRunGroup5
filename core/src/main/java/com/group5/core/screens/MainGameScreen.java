@@ -32,6 +32,7 @@ public class MainGameScreen implements Screen {
 
     /**
      * Constructs a new main game screen that plays the actual game.
+     *
      * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {

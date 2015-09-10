@@ -18,9 +18,18 @@ public class EndlessRunner extends Game {
      * The current game instance.
      */
     private static EndlessRunner game;
+    /**
+     * The SpriteBatch to draw stuff with.
+     */
+    private SpriteBatch batch;
+    /**
+     * The current texture cache.
+     */
+    private TextureCache textureCache;
 
     /**
      * Sets the current game instance.
+     *
      * @param g the new current game instance
      */
     static void setGame(final EndlessRunner g) {
@@ -29,6 +38,7 @@ public class EndlessRunner extends Game {
 
     /**
      * Returns the current game instance.
+     *
      * @return the current game instance
      */
     public static EndlessRunner get() {
@@ -36,17 +46,8 @@ public class EndlessRunner extends Game {
     }
 
     /**
-     * The SpriteBatch to draw stuff with.
-     */
-    private SpriteBatch batch;
-
-    /**
-     * The current texture cache.
-     */
-    private TextureCache textureCache;
-
-    /**
      * Returns the current texture cache.
+     *
      * @return the current texture cache.
      */
     public TextureCache getTextureCache() {
