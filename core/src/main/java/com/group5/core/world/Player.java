@@ -25,17 +25,6 @@ public class Player extends WorldObject {
 
     @Override
     public void update(final float delta, final World world) {
-        /*if (Gdx.input.isKeyJustPressed(KeyMap.RIGHT)) {
-            speed.add(200.f, 0.f);
-        } else if (!Gdx.input.isKeyPressed(KeyMap.RIGHT) && speed.x > 0.f) {
-            speed.x = 0.f;
-        }
-        if (Gdx.input.isKeyJustPressed(KeyMap.LEFT)) {
-            speed.add(-200.f, 0.f);
-        } else if (!Gdx.input.isKeyPressed(KeyMap.LEFT) && speed.x < 0.f) {
-            speed.x = 0.f;
-        }*/
-
         // TODO: There's a cleaner way to handle this
         float oldX = getX();
         setX(oldX + speed.x * delta + world.getGravity().x * delta);

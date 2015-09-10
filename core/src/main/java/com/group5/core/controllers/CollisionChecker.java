@@ -48,14 +48,14 @@ public class CollisionChecker {
         // TODO: Base this on custom bounding boxes instead of texture size
         Texture t1 = w1.getTexture();
         Texture t2 = w2.getTexture();
-        return (w1.getX() < w2.getX() + t2.getWidth()
+        return w1.getX() < w2.getX() + t2.getWidth()
                 && w1.getY() < w2.getY() + t2.getHeight()
                 && w1.getX() >= w2.getX()
-                && w1.getY() >= w2.getY())
-                || (w2.getX() < w1.getX() + t1.getWidth()
-                        && w2.getY() < w1.getY() + t1.getHeight()
-                        && w2.getX() >= w1.getX()
-                        && w2.getY() >= w1.getY());
+                && w1.getY() >= w2.getY()
+                || w2.getX() < w1.getX() + t1.getWidth()
+                && w2.getY() < w1.getY() + t1.getHeight()
+                && w2.getX() >= w1.getX()
+                && w2.getY() >= w1.getY();
     }
 
 

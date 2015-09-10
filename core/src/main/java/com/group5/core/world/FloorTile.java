@@ -33,7 +33,8 @@ public class FloorTile extends WorldObject {
      * Check whether an object is the same object as this instance.
      */
     @Override
+
     public boolean equals(final Object obj) {
-        return obj != null && obj instanceof FloorTile && super.equals(obj);
+        return obj instanceof FloorTile && super.equals(obj);
     }
 }
