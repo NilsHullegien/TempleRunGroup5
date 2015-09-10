@@ -16,17 +16,17 @@ public class Spawner {
 	 * World variable in which new objects will be added.
 	 */
 	private World world;
-	
+
 	/**
 	 * Max distance in pixels two neighbouring floortiles can be.
 	 */
 	private float interval;
-	
+
 	/**
 	 * The width of the floor texture.
 	 */
 	private float floorWidth;
-	
+
 	/**
 	 * Constructor of the spawner for the world.
 	 * @param w the world the spawner is created for.
@@ -36,7 +36,7 @@ public class Spawner {
 		interval = 100;
 		floorWidth = 1024;
 	}
-	
+
 	/**
 	 * Method for the spawner to find the last floor position.
 	 * @return 0 or the right most floor x coordinate of the last added floor.
@@ -55,7 +55,7 @@ public class Spawner {
 		}
 		return floor.getX() + floor.getTexture().getWidth();
 	}
-	
+
 	/**
 	 * Method to get the player position.
 	 * @return the x coordinate of the player.
@@ -63,7 +63,7 @@ public class Spawner {
 	public float getPlayerPosition() {
 		return world.getPlayer().getX();
 	}
-	
+
 	/**
 	 * Method to spawn new objects into the world.
 	 * Objects will be added within a certain range.
@@ -77,7 +77,7 @@ public class Spawner {
 			if (rand.nextBoolean()) {
 				int numObstacles = rand.nextInt(2) + 2;
 				for (int i = 1; i < numObstacles; i++) {
-					world.add(new Obstacle(getLastFloor() + gap + (floorWidth / numObstacles) * i, 64));	
+					world.add(new Obstacle(getLastFloor() + gap + (floorWidth / numObstacles) * i, 64));
 				}
 			}
 			world.add(new FloorTile(getLastFloor() + gap, 0));

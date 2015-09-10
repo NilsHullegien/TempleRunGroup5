@@ -7,7 +7,7 @@ import com.group5.core.EndlessRunner;
  *
  */
 public class Obstacle extends WorldObject {
-	
+
 	/**
 	 * Constructor of the obstacle.
 	 * @param x the x coordinate of the obstacle
@@ -38,5 +38,5 @@ public class Obstacle extends WorldObject {
 		}
 		return false;
 	}
-	
+
 }

@@ -11,13 +11,13 @@ public class Player extends WorldObject {
      * The current speed the player is moving at.
      */
     private Vector2 speed;
-    
+
     /**
      * Boolean used for the check if the player is jumping or not.
      * (jumping means player.getY() < 65).
      */
     private boolean isJumping = false;
-    
+
     /**
      * Constructs a new Player positioned at the given coordinates.
      *
@@ -60,24 +60,23 @@ public class Player extends WorldObject {
         Player that = (Player) obj;
         return super.equals(obj) && this.speed.equals(that.speed);
     }
-    
+
     /**
      * The function that let the player jump up.
      * (falling down is done by the gravity).
      * NOTE: the actual movement of the player is done in the
      * updateJumpPosition(float) method.
-     * @param jumpTime The time the player jumps 
+     * @param jumpTime The time the player jumps.
      */
     public void jump(final float jumpTime) {
     	if (isJumping && getY() <= jumpTime / 5) {
 	    	updatePlayerPos((float) (jumpTime / 5 * 0.2));
     	}
-    	
     }
-    
+
     /**
      * Updates the position of the player.
-     * @param y the height the player jumps 
+     * @param y the height the player jumps.
      */
     public void updatePlayerPos(final float y) {
     	System.out.println("Parameter y: " + y);
@@ -85,7 +84,7 @@ public class Player extends WorldObject {
     	System.out.println("New Position: " + getY() + y);
     	setY(getY() + y);
     }
-    
+
     /**
      * Checks if the player is jumping.
      * @return the isJumping variable.
@@ -93,7 +92,7 @@ public class Player extends WorldObject {
     public boolean isJumping() {
     	return isJumping;
     }
-    
+
     /**
      * Set the isJumping variable.
      * @param isJ the new value for isJumping (boolean)
@@ -101,6 +100,4 @@ public class Player extends WorldObject {
     public void setIsJumping(final boolean isJ) {
     	isJumping = isJ;
     }
-    
-    
 }
