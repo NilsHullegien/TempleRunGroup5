@@ -167,10 +167,11 @@
         <module name="UpperEll"/>
 
         <module name="SuppressWarningsHolder" />
-        <module name="SuppressWarningsFilter"/>
+        
 
     </module>
 
+        <module name="SuppressWarningsFilter"/>
     
 
 </module>
