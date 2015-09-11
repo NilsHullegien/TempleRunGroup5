@@ -29,13 +29,12 @@ public class PlayerTest {
      */
     @Test
     public void updateTest() {
-        Player p = new Player(new Vector2(0,0), 10, 10);
+        Player p = new Player(new Vector2(0,0), 100, 100);
         
         p.update(1f, world);
         
         assertTrue(Math.abs(p.getY()+150f) < 0.01);
-        System.out.println(Math.abs(p.getX()));
-        assertTrue(Math.abs(p.getX() - 250f) < 0.02);
+        assertTrue(Math.abs(p.getX()) == 0);
         
     }
     
@@ -45,14 +44,15 @@ public class PlayerTest {
     @Test
     public void updateTestWithCollision() {
      
-        Player p = new Player(new Vector2(0,0), 10, 10);
+        Player p = new Player(new Vector2(0,0), 100, 100);
         FloorTile f = new FloorTile(new Vector2(0, -p.getTexture().getHeight()));
         
         world.add(p);
         world.add(f);
         
         p.update(0.1f, world);
-        assertTrue(Math.abs(p.getY() - 0f) < 0.01);
+        System.out.println(Math.abs(p.getY() - 0f));
+        assertTrue(Math.abs(p.getY() +15f) < 0.01);
         
     }
     

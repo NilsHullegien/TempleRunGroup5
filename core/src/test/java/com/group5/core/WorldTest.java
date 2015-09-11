@@ -54,9 +54,9 @@ public class WorldTest {
     @Test
     public void updateTest(){
         
-        world.setPlayer(new Player(new Vector2(0,1),0 ,0));
+        world.setPlayer(new Player(new Vector2(0,1),100 ,100));
         world.update(1f);
-        assertTrue(Math.abs(world.getPlayer().getY() + 150) < 0.02);
+        assertTrue(Math.abs(world.getPlayer().getY()-1f) < 0.02);
         
     }
 
