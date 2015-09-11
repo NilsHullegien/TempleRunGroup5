@@ -1,8 +1,10 @@
 package com.group5.core;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,7 @@ public class WorldObjectTest {
      */
     @Test
     public void WordObjectConstructorTest() {
-        world.add(new Player(5, 10));
+        world.add(new Player(new Vector2(5, 10),0 ,0));
         WorldObject obj = world.getObjects().get(0);
 
         //create a new object and check whether the starting positions are correctly initialised

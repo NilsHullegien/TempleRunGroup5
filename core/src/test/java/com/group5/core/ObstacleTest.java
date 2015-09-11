@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.Obstacle;
 
 /**
@@ -19,7 +20,7 @@ public class ObstacleTest {
 	 */
 	@Test
 	public void testEqualsSame() {
-		Obstacle obstacle = new Obstacle(0, 0);
+		Obstacle obstacle = new Obstacle(new Vector2(0, 0));
 		assertTrue(obstacle.equals(obstacle));
 	}
 	
@@ -28,8 +29,8 @@ public class ObstacleTest {
 	 */
 	@Test
 	public void testEqualsDif() {
-		Obstacle obstacle = new Obstacle(0, 0);
-		Obstacle dif = new Obstacle(0, 10);
+		Obstacle obstacle = new Obstacle(new Vector2(0, 0));
+		Obstacle dif = new Obstacle(new Vector2(0, 10));
 		assertFalse(obstacle.equals(dif));
 	}
 	
@@ -38,7 +39,7 @@ public class ObstacleTest {
 	 */
 	@Test
 	public void testEqualsNull() {
-		Obstacle obstacle = new Obstacle(0, 0);
+		Obstacle obstacle = new Obstacle(new Vector2(0, 0));
 		assertFalse(obstacle.equals(null));
 	}
 	
@@ -47,8 +48,8 @@ public class ObstacleTest {
 	 */
 	@Test
 	public void testEqualsSameProperties() {
-		Obstacle obstacle = new Obstacle(0, 0);
-		Obstacle sameProp = new Obstacle(0, 0);
+		Obstacle obstacle = new Obstacle(new Vector2(0, 0));
+		Obstacle sameProp = new Obstacle(new Vector2(0, 0));
 		assertTrue(obstacle.equals(sameProp));
 	}
 

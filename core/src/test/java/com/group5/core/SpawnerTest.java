@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.controllers.Spawner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
@@ -29,7 +30,7 @@ public class SpawnerTest {
 	public void setup() {
 		world = new World();
 		spawner = new Spawner(world);
-		player = new Player(0, 0);
+		player = new Player(new Vector2(0, 0), 0, 0);
 		world.setPlayer(player);
 	}
 
@@ -54,7 +55,7 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloor() {
-		world.add(new FloorTile(100, 100));
+		world.add(new FloorTile(new Vector2(100, 100)));
 		assertTrue(spawner.getLastFloor() == 1124);
 	}
 	
@@ -63,9 +64,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloorMultiple() {
-		world.add(new FloorTile(0, 100));
-		world.add(new FloorTile(50, 100));
-		world.add(new FloorTile(150, 100));
+		world.add(new FloorTile(new Vector2(0, 100)));
+		world.add(new FloorTile(new Vector2(50, 100)));
+		world.add(new FloorTile(new Vector2(150, 100)));
 		assertTrue(spawner.getLastFloor() == 1174);
 	}
 	
@@ -74,9 +75,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloorMultipleUnordered() {
-		world.add(new FloorTile(150, 100));
-		world.add(new FloorTile(0, 100));
-		world.add(new FloorTile(50, 100));
+		world.add(new FloorTile(new Vector2(150, 100)));
+		world.add(new FloorTile(new Vector2(0, 100)));
+		world.add(new FloorTile(new Vector2(50, 100)));
 		assertTrue(spawner.getLastFloor() == 1174);
 	}
 
