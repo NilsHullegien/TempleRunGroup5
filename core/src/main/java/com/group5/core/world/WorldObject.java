@@ -40,6 +40,15 @@ public abstract class WorldObject {
     }
 
     /**
+     * Returns the object's width.
+     *
+     * @return the object's width
+     */
+    public int getWidth() {
+        return texture.getWidth();
+    }
+
+    /**
      * Sets the object's x coordinate.
      *
      * @param newX the new x coordinate
@@ -55,6 +64,15 @@ public abstract class WorldObject {
      */
     public float getY() {
         return pos.y;
+    }
+
+    /**
+     * Returns the object's height.
+     *
+     * @return the object's height
+     */
+    public int getHeight() {
+        return texture.getHeight();
     }
 
     /**

@@ -34,6 +34,17 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * Scaling of y for correct representation on screen of animation.
      */
     private float screeny;
+
+    @Override
+    public int getWidth() {
+        return (int) screenx;
+    }
+
+    @Override
+    public int getHeight() {
+        return (int) screeny;
+    }
+
     /**
      * Object in the world that shows a animated sprite.
      * @param tex Texture
@@ -57,7 +68,8 @@ public abstract class AnimatedWorldObject extends WorldObject {
         this.screeny = sy;
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
-        }
+    }
+
     /**
      * Creates an Animation.
      * @param tex Texture used
@@ -80,6 +92,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
         }
         return new Animation(animationduration / amountframes, frames);
     }
+
      /**
       * Render the animation.
       * @param batch The batch in which the animatedsprite should be rendered.
