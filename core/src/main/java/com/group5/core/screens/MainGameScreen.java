@@ -4,8 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
@@ -37,13 +37,13 @@ public class MainGameScreen implements Screen {
      * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(100, 100);
+        Player player = new Player(new Vector2(100, 100), 100, 100);
         this.batch = b;
         this.world = new World();
         this.world.setPlayer(player);
 
         world.setPlayer(player);
-        world.add(new FloorTile(0, 0));
+        world.add(new FloorTile(new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());

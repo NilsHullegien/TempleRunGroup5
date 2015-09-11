@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Represents an object that has a presence in a World.
@@ -26,36 +27,34 @@ public abstract class AnimatedWorldObject extends WorldObject {
      */
     private float animationduration;
     /**
-     * Scaling of x for correct representation on screen of animation
+     * Scaling of x for correct representation on screen of animation.
      */
     private float screenx;
     /**
-     * Scaling of y for correct representation on screen of animation
+     * Scaling of y for correct representation on screen of animation.
      */
     private float screeny;
     /**
      * Object in the world that shows a animated sprite.
      * @param tex Texture
-     * @param xCoord Initial x position
-     * @param yCoord Initial y position
+     * @param coord Initial position
+     * @param sx the size of the object
+     * @param sy the size of the object
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
      * @param duration Total duration of animation
      */
     public AnimatedWorldObject(final Texture tex,
-                       final float xCoord,
-                       final float yCoord,
+                       final Vector2 coord,
                        final int sx,
                        final int sy,
                        final int framecols,
                        final int framerows,
                        final float duration) {
-        super(tex, xCoord, yCoord);
+        super(tex, coord);
         this.amountframes = framecols * framerows;
         this.screenx = sx;
         this.screeny = sy;
-        
-        
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
         }
@@ -86,7 +85,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
       * @param batch The batch in which the animatedsprite should be rendered.
       */
     public void doRender(final SpriteBatch batch) {
-           batch.draw(animation.getKeyFrame(currenttime, true), x, y,screenx,screeny);
+           batch.draw(animation.getKeyFrame(currenttime, true), this.getX(), this.getY(), screenx, screeny);
     }
     /**
      * Update the animationframe, should be called per frame.

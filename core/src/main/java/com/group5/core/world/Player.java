@@ -11,28 +11,20 @@ public class Player extends AnimatedWorldObject {
      * The current speed the player is moving at.
      */
     private Vector2 speed;
-
     /**
      * Constructs a new Player positioned at the given coordinates.
-     *
-     * @param x Starting x-coordinate
-     * @param y Starting y-coordinate
+     * @param coord coordinate
+     * @param sizex size of player in pixels
+     * @param sizey size of player in pixels
      */
-    public Player(final float x, final float y) {
+    public Player(final Vector2 coord, final int sizex, final int sizey) {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png")
-        , x, y, 100,100, 6, 5, 2);
-        speed = new Vector2(250, 0);
-        speed = new Vector2(0, 0);
-    }
-    
-    public Player(final float x, final float y, final int sizex, final int sizey) {
-        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
-        , x, y, sizex, sizey, 6, 5, 2);
+        , coord, sizex, sizey, 6, 5, 2);
         speed = new Vector2(250, 0);
         speed = new Vector2(0, 0);
     }
 
-    @Override	
+    @Override
     public void update(final float delta, final World world) {
         // TODO: There's a cleaner way to handle this
         float oldX = getX();
@@ -65,6 +57,5 @@ public class Player extends AnimatedWorldObject {
         Player that = (Player) obj;
         return super.equals(obj) && this.speed.equals(that.speed);
     }
-   
 
 }

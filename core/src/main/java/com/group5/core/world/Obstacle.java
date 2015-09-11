@@ -1,5 +1,6 @@
 package com.group5.core.world;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.EndlessRunner;
 
 /**
@@ -9,13 +10,10 @@ import com.group5.core.EndlessRunner;
 public class Obstacle extends WorldObject {
     /**
      * Constructor of the obstacle.
-     * @param x
-     *            the x coordinate of the obstacle.
-     * @param y
-     *            the y coordinate of the obstacle.
+     * @param coord Initial position
      */
-    public Obstacle(final float x, final float y) {
-        super(EndlessRunner.get().getTextureCache().load("obstacle.png"), x, y);
+    public Obstacle(final Vector2 coord) {
+        super(EndlessRunner.get().getTextureCache().load("obstacle.png"), coord);
     }
 
     /**
