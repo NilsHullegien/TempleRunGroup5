@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -64,13 +65,13 @@ public class MainGameScreen implements Screen {
      * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(100, 100);
+        Player player = new Player(new Vector2(100, 100), 100, 100);
         this.batch = b;
         this.world = new World();
         this.world.setPlayer(player);
 
         world.setPlayer(player);
-        world.add(new FloorTile(0, 0));
+        world.add(new FloorTile(new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -98,9 +99,7 @@ public class MainGameScreen implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         world.update(delta);
-
         camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
@@ -108,13 +107,14 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-            batch.draw(obj.getTexture(), obj.getX(), obj.getY());
+        obj.doRender(batch);
         }
 
         if (!(world.getGameStatus())) {
             stage.getActors().get(0).setVisible(true);
         }
         batch.end();
+        world.update(delta);
         stage.act();
         stage.draw();
     }

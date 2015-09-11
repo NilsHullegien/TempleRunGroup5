@@ -2,6 +2,7 @@ package com.group5.core.controllers;
 
 import java.util.Random;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Obstacle;
 import com.group5.core.world.World;
@@ -76,11 +77,11 @@ public class Spawner {
             if (rand.nextBoolean()) {
                 int numObstacles = rand.nextInt(2) + 2;
                 for (int i = 1; i < numObstacles; i++) {
-                    world.add(new Obstacle(getLastFloor() + gap
-                            + (floorWidth / numObstacles) * i, 64));
+                    world.add(new Obstacle(new Vector2(getLastFloor() + gap
+                            + (floorWidth / numObstacles) * i, 64)));
                 }
             }
-            world.add(new FloorTile(getLastFloor() + gap, 0));
+            world.add(new FloorTile(new Vector2(getLastFloor() + gap, 0)));
         }
     }
 }

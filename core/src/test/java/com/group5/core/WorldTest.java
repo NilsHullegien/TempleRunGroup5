@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import com.badlogic.gdx.math.Vector2;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -30,15 +31,14 @@ public class WorldTest {
      */
     @Test
     public void addTest() {
-        world.add(new FloorTile(0,0));
-        assertTrue(world.getObjects().get(0).equals(new FloorTile(0,0)));
-
-        world.add(new FloorTile(0, 1));
-        assertTrue(world.getObjects().get(1).equals(new FloorTile(0, 1)));
-
-        world.add(new Player(0, 1));
-        assertTrue(world.getObjects().get(2).equals(new Player(0, 1)));
-
+        world.add(new FloorTile(new Vector2(0, 0)));
+        assertTrue(world.getObjects().get(0).equals(new FloorTile(new Vector2(0,0))));
+        
+        world.add(new FloorTile(new Vector2(0,1)));
+        assertTrue(world.getObjects().get(1).equals(new FloorTile(new Vector2(0,1))));
+        
+        world.add(new Player(new Vector2(0,1),0,0));
+        assertTrue(world.getObjects().get(2).equals(new Player(new Vector2(0, 1), 0, 0)));
     }
 
     /**
@@ -46,32 +46,31 @@ public class WorldTest {
      */
     @Test
     public void setPlayerTest() {
-        world.setPlayer(new Player(0,0));
-        assertTrue(world.getPlayer().equals(new Player(0, 0)));
-        world.setPlayer(new Player(1, 0));
-        assertTrue(world.getPlayer().equals(new Player(1, 0)));
+        world.setPlayer(new Player(new Vector2(0,0),0,0));
+        assertTrue(world.getPlayer().equals(new Player(new Vector2(0,0),0,0)));
+        world.setPlayer(new Player(new Vector2(1,0), 0, 0));
+        assertTrue(world.getPlayer().equals(new Player(new Vector2(1,0),0,0)));
     }
 
     /**
      * Check whether the update function of the player is correctly executed
      */
     @Test
-    public void updateTest() {
-
-        world.setPlayer(new Player(0, 0));
+    public void updateTest(){
+        
+        world.setPlayer(new Player(new Vector2(0,1),100 ,100));
         world.update(1f);
-        assertTrue(Math.abs(world.getPlayer().getY() + 150) < 0.02);
+        assertTrue(Math.abs(world.getPlayer().getY()-1f) < 0.02);
     }
-
     /**
      * Test that an object that is far left from the player disappears on update.
      */
     @Test
     public void testObjectDisappearsWhenTooFarLeft() {
         World w = new World();
-        w.setPlayer(new Player(10000.f, 0.f));
+        w.setPlayer(new Player(new Vector2(10000.f, 0.f),100,100));
 
-        FloorTile disappearing = new FloorTile(0.f, 0.f);
+        FloorTile disappearing = new FloorTile(new Vector2(0,0));
         w.add(disappearing);
 
         w.update(0);
@@ -85,9 +84,9 @@ public class WorldTest {
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
         World w = new World();
-        w.setPlayer(new Player(0.f, 0.f));
+        w.setPlayer(new Player(new Vector2(0,0),100,100));
 
-        FloorTile disappearing = new FloorTile(0.f, 0.f);
+        FloorTile disappearing = new FloorTile(new Vector2(0,0));
         w.add(disappearing);
 
         w.update(0);
@@ -101,9 +100,9 @@ public class WorldTest {
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
         World w = new World();
-        w.setPlayer(new Player(0.f, 0.f));
+        w.setPlayer(new Player(new Vector2(0,0),100,100));
 
-        FloorTile disappearing = new FloorTile(10000.f, 0.f);
+        FloorTile disappearing = new FloorTile(new Vector2(10000.f, 0.f));
         w.add(disappearing);
 
         w.update(0);

@@ -1,5 +1,6 @@
 package com.group5.core.world;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.EndlessRunner;
 
 /**
@@ -10,11 +11,10 @@ public class FloorTile extends WorldObject {
     /**
      * A floortile is a tile that the player can stand on and jump off of.
      *
-     * @param x Starting x-coordinate
-     * @param y Starting y-coordinate
+     * @param coord position
      */
-    public FloorTile(final float x, final float y) {
-        super(EndlessRunner.get().getTextureCache().load("floorTile.png"), x, y);
+    public FloorTile(final Vector2 coord) {
+        super(EndlessRunner.get().getTextureCache().load("floorTile.png"), coord);
     }
 
     @Override
