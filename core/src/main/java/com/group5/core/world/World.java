@@ -129,6 +129,6 @@ public class World {
      * @return True if the player is still alive, else false.
      */
     public boolean getGameStatus() {
-        return (!(player.getY() < 0.f));
+        return !(player.getY() < 0.f);
     }
 }
