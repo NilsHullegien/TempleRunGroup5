@@ -8,4 +8,4 @@ cache:
   - $HOME/.m2
 
 script:
-  - mvn test checkstyle:check findbugs:check pmd:check
+  - mvn -P desktop test checkstyle:check findbugs:check pmd:check
