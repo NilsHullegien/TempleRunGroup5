@@ -4,7 +4,6 @@ import java.util.Random;
 
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Obstacle;
-import com.group5.core.world.Player;
 import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
 
