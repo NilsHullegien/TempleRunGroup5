@@ -57,7 +57,7 @@ public class MainGameScreen implements Screen {
      * Skin of the labels.
      */
     private Skin labelSkin;
-    
+
     /**
      * Boolean to check if the InputProcessor from World has been initialized.
      */
@@ -117,9 +117,10 @@ public class MainGameScreen implements Screen {
         for (WorldObject obj : world.getObjects()) {
             batch.draw(obj.getTexture(), obj.getX(), obj.getY());
             world.getPlayer().jump(world.getJumpTime());
-            if(!setIP) Gdx.input.setInputProcessor(world.getInputProcessor());
+            if (!setIP) {
+                Gdx.input.setInputProcessor(world.getInputProcessor());
+            }
             if (world.getPlayer().getY() >= world.getJumpTime() / 5.f) {
-                
                 world.getPlayer().setIsJumping(false);
             }
         }

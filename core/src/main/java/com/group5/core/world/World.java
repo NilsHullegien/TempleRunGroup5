@@ -1,6 +1,5 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
@@ -261,9 +260,14 @@ public class World {
     public boolean getGameStatus() {
         return !(player.getY() < 0.f);
     }
-    
+
+    /**
+     * Getter for the inputProcessor used to capture:
+     * key presses and releases.
+     * Used in MainGameScreen.render();
+     * @return the InputProcessor
+     */
     public InputProcessor getInputProcessor() {
         return ip;
     }
-    
 }
