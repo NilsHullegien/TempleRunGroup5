@@ -20,7 +20,14 @@ public class Player extends AnimatedWorldObject {
      */
     public Player(final float x, final float y) {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png")
-        , x, y, 6, 5, 2);
+        , x, y, 100,100, 6, 5, 2);
+        speed = new Vector2(250, 0);
+        speed = new Vector2(0, 0);
+    }
+    
+    public Player(final float x, final float y, final int sizex, final int sizey) {
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
+        , x, y, sizex, sizey, 6, 5, 2);
         speed = new Vector2(250, 0);
         speed = new Vector2(0, 0);
     }
