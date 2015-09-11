@@ -25,20 +25,6 @@ public class PlayerTest {
     }
     
     /**
-     * Check whether the player position correctly updates when no collision takes place.
-     */
-    @Test
-    public void updateTest() {
-        Player p = new Player(new Vector2(0,0), 100, 100);
-        
-        p.update(1f, world);
-        
-        assertTrue(Math.abs(p.getY()+150f) < 0.01);
-        assertTrue(Math.abs(p.getX()) == 0);
-        
-    }
-    
-    /**
      * Check that a player cannot move when he is on top of an obstacle.
      */
     @Test

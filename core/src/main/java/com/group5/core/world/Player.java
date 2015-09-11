@@ -27,7 +27,6 @@ public class Player extends AnimatedWorldObject {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png")
         , coord, sizex, sizey, 6, 5, 2);
         speed = new Vector2(250, 0);
-        speed = new Vector2(0, 0);
     }
 
     @Override

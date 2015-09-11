@@ -53,16 +53,6 @@ public class WorldTest {
     }
 
     /**
-     * Check whether the update function of the player is correctly executed
-     */
-    @Test
-    public void updateTest(){
-        
-        world.setPlayer(new Player(new Vector2(0,1),100 ,100));
-        world.update(1f);
-        assertTrue(Math.abs(world.getPlayer().getY()-1f) < 0.02);
-    }
-    /**
      * Test that an object that is far left from the player disappears on update.
      */
     @Test
