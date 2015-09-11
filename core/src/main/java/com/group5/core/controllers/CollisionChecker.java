@@ -1,6 +1,5 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
 
