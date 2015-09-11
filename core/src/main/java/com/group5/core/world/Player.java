@@ -12,6 +12,12 @@ public class Player extends AnimatedWorldObject {
      */
     private Vector2 speed;
     /**
+     * Boolean used for the check if the player is jumping or not. (jumping
+     * means player.getY() < 65).
+     */
+    private boolean isJumping = false;
+
+    /**
      * Constructs a new Player positioned at the given coordinates.
      * @param coord coordinate
      * @param sizex size of player in pixels
@@ -57,4 +63,47 @@ public class Player extends AnimatedWorldObject {
         return super.equals(obj) && this.speed.equals(that.speed);
     }
 
+    /**
+     * The function that let the player jump up. (falling down is done by the
+     * gravity). NOTE: the actual movement of the player is done in the
+     * updateJumpPosition(float) method.
+     * @param jumping
+     *            The time the player jumps.
+     */
+    public void jump(final float jumping) {
+        if (isJumping && getY() <= jumping / 5) {
+            float jumpTime = jumping;
+            for (int i = 0; i < 20; i++) {
+                jumpTime = (float) (jumpTime / 5 * 0.2 * 0.05);
+                updatePlayerPos(jumpTime);
+            }
+            jumpTime = 0;
+        }
+    }
+
+    /**
+     * Updates the position of the player.
+     * @param y
+     *            the height the player jumps.
+     */
+    public void updatePlayerPos(final float y) {
+        setY(getY() + y);
+    }
+
+    /**
+     * Checks if the player is jumping.
+     * @return the isJumping variable.
+     */
+    public boolean isJumping() {
+        return isJumping;
+    }
+
+    /**
+     * Set the isJumping variable.
+     * @param isJ
+     *            the new value for isJumping (boolean)
+     */
+    public void setIsJumping(final boolean isJ) {
+        isJumping = isJ;
+    }
 }

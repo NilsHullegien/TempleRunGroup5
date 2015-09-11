@@ -8,6 +8,7 @@ import com.group5.core.EndlessRunner;
  *
  */
 public class Obstacle extends WorldObject {
+
     /**
      * Constructor of the obstacle.
      * @param coord Initial position

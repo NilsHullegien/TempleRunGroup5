@@ -60,9 +60,15 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
+     * Boolean to check if the InputProcessor from World has been initialized.
+     */
+    private boolean setIP = false;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
-     * @param b the SpriteBatch to draw textures with
+     * @param b
+     *            the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
         Player player = new Player(new Vector2(100, 100), 100, 100);
@@ -100,6 +106,7 @@ public class MainGameScreen implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         world.update(delta);
+
         camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
@@ -107,7 +114,14 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-        obj.doRender(batch);
+            world.getPlayer().jump(world.getJumpTime());
+            if (!setIP) {
+                Gdx.input.setInputProcessor(world.getInputProcessor());
+            }
+            if (world.getPlayer().getY() >= world.getJumpTime() / 5.f) {
+                world.getPlayer().setIsJumping(false);
+            }
+            obj.doRender(batch);
         }
 
         if (!(world.getGameStatus())) {

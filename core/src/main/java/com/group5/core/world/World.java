@@ -1,5 +1,7 @@
 package com.group5.core.world;
 
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.controllers.Spawner;
@@ -28,15 +30,36 @@ public class World {
     private Vector2 gravity;
 
     /**
+     * Gets the time the player held down the jumpButton. Getter and setter are
+     * provided.
+     */
+    private long jumpTime;
+
+    /**
      * The current player in the game. A game can only have one player at any
      * given time.
      */
     private Player player;
 
     /**
+     * The button pressed for jumping.
+     */
+    private char jumpButton = Keys.W;
+
+    /**
+     * Timer start and stop for determining how long the player jumps.
+     */
+    private long timerStart = 0L;
+
+    /**
      * The spawner that spawns new objects into the world.
      */
     private Spawner spawner;
+
+    /**
+     * Input processor used in LibGDX. Registers when key is pressed/released
+     */
+    private InputProcessor ip;
 
     /**
      * Constructs a new, empty world with a default gravity.
@@ -46,6 +69,98 @@ public class World {
         gravity = new Vector2(0, -150.f);
         objects = new ArrayList<WorldObject>();
         spawner = new Spawner(this);
+        ip = new InputProcessor() {
+
+            /**
+             * Registers a released button.
+             * @param keycode
+             *            The integer representation of the button released.
+             */
+            @Override
+            public boolean keyUp(final int keycode) {
+                System.out.println("Player Y: " + player.getY());
+                if (keycode == jumpButton) {
+                    jumpTime = System.currentTimeMillis() - timerStart;
+                    if (jumpTime >= 1000L) {
+                        jumpTime = 1000L;
+                    }
+                    player.setIsJumping(true);
+                }
+                return false;
+            }
+
+            /**
+             * Registers a pressed button.
+             * @param keycode
+             *            The integer representation of the button pressed.
+             */
+            @Override
+            public boolean keyDown(final int keycode) {
+                if (keycode == jumpButton && player.getY() <= 65) {
+                    System.out.println("Timer started");
+                    timerStart = System.currentTimeMillis();
+                }
+                return false;
+            }
+
+            // ////////////////
+            // UNUSED METHODS//
+            // ////////////////
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean touchUp(final int screenX, final int screenY,
+                    final int pointer, final int button) {
+                return false;
+            }
+
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean touchDragged(final int screenX, final int screenY,
+                    final int pointer) {
+                return false;
+            }
+
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean touchDown(final int screenX, final int screenY,
+                    final int pointer, final int button) {
+                return false;
+            }
+
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean scrolled(final int amount) {
+                return false;
+            }
+
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean mouseMoved(final int screenX, final int screenY) {
+                return false;
+            }
+
+            /**
+             * Unused.
+             */
+            @Override
+            public boolean keyTyped(final char character) {
+                return false;
+            }
+
+            // ////////////////////
+            // END UNUSED METHODS//
+            // ////////////////////
+        };
     }
 
     /**
@@ -88,7 +203,6 @@ public class World {
 
     /**
      * Returns the objects contained in the world.
-     *
      * @return the objects contained in the world.
      */
     public List<WorldObject> getObjects() {
@@ -124,7 +238,6 @@ public class World {
 
     /**
      * Updates all objects present in the world.
-     *
      * @param delta
      * the time that has passed since the previous frame.
      */
@@ -145,10 +258,36 @@ public class World {
     }
 
     /**
+     * Sets the jumpTime variable.
+     * @param newTime
+     *            The time jumpTime needs to be set to.
+     */
+    public void setJumpTime(final long newTime) {
+        jumpTime = newTime;
+    }
+
+    /**
+     * Returns the jumpTime variable.
+     * @return the jumpTime variable.
+     */
+    public long getJumpTime() {
+        return jumpTime;
+    }
+    /**
      * Check whether the player is still alive.
      * @return True if the player is still alive, else false.
      */
     public boolean getGameStatus() {
         return !(player.getY() < 0.f);
+    }
+
+    /**
+     * Getter for the inputProcessor used to capture:
+     * key presses and releases.
+     * Used in MainGameScreen.render();
+     * @return the InputProcessor
+     */
+    public InputProcessor getInputProcessor() {
+        return ip;
     }
 }
