@@ -161,7 +161,6 @@ public class World {
             // END UNUSED METHODS//
             // ////////////////////
         };
-        Gdx.input.setInputProcessor(ip);
     }
 
     /**
@@ -230,7 +229,7 @@ public class World {
     /**
      * Updates all objects present in the world.
      * @param delta
-     *            the time that has passed since the previous frame.
+     * the time that has passed since the previous frame.
      */
     public void update(final float delta) {
         spawner.spawnBlocks();
@@ -255,5 +254,16 @@ public class World {
     public long getJumpTime() {
         return jumpTime;
     }
-
+    /**
+     * Check whether the player is still alive.
+     * @return True if the player is still alive, else false.
+     */
+    public boolean getGameStatus() {
+        return !(player.getY() < 0.f);
+    }
+    
+    public InputProcessor getInputProcessor() {
+        return ip;
+    }
+    
 }
