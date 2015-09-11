@@ -114,7 +114,6 @@ public class MainGameScreen implements Screen {
             stage.getActors().get(0).setVisible(true);
         }
         batch.end();
-        world.update(delta);
         stage.act();
         stage.draw();
     }
