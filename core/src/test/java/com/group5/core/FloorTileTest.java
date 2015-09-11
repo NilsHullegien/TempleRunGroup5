@@ -1,7 +1,9 @@
 package com.group5.core;
 
+import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -18,21 +20,21 @@ public class FloorTileTest {
     public void equalsTest() {
 
         //a floortile is the same as itself
-        FloorTile f1 = new FloorTile(0, 0);
+        FloorTile f1 = new FloorTile(new Vector2(0, 0));
         assertTrue(f1.equals(f1));
 
         //a floortile is the same as another floortile with the same properties
-        FloorTile f2 = new FloorTile(0, 0);
+        FloorTile f2 = new FloorTile(new Vector2(0, 0));
         assertTrue(f1.equals(f2));
 
         //a floortile is not the same as a floortile with different properties
-        FloorTile f3 = new FloorTile(1, 0);
+        FloorTile f3 = new FloorTile(new Vector2(1, 0));
         assertFalse(f1.equals(f3));
-        FloorTile f4 = new FloorTile(0, 1);
+        FloorTile f4 = new FloorTile(new Vector2(0, 1));
         assertFalse(f1.equals(f4));
 
         //a floortile is never the same this as an object of a different type
-        Player p = new Player(0, 0);
+        Player p = new Player(new Vector2(0, 0), 0, 0);
         assertFalse(f1.equals(p));
 
     }

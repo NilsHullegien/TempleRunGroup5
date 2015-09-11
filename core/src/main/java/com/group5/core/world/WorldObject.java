@@ -1,6 +1,8 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 
 /**
@@ -9,42 +11,32 @@ import com.badlogic.gdx.graphics.Texture;
 public abstract class WorldObject {
 
     /**
-     * The world-relative x coordinate of the object.
+     * Position of object.
      */
-    private float x;
-
-    /**
-     * The world-relative y coordinate of the object.
-     */
-    private float y;
-
+    private Vector2 pos;
     /**
      * The texture of the object.
      */
     private Texture texture;
-
     /**
      * Constructs a new world object with the given coordinates and texture.
      *
      * @param tex    location of the texture of the object
-     * @param xCoord x coordinate of the object
-     * @param yCoord y coordinate of the object
+     * @param coord  coordinate of object
      */
     public WorldObject(final Texture tex,
-                       final float xCoord,
-                       final float yCoord) {
-        this.x = xCoord;
-        this.y = yCoord;
+                       final Vector2 coord
+                        ) {
+        this.pos = coord;
         this.texture = tex;
     }
-
     /**
      * Returns the object's x coordinate.
      *
      * @return the object's x coordinate
      */
     public float getX() {
-        return x;
+        return pos.x;
     }
 
     /**
@@ -53,7 +45,7 @@ public abstract class WorldObject {
      * @param newX the new x coordinate
      */
     public void setX(final float newX) {
-        this.x = newX;
+        this.pos.set(newX, this.pos.y);
     }
 
     /**
@@ -62,7 +54,7 @@ public abstract class WorldObject {
      * @return the object's y coordinate
      */
     public float getY() {
-        return y;
+        return pos.y;
     }
 
     /**
@@ -71,7 +63,7 @@ public abstract class WorldObject {
      * @param newY the new y coordinate
      */
     public void setY(final float newY) {
-        this.y = newY;
+        this.pos.set(this.pos.x, newY);
     }
 
     /**
@@ -82,12 +74,19 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
+    /**
+     * Call function to render a World Object.
+     * @param batch The batch the object should draw in
+     */
+    public void doRender(final SpriteBatch batch) {
+        batch.draw(getTexture(), this.pos.x, this.pos.y);
+    }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Float.floatToIntBits(x);
-        hash = 89 * hash + Float.floatToIntBits(y);
+        hash = 89 * hash + Float.floatToIntBits(pos.x);
+        hash = 89 * hash + Float.floatToIntBits(pos.y);
         hash = 89 * hash + texture.hashCode();
         return hash;
     }

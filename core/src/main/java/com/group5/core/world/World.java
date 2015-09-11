@@ -7,6 +7,7 @@ import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -173,6 +174,16 @@ public class World {
     }
 
     /**
+     * Checks if an object is contained in the world.
+     *
+     * @param object the object that might be contained in the world
+     * @return whether the object is contained in the world
+     */
+    public boolean contains(final WorldObject object) {
+        return objects.contains(object);
+    }
+
+    /**
      * Returns the world's collider.
      *
      * @return the world's collider
@@ -232,7 +243,16 @@ public class World {
      */
     public void update(final float delta) {
         spawner.spawnBlocks();
-        for (WorldObject w : objects) {
+        WorldObject w;
+        Iterator<WorldObject> wIter = objects.iterator();
+        while (wIter.hasNext()) {
+            w = wIter.next();
+
+            if ((w.getX() + w.getTexture().getWidth()) < (player.getX() - 1000)) {
+                wIter.remove();
+                continue;
+            }
+
             w.update(delta, this);
         }
     }

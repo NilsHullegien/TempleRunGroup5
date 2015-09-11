@@ -6,12 +6,11 @@ import com.group5.core.EndlessRunner;
 /**
  * Represents a game character controlled by the user.
  */
-public class Player extends WorldObject {
+public class Player extends AnimatedWorldObject {
     /**
      * The current speed the player is moving at.
      */
     private Vector2 speed;
-
     /**
      * Boolean used for the check if the player is jumping or not. (jumping
      * means player.getY() < 65).
@@ -20,15 +19,15 @@ public class Player extends WorldObject {
 
     /**
      * Constructs a new Player positioned at the given coordinates.
-     * @param x
-     *            Starting x-coordinate
-     * @param y
-     *            Starting y-coordinate
+     * @param coord coordinate
+     * @param sizex size of player in pixels
+     * @param sizey size of player in pixels
      */
-    public Player(final float x, final float y) {
-        super(EndlessRunner.get().getTextureCache().load("playerBlock.png"), x,
-                y);
+    public Player(final Vector2 coord, final int sizex, final int sizey) {
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
+        , coord, sizex, sizey, 6, 5, 2);
         speed = new Vector2(250, 0);
+        speed = new Vector2(0, 0);
     }
 
     @Override
@@ -45,6 +44,8 @@ public class Player extends WorldObject {
         if (world.getCollider().checkCollision(this)) {
             setY(oldY);
         }
+        //update the animation
+        super.update(delta, world);
     }
 
     @Override
