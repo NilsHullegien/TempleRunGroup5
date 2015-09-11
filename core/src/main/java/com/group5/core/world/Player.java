@@ -68,9 +68,13 @@ public class Player extends WorldObject {
      * updateJumpPosition(float) method.
      * @param jumpTime The time the player jumps.
      */
-    public void jump(final float jumpTime) {
+    public void jump(float jumpTime) {
     	if (isJumping && getY() <= jumpTime / 5) {
-	    	updatePlayerPos((float) (jumpTime / 5 * 0.2));
+    	    for (int i = 0; i < 20; i++) {
+    	        jumpTime = (float) (jumpTime / 5 * 0.2 * 0.05);
+    	        updatePlayerPos((jumpTime));
+    	    }
+    	    jumpTime = 0;
     	}
     }
 
@@ -79,9 +83,6 @@ public class Player extends WorldObject {
      * @param y the height the player jumps.
      */
     public void updatePlayerPos(final float y) {
-    	System.out.println("Parameter y: " + y);
-    	System.out.println("Old Position: " + getY());
-    	System.out.println("New Position: " + getY() + y);
     	setY(getY() + y);
     }
 
