@@ -56,7 +56,7 @@ public class CollisionCheckerTest {
      */
     @Test
     public void checkCollisionTest() {
-        world.add(new Player(0, 0));
+        world.setPlayer(new Player(0, 0));
         //only one object, so no collision
         assertFalse(checker.checkCollision(world.getObjects().get(0)));
 
