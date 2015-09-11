@@ -7,15 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-<<<<<<< HEAD
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.world.FloorTile;
-import com.group5.core.world.Player;
-import com.group5.core.world.World;
-=======
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
->>>>>>> 88aa6bb2f6f30fc5fcc5b3e07d6f14561d88ca6e
 
 /**
  * Tests for the world object.
