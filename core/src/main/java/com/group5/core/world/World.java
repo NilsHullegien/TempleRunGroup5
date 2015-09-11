@@ -26,7 +26,6 @@ public class World {
      */
     private Vector2 gravity;
 
-
     /**
      * The current player in the game.
      * A game can only have one player at any given time.
@@ -37,7 +36,7 @@ public class World {
      * The spawner that spawns new objects into the world.
      */
     private Spawner spawner;
-    
+
     /**
      * Constructs a new, empty world with a default gravity.
      */
@@ -88,10 +87,10 @@ public class World {
      * Returns the world's spawner.
      * @return Spawner which spawns new objects into the world.
      */
-    public Spawner getSpawner(){
+    public Spawner getSpawner() {
     	return spawner;
     }
-    
+
      /** Set the (new) current player.
      * @param p The new player.
      */
@@ -120,5 +119,4 @@ public class World {
             w.update(delta, this);
         }
     }
-
 }
