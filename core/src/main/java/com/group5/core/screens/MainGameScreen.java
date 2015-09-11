@@ -114,8 +114,6 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-
-            batch.draw(obj.getTexture(), obj.getX(), obj.getY());
             world.getPlayer().jump(world.getJumpTime());
             if (!setIP) {
                 Gdx.input.setInputProcessor(world.getInputProcessor());
@@ -123,7 +121,7 @@ public class MainGameScreen implements Screen {
             if (world.getPlayer().getY() >= world.getJumpTime() / 5.f) {
                 world.getPlayer().setIsJumping(false);
             }
-        obj.doRender(batch);
+            obj.doRender(batch);
         }
 
         if (!(world.getGameStatus())) {

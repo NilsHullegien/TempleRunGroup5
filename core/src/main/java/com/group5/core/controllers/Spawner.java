@@ -35,7 +35,7 @@ public class Spawner {
      */
     public Spawner(final World w) {
         world = w;
-        interval = 150;
+        interval = 200;
         floorWidth = 1024;
     }
 
