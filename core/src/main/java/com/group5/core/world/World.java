@@ -27,8 +27,8 @@ public class World {
     private Vector2 gravity;
 
     /**
-     * The current player in the game.
-     * A game can only have one player at any given time.
+     * The current player in the game. A game can only have one player at any
+     * given time.
      */
     private Player player;
 
@@ -50,7 +50,8 @@ public class World {
     /**
      * Adds an object to the world.
      *
-     * @param object Object you want to add to the world
+     * @param object
+     *            Object you want to add to the world
      */
     public void add(final WorldObject object) {
         objects.add(object);
@@ -88,11 +89,13 @@ public class World {
      * @return Spawner which spawns new objects into the world.
      */
     public Spawner getSpawner() {
-    	return spawner;
+        return spawner;
     }
 
-     /** Set the (new) current player.
-     * @param p The new player.
+    /**
+     * Set the (new) current player.
+     * @param p
+     *            The new player.
      */
     public void setPlayer(final Player p) {
         objects.remove(player);
@@ -111,10 +114,11 @@ public class World {
     /**
      * Updates all objects present in the world.
      *
-     * @param delta the time that has passed since the previous frame.
+     * @param delta
+     * the time that has passed since the previous frame.
      */
     public void update(final float delta) {
-    	spawner.spawnBlocks();
+        spawner.spawnBlocks();
         for (WorldObject w : objects) {
             w.update(delta, this);
         }
