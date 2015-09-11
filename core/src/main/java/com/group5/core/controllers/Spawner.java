@@ -45,10 +45,9 @@ public class Spawner {
     public float getLastFloor() {
         FloorTile floor = null;
         for (WorldObject w : world.getObjects()) {
-            if (w instanceof FloorTile) {
-                if (floor == null || w.getX() > floor.getX()) {
-                    floor = (FloorTile) w;
-                }
+            if (w instanceof FloorTile
+                    && (floor == null || w.getX() > floor.getX())) {
+                floor = (FloorTile) w;
             }
         }
         if (floor == null) {
