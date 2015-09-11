@@ -29,7 +29,7 @@ public class PlayerTest {
      */
     @Test
     public void updateTest() {
-        Player p = new Player(new Vector2(0,0), 0, 0);
+        Player p = new Player(new Vector2(0,0), 10, 10);
         
         p.update(1f, world);
         
@@ -45,7 +45,7 @@ public class PlayerTest {
     @Test
     public void updateTestWithCollision() {
      
-        Player p = new Player(new Vector2(0,0), 0, 0);
+        Player p = new Player(new Vector2(0,0), 10, 10);
         FloorTile f = new FloorTile(new Vector2(0, -p.getTexture().getHeight()));
         
         world.add(p);
