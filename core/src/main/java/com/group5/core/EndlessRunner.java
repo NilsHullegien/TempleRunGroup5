@@ -3,7 +3,10 @@ package com.group5.core;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.group5.core.screens.MainMenu;
+import com.group5.core.util.Logger;
 import com.group5.core.util.TextureCache;
+
+import java.io.IOException;
 
 /**
  * Startup class for the Game, from here all textures are loaded
@@ -53,6 +56,7 @@ public class EndlessRunner extends Game {
 
     @Override
     public void create() {
+        Logger.get().info("Game", "Creating");
         EndlessRunner.setGame(this);
         batch = new SpriteBatch();
         textureCache = new TextureCache();
@@ -73,6 +77,11 @@ public class EndlessRunner extends Game {
 
     @Override
     public void dispose() {
+        try {
+            Logger.get().dispose();
+        } catch (IOException ex) {
+            System.err.println("ERROR: Failed to dispose of logger");
+        }
         batch.dispose();
         textureCache.dispose();
     }

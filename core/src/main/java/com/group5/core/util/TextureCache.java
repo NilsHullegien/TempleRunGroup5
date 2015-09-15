@@ -34,7 +34,7 @@ public class TextureCache {
         if (textures.containsKey(textureFile)) {
             return textures.get(textureFile);
         } else {
-            Gdx.app.log("TextureCache", "Loading texture: " + textureFile);
+            Logger.get().debug("TextureCache", "Loading texture: " + textureFile);
             Texture t = new Texture(Gdx.files.internal(textureFile));
             textures.put(textureFile, t);
             return t;

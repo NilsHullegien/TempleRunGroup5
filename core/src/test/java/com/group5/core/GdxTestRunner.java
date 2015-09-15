@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
+import com.group5.core.util.Logger;
 import com.group5.core.util.TextureCache;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
@@ -26,7 +27,7 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 
         new HeadlessApplication(this, conf);
         Gdx.gl = Mockito.mock(GL20.class);
-        Gdx.app.setLogLevel(Application.LOG_NONE);
+        Logger.get().setThreshold(Logger.Level.NONE);
 
         EndlessRunner game = Mockito.mock(EndlessRunner.class);
         Mockito.stub(game.getTextureCache()).toReturn(new TextureCache());
