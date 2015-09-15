@@ -120,7 +120,7 @@ public class MainGameScreen implements Screen {
         }
 
         if (!gameOverMenuActive && !(world.getGameStatus())) {
-            gameOverMenuActive = false;
+            gameOverMenuActive = true;
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
