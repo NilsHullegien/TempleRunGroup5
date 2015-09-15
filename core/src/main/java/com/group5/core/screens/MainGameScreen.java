@@ -60,9 +60,9 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
-     * Boolean to check if the InputProcessor from World has been initialized.
+     * Boolean to check if the game over menu is active.
      */
-    private boolean setIP = false;
+    private boolean gameOverMenuActive = false;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -84,13 +84,11 @@ public class MainGameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
+        Gdx.input.setInputProcessor(world.getInputProcessor());
     }
 
     @Override
     public void show() {
-
-        Gdx.input.setInputProcessor(stage);
-
         createDefaultButtonSkin();
         createDefaultLabelSkin();
         gameOverScreenSetup();
@@ -115,17 +113,16 @@ public class MainGameScreen implements Screen {
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
             world.getPlayer().jump(world.getJumpTime());
-            if (!setIP) {
-                Gdx.input.setInputProcessor(world.getInputProcessor());
-            }
             if (world.getPlayer().getY() >= world.getJumpTime() / 5.f) {
                 world.getPlayer().setIsJumping(false);
             }
             obj.doRender(batch);
         }
 
-        if (!(world.getGameStatus())) {
+        if (!gameOverMenuActive && !(world.getGameStatus())) {
+            gameOverMenuActive = true;
             stage.getActors().get(0).setVisible(true);
+            Gdx.input.setInputProcessor(stage);
         }
         batch.end();
         stage.act();
