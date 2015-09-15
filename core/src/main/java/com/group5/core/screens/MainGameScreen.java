@@ -60,7 +60,7 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
-     * Boolean to check if the game over menu is active
+     * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
 
