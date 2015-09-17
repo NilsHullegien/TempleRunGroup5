@@ -8,60 +8,74 @@ import com.group5.core.world.FloorTile;
 import com.group5.core.world.Obstacle;
 import com.group5.core.world.WorldObject;
 
+/**
+ * Director class which will direct what will appear in the world.
+ *
+ */
 public class Director {
-	private State currentState;
+	private GameSlice state;
+	private ArrayList<GameSlice> sliceList;
 	private Random random;
-	private float obstaclesRNG = 0.6f;
-	private float noGapFloorRNG = 0.5f;
-	
 	private int floorInterval = 150;
+	private int obstacleInterval = 200;
 	private Spawner spawner;
-	
-	public enum State {
-		EASY, MEDIUM, HARD
-	}
-	
-	public Director(Spawner spawner){
-		currentState = State.EASY;
+
+	/**
+	 * Constructor of the Director class.
+	 * @param spawner spawner which will spawn the objects for the director.
+	 */
+	public Director(Spawner spawner) {
+		sliceList = new ArrayList<GameSlice>();
+		sliceList.add(new GameSlice("Regular", 1, 0, 0.5f, 0, 64, 0));
+		sliceList.add(new GameSlice("ObstacleCourse", 0, 0, 1, 0, 0, 0));
+		state = sliceList.get(0);
 		random = new Random();
 		this.spawner = spawner;
 	}
-	
-	public void setState(State newState) {
-		switch(newState) {
-		case EASY:	
-			obstaclesRNG = 0.5f;
-			noGapFloorRNG = 0.5f;
-			break;
-		case MEDIUM:
-			obstaclesRNG = 0.7f;
-			noGapFloorRNG = 0.7f;
-			break;
-		case HARD:
-			obstaclesRNG = 0.9f;
-			noGapFloorRNG = 0.9f;
-			break;
-		}
-		currentState = newState;
+
+	/**
+	 * Method to get the current Gameslice.
+	 * @return the current GameSlice state.
+	 */
+	public GameSlice getState() {
+		return state;
 	}
 	
-	public ArrayList<WorldObject> direct(){
+	/**
+	 * Method to set the current GameSlice.
+	 * @param index the new index of the GameSlice list.
+	 */
+	public void setState(int index) {
+		if(index < sliceList.size()) {
+			state = sliceList.get(index);
+		}
+	}
+
+	/**
+	 * Method to direct which objects the spawner needs to spawn.
+	 * Every direct List can only have one floor and one obstacle at most.
+	 * There is no randomness yet for the number of obstacles or the place of the obstacles.
+	 * @return an ArrayList<WorldObject> containing the objects the spawner needs to spawn.
+	 */
+	public ArrayList<WorldObject> direct() {
 		ArrayList<WorldObject> nextFloorList = new ArrayList<WorldObject>();
 		float xFloor = 0;
-		if(random.nextFloat() > noGapFloorRNG) {
-			xFloor = random.nextInt(floorInterval - 100) + 100; 
-		}
-		nextFloorList.add(new FloorTile(new Vector2(xFloor + spawner.getLastFloor(), 0)));
-		
-		float xObstacle = 0;
-		float floorWidth = spawner.getFloorSize();
-		if(random.nextFloat() < obstaclesRNG) {
-			int numObstacles = random.nextInt(2) + 1;
-			System.out.println(numObstacles);
-			for (int i = 0; i < numObstacles; i++) {
-				xObstacle = spawner.getLastFloor() + xFloor + (floorWidth/numObstacles) * i; 
-				nextFloorList.add(new Obstacle(new Vector2(xObstacle, 64)));
+		int playerSize = Math.round(spawner.getPlayerSize());
+		if (random.nextFloat() < state.getFloorRNG()) {
+			if (random.nextFloat() > state.getNoGapFloorRNG()) {
+				xFloor = random.nextInt(floorInterval - playerSize) + playerSize;
 			}
+			nextFloorList.add(new FloorTile(new Vector2(xFloor + spawner.getMostRightPos(), state.getYPosFloor())));
+		}
+
+		float xObstacle = 0;
+		float gapObstacle = 0;
+		if (random.nextFloat() < state.getObstaclesRNG()) {
+			if (random.nextFloat() > state.getNoGapObstacleRNG()) {
+				gapObstacle = obstacleInterval;
+			}
+				xObstacle = spawner.getMostRightPos() + xFloor + gapObstacle;
+				nextFloorList.add(new Obstacle(new Vector2(xObstacle, state.getYPosObstacles())));
 		}
 		return nextFloorList;
 	}

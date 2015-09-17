@@ -71,26 +71,71 @@ public class Spawner {
 		return world.getPlayer().getX();
 	}
 
+	/**
+	 * Method to get the size of the FloorTile.
+	 * @return 0 or the size of the FloorTile as a float.
+	 */
 	public float getFloorSize() {
-    	 FloorTile floor = null;
-         for (WorldObject w : world.getObjects()) {
-             if (w instanceof FloorTile) {
-            	 floor = (FloorTile) w;
-            	 return floor.getTexture().getWidth();
-             }
-         }
-         return 0.f;
-    }
+		FloorTile floor = null;
+		for (WorldObject w : world.getObjects()) {
+			if (w instanceof FloorTile) {
+				floor = (FloorTile) w;
+				return floor.getTexture().getWidth();
+			}
+		}
+		return 0.f;
+	}
+
+	/**
+	 * Method to get the size of the Player.
+	 * @return the size of the Player as a float.
+	 */
+	public float getPlayerSize() {
+		return world.getPlayer().getWidth();
+	}
+
+	/**
+	 * Method for the spawner to find the last obstacle position.
+	 * @return 0 or the most right position of the last obstacle.
+	 */
+	public float getLastObstacle() {
+		Obstacle obstacle = null;
+		for (WorldObject w : world.getObjects()) {
+			if (w instanceof Obstacle && (obstacle == null || w.getX() > obstacle.getX())) {
+				obstacle = (Obstacle) w;
+			}
+		}
+		if (obstacle == null) {
+			return 0;
+		}
+		return obstacle.getX() + obstacle.getTexture().getWidth();
+	}
+
+	/**
+	 * Method to get the rightmost position that is of interest for the spawner.
+	 * In case that the director state is in the ObstacleCourse state this method
+	 * can also return the rightmost position of the last obstacle.
+	 * @return 0 or the rightmost position of the last obstacle or floor.
+	 */
+	public float getMostRightPos() {
+		float lastObst = getLastObstacle();
+		float lastFloor = getLastFloor();
+		if (director.getState().getSlice().equals("ObstacleCourse")) {
+			if (lastObst > lastFloor) {
+				return lastObst;
+			}
+		}
+		return lastFloor;
+	}
 
 	/**
 	 * Method to spawn new objects into the world. Objects will be added within
-	 * a certain range. The number of obstacles on the added floortiles are
-	 * random. As well as the distance between two floortiles.
+	 * a certain range. The objects that will be added are selected by the director.
 	 */
 	public void spawnBlocks() {
-		if (getLastFloor() - getPlayerPosition() < 700) {
+		if (getMostRightPos() - getPlayerPosition() < 700) {
 			ArrayList<WorldObject> listToAdd = director.direct();
-			for(WorldObject w : listToAdd) {
+			for (WorldObject w : listToAdd) {
 				world.add(w);
 			}
 		}
