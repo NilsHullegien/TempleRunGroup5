@@ -24,24 +24,6 @@ public class PlayerTest {
         this.world = new World();
     }
     
-    /**
-     * Check that a player cannot move when he is on top of an obstacle.
-     */
-    @Test
-    public void updateTestWithCollision() {
-     
-        Player p = new Player(new Vector2(0,0), 100, 100);
-        FloorTile f = new FloorTile(new Vector2(0, -p.getTexture().getHeight()));
-        
-        world.add(p);
-        world.add(f);
-        
-        p.update(0.1f, world);
-        System.out.println(Math.abs(p.getY() - 0f));
-        assertTrue(Math.abs(p.getY() +15f) < 0.01);
-        
-    }
-    
     
     /**
      * Test whether the equals method works properly
