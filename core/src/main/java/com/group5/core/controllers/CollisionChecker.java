@@ -35,7 +35,40 @@ public class CollisionChecker {
         }
         return false;
     }
-
+    /**
+     * Checks if an object has moved partially inside an other object vertically and bounces it back.
+     * @param w object to bounce back
+     */
+    public void yBounce(final WorldObject w) {
+        for (WorldObject obj : world.getObjects()) {
+             if (obj != w && overlap(w, obj)) {
+                 if (overlapTop(w, obj)) {
+                     w.setY(w.getY() + obj.getHeight() + obj.getY() - w.getY());
+                     } else {
+                         if (overlapBottom(w, obj)) {
+                             w.setY(w.getY() - 1 * (obj.getY() + w.getY() - w.getY()));
+                             }
+                         }
+            }
+        }
+        }
+    /**
+     * Checks if an object has moved partially inside an other object horizontally and bounces it back.
+     * @param w object to bounce back
+     */
+    public void xBounce(final WorldObject w) {
+        for (WorldObject obj : world.getObjects()) {
+            if (obj != w && overlap(w, obj)) {
+                if (overlapLeft(w, obj)) {
+                    w.setX(w.getX() + obj.getX() - (w.getWidth() + w.getX()));
+                    } else {
+                    if (overlapRight(obj, w)) {
+                    w.setX(w.getX() + obj.getX() + obj.getWidth() -  w.getX());
+                    }
+                  }
+            }
+        }
+    }
     /**
      * Checks if two objects overlap.
      *
@@ -44,11 +77,49 @@ public class CollisionChecker {
      * @return True if the two objects overlap
      */
     public boolean overlap(final WorldObject w1, final WorldObject w2) {
-        // TODO: Base this on custom bounding boxes instead of texture size
         return w1.getX() + w1.getWidth() > w2.getX()
-                && w1.getX() < w2.getX() + w2.getWidth()
+                && w1.getX()  < w2.getX() + w2.getWidth()
                 && w1.getY() + w1.getHeight() > w2.getY()
                 && w1.getY() < w2.getY() + w2.getHeight();
+    }
+    /**
+     * Is true if the left of w1 overlaps with the right of w2.
+     * @param w1 overlapping w2 from the it's left
+     * @param w2 being overlapped by w1 from the right
+     * @return boolean
+     */
+     public boolean overlapLeft(final WorldObject w1, final WorldObject w2) {
+        // TODO: Base this on custom bounding boxes instead of texture size
+        return w1.getX() + w1.getWidth() > w2.getX();
+
+    }
+     /**
+     * Is true if the right of w1 overlaps with the left of w2.
+     * @param w1 overlapping w2 from the it's right
+     * @param w2 being overlapped by w1 from the left
+     * @return boolean
+     */
+    public boolean overlapRight(final WorldObject w1, final WorldObject w2) {
+        return w1.getX() < w2.getX() + w2.getWidth();
+    }
+    /**
+     * Is true if the bottom of w1 overlaps the top of w2.
+     * @param w1 overlapping w2 from the it's top
+     * @param w2 being overlapped by w1 from the bottom
+     * @return boolean
+     */
+    public boolean overlapTop(final WorldObject w1, final WorldObject w2) {
+        return w1.getY() < w2.getY() + w2.getHeight();
+    }
+    /**
+     * True if the top of w1 overlaps the bottom of w2.
+     * @param w1 overlapping w2 from the it's bottom
+     * @param w2 being overlapped by w1 from the top
+     * @return boolean
+     */
+    public boolean overlapBottom(final WorldObject w1, final WorldObject w2) {
+        return w1.getY() + w1.getHeight() > w2.getY();
+
     }
 
 
