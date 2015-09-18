@@ -6,6 +6,7 @@ import com.group5.core.world.Player;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -37,6 +38,15 @@ public class FloorTileTest {
         Player p = new Player(new Vector2(0, 0), 0, 0);
         assertFalse(f1.equals(p));
 
+    }
+    
+    @Test
+    public void hashCodeTest() {
+        FloorTile f1 = new FloorTile(new Vector2(0,0));
+        FloorTile f2 = new FloorTile(new Vector2(0,0));
+        
+        System.out.println("HashCode: " + f1.hashCode());
+        assertTrue(f1.hashCode() == f2.hashCode());
     }
 
 }

@@ -1,5 +1,7 @@
 package com.group5.core;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
@@ -8,6 +10,7 @@ import com.group5.core.world.WorldObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertTrue;
 
@@ -19,6 +22,7 @@ public class WorldObjectTest {
     public void setUp() {
         // TODO: Probably should use a stubbed world here
         this.world = new World();
+        world.add(new Player(new Vector2(5, 10),0 ,0));
     }
 
     /**
@@ -26,12 +30,21 @@ public class WorldObjectTest {
      */
     @Test
     public void WordObjectConstructorTest() {
-        world.add(new Player(new Vector2(5, 10),0 ,0));
         WorldObject obj = world.getObjects().get(0);
 
         //create a new object and check whether the starting positions are correctly initialised
         assertTrue(obj.getX() == 5);
         assertTrue(obj.getY() == 10);
     }
+    
+//    @Test
+//    public void doRenderTest() {
+//        SpriteBatch batch = new SpriteBatch();
+//        WorldObject wo = Mockito.mock(WorldObject.class);
+//        Texture t = Mockito.mock(Texture.class);
+//        
+//        wo.doRender(batch);
+//        Mockito.verify(batch.draw(t, 0,0));
+//    }
 
 }
