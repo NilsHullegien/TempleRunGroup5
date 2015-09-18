@@ -43,23 +43,23 @@ public class GameSlice {
 
 	/**
 	 * Constructor of the GameSlice class.
-	 * @param state String of the kind of slice.
-	 * @param floorRNG float that gives chance for if a floor spawns.
-	 * @param noGapFloorRNG float that gives chance for if there is a gap between floors.
-	 * @param obstaclesRNG float that gives chance for if an obstacle spawns.
-	 * @param noGapObstacleRNG float that gives chance for if there is a space between obstacles or floors.
-	 * @param yPosObstacle float that gives the y Position of the Obstacle.
-	 * @param yPosFloor float that gives the y Position of the Floor.
+	 * @param slice String of the kind of slice.
+	 * @param floorNumber float that gives chance for if a floor spawns.
+	 * @param noGapFloorNumber float that gives chance for if there is a gap between floors.
+	 * @param obstaclesNumber float that gives chance for if an obstacle spawns.
+	 * @param noGapObstacleNumber float that gives chance for if there is a space between obstacles or floors.
+	 * @param yPositionObstacle float that gives the y Position of the Obstacle.
+	 * @param yPositionFloor float that gives the y Position of the Floor.
 	 */
-	public GameSlice(final String State, final float FloorRNG, final float NoGapFloorRNG, final float ObstaclesRNG, final float NoGapObstacleRNG,
-			final float YPosObstacle, final float YPosFloor) {
-		this.state = State;
-		this.floorRNG = FloorRNG;
-		this.noGapFloorRNG = NoGapFloorRNG;
-		this.obstaclesRNG = ObstaclesRNG;
-		this.noGapObstacleRNG = NoGapObstacleRNG;
-		this.yPosObstacle = YPosObstacle;
-		this.yPosFloor = YPosFloor;
+	public GameSlice(final String slice, final float floorNumber, final float noGapFloorNumber, final float obstaclesNumber, 
+			final float noGapObstacleNumber, final float yPositionObstacle, final float yPositionFloor) {
+		this.state = slice;
+		this.floorRNG = floorNumber;
+		this.noGapFloorRNG = noGapFloorNumber;
+		this.obstaclesRNG = obstaclesNumber;
+		this.noGapObstacleRNG = noGapObstacleNumber;
+		this.yPosObstacle = yPositionObstacle;
+		this.yPosFloor = yPositionFloor;
 	}
 
 	/**
