@@ -127,6 +127,14 @@ public class Spawner {
 		}
 		return lastFloor;
 	}
+	
+	/**
+	 * Method to get the director class of this spawner.
+	 * @return the director of this spawner.
+	 */
+	public Director getDirector() {
+		return director;
+	}
 
 	/**
 	 * Method to spawn new objects into the world. Objects will be added within
