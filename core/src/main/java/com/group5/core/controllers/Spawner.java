@@ -105,10 +105,8 @@ public class Spawner {
     public float getMostRightPos() {
         float lastObst = getLastObstacle();
         float lastFloor = getLastFloor();
-        if (director.getState().getSlice().equals("ObstacleCourse")) {
-            if (lastObst > lastFloor) {
+        if (director.getState().getSlice().equals("ObstacleCourse") && lastObst > lastFloor) {
                 return lastObst;
-            }
         }
         return lastFloor;
     }
