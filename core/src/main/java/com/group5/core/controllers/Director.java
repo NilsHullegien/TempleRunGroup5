@@ -22,7 +22,9 @@ public class Director {
 
 	/**
 	 * Constructor of the Director class.
-	 * @param spawner spawner which will spawn the objects for the director.
+	 * 
+	 * @param spawner
+	 *            spawner which will spawn the objects for the director.
 	 */
 	public Director(Spawner spawner) {
 		sliceList = new ArrayList<GameSlice>();
@@ -35,27 +37,32 @@ public class Director {
 
 	/**
 	 * Method to get the current Gameslice.
+	 * 
 	 * @return the current GameSlice state.
 	 */
 	public GameSlice getState() {
 		return state;
 	}
-	
+
 	/**
 	 * Method to set the current GameSlice.
-	 * @param index the new index of the GameSlice list.
+	 * 
+	 * @param index
+	 *            the new index of the GameSlice list.
 	 */
 	public void setState(int index) {
-		if(index < sliceList.size()) {
+		if (index < sliceList.size()) {
 			state = sliceList.get(index);
 		}
 	}
 
 	/**
-	 * Method to direct which objects the spawner needs to spawn.
-	 * Every direct List can only have one floor and one obstacle at most.
-	 * There is no randomness yet for the number of obstacles or the place of the obstacles.
-	 * @return an ArrayList<WorldObject> containing the objects the spawner needs to spawn.
+	 * Method to direct which objects the spawner needs to spawn. Every direct
+	 * List can only have one floor and one obstacle at most. There is no
+	 * randomness yet for the number of obstacles or the place of the obstacles.
+	 * 
+	 * @return an ArrayList<WorldObject> containing the objects the spawner
+	 *         needs to spawn.
 	 */
 	public ArrayList<WorldObject> direct() {
 		ArrayList<WorldObject> nextFloorList = new ArrayList<WorldObject>();
@@ -74,8 +81,8 @@ public class Director {
 			if (random.nextFloat() > state.getNoGapObstacleRNG()) {
 				gapObstacle = obstacleInterval;
 			}
-				xObstacle = spawner.getMostRightPos() + xFloor + gapObstacle;
-				nextFloorList.add(new Obstacle(new Vector2(xObstacle, state.getYPosObstacles())));
+			xObstacle = spawner.getMostRightPos() + xFloor + gapObstacle;
+			nextFloorList.add(new Obstacle(new Vector2(xObstacle, state.getYPosObstacles())));
 		}
 		return nextFloorList;
 	}
