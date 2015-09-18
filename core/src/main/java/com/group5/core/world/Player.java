@@ -23,6 +23,10 @@ public class Player extends AnimatedWorldObject {
      * Boolean if the player is jumping.
      */
     private boolean jumping = false;
+    /**
+     * Bouncefudge.
+     */
+    private float bouncefudge = 1000;
 
     /**
      * Constructs a new Player positioned at the given coordinates.
@@ -39,14 +43,12 @@ public class Player extends AnimatedWorldObject {
     @Override
     public void update(final float delta, final World world) {
         setX(getX() + delta * speed.x);
-        if (world.getCollider().checkCollision(this)) {
-            if (jumping) {
+        if (world.getCollider().checkCollision(this) && jumping) {
                 speed.y = this.jumpspeed;
                 jumping = false;
-                }
             }
         if (world.getCollider().checkCollision(this)) {
-            world.getCollider().yBounce(this);
+            world.getCollider().yBounce(this, bouncefudge);
         }
          if (world.getCollider().checkCollision(this) && speed.y < 0) {
             jumping = false;

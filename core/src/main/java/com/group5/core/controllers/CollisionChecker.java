@@ -38,16 +38,26 @@ public class CollisionChecker {
     /**
      * Checks if an object has moved partially inside an other object vertically and bounces it back.
      * @param w object to bounce back
+     * @param maxdiff the maximum difference
      */
-    public void yBounce(final WorldObject w) {
+    public void yBounce(final WorldObject w, final float maxdiff) {
         for (WorldObject obj : world.getObjects()) {
              if (obj != w && overlap(w, obj)) {
                  if (overlapTop(w, obj)) {
+                     float diff = obj.getHeight() + obj.getY() - w.getY();
+                if (diff < maxdiff) {
+                     // crazily enough need to recompute the difference here
                      w.setY(w.getY() + obj.getHeight() + obj.getY() - w.getY());
+                     System.out.println(diff);
+                }
                      } else {
                          if (overlapBottom(w, obj)) {
-                             w.setY(w.getY() - 1 * (obj.getY() + w.getY() - w.getY()));
+                             float diff = w.getY() + w.getHeight() - obj.getY();
+                             if (diff < maxdiff) {
+                            // crazily enough need to recompute the difference here
+                             w.setY(w.getY() - w.getY() + w.getHeight() - obj.getY());
                              }
+                            }
                          }
             }
         }
