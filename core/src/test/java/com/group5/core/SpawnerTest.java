@@ -6,8 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.badlogic.gdx.math.Vector2;
+import com.group5.core.controllers.Director;
 import com.group5.core.controllers.Spawner;
 import com.group5.core.world.FloorTile;
+import com.group5.core.world.Obstacle;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
 
@@ -23,6 +25,8 @@ public class SpawnerTest {
 	
 	private Player player;
 	
+	private Director director;
+	
 	/**
 	 * Initialize the variables for the tests.
 	 */
@@ -32,6 +36,8 @@ public class SpawnerTest {
 		spawner = new Spawner(world);
 		player = new Player(new Vector2(0, 0), 0, 0);
 		world.setPlayer(player);
+		director = spawner.getDirector();
+		director.setState(0);
 	}
 
 	/**
@@ -80,5 +86,80 @@ public class SpawnerTest {
 		world.add(new FloorTile(new Vector2(50, 100)));
 		assertTrue(spawner.getLastFloor() == 1174);
 	}
+	
+	/**
+	 * Test the getFloor method to get the size of the floor.
+	 */
+	@Test
+	public void testGetFloorSize() {
+		world.add(new FloorTile(new Vector2(100, 200)));
+		assertTrue(spawner.getFloorSize() == 1024);
+	}
+	
+	/**
+	 * Test the last obstacle method for one obstacle.
+	 */
+	@Test
+	public void testGetLastObstacle() {
+		world.add(new Obstacle(new Vector2(0, 100)));
+		assertTrue(spawner.getLastObstacle() == 100);
+	}
+	
+	/**
+	 * Test the last obstacle method for multiple obstacles.
+	 */
+	@Test
+	public void testGetLastObstacleMultiple() {
+		world.add(new Obstacle(new Vector2(0, 100)));
+		world.add(new Obstacle(new Vector2(100, 100)));
+		world.add(new Obstacle(new Vector2(200, 100)));
+		assertTrue(spawner.getLastObstacle() == 300);
+	}
+	
+	/**
+	 * Test the last obstacle method for multiple obstacles unordered.
+	 */
+	@Test
+	public void testGetLastObstacleMultipleUnordered() {
+		world.add(new Obstacle(new Vector2(100, 100)));
+		world.add(new Obstacle(new Vector2(200, 100)));
+		world.add(new Obstacle(new Vector2(0, 100)));
+		assertTrue(spawner.getLastObstacle() == 300);
+	}
+	
+	/**
+	 * Test the getMostRightPos method for the floortile being most right.
+	 */
+	@Test
+	public void testGetMostRightPos() {
+		world.add(new FloorTile(new Vector2(100, 100)));
+		world.add(new Obstacle(new Vector2(200, 200)));
+		assertTrue(spawner.getMostRightPos() == 1124);
+	}
+	
+	/**
+	 * Test the getMostRightPos method for the floortile being most 
+	 * right while on an ObstacleCourse.
+	 */
+	@Test
+	public void testGetMostRightPosObstacleCourse() {
+		director.setState(1);
+		world.add(new FloorTile(new Vector2(100, 100)));
+		world.add(new Obstacle(new Vector2(200, 200)));
+		assertTrue(spawner.getMostRightPos() == 1124);
+	}
+	
+	/**
+	 * Test the getMostRightPos method for the obstacle being most 
+	 * right while on an ObstacleCourse.
+	 */
+	@Test
+	public void testGetMostRightPosObstacleCourseFurthest() {
+		director.setState(1);
+		world.add(new FloorTile(new Vector2(100, 100)));
+		world.add(new Obstacle(new Vector2(2000, 200)));
+		assertTrue(spawner.getMostRightPos() == 2100);
+	}
+	
 
 }
