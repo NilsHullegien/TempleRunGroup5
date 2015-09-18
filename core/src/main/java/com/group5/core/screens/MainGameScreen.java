@@ -71,7 +71,7 @@ public class MainGameScreen implements Screen {
      *            the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(new Vector2(100, 100), 100, 100);
+        Player player = new Player(new Vector2(100, 500), 100, 100);
         this.batch = b;
         this.world = new World();
         this.world.setPlayer(player);
@@ -112,10 +112,6 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (WorldObject obj : world.getObjects()) {
-            world.getPlayer().jump(world.getJumpTime());
-            if (world.getPlayer().getY() >= world.getJumpTime() / 5.f) {
-                world.getPlayer().setIsJumping(false);
-            }
             obj.doRender(batch);
         }
 
