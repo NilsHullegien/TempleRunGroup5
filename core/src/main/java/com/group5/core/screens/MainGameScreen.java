@@ -63,6 +63,10 @@ public class MainGameScreen implements Screen {
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
+    
+    private float score;
+    
+    private Label scoreLabel;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -75,6 +79,7 @@ public class MainGameScreen implements Screen {
         this.batch = b;
         this.world = new World();
         this.world.setPlayer(player);
+        this.score = 0;
 
         world.setPlayer(player);
         world.add(new FloorTile(new Vector2(0, 0)));
@@ -91,6 +96,7 @@ public class MainGameScreen implements Screen {
     public void show() {
         createDefaultButtonSkin();
         createDefaultLabelSkin();
+        createScoreLabel();
         gameOverScreenSetup();
     }
 
@@ -120,6 +126,9 @@ public class MainGameScreen implements Screen {
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
+        score = score + delta;
+
+        scoreLabel.setText(Float.toString(score));
         batch.end();
         stage.act();
         stage.draw();
@@ -164,6 +173,12 @@ public class MainGameScreen implements Screen {
         stage.addActor(t);
     }
 
+    private void createScoreLabel() {
+        scoreLabel = new Label(Float.toString(score), labelSkin);
+        stage.addActor(scoreLabel);
+        
+    }
+    
     /**
      * Create the skin for a default label.
      */
