@@ -72,6 +72,95 @@ public class CollisionCheckerTest {
     	assertTrue(checker.checkCollision(world.getObjects().get(0)));
     	assertTrue(checker.checkCollision(world.getObjects().get(2)));
     }
+    
+    /**
+     * Test whether overLapLeft works in case of true and false.
+     */
+    @Test
+    public void overLapLeftTFTest() {
+        WorldObject w1 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(1, 0));
+        WorldObject w3 = new FloorTile(new Vector2(2000, 0));
 
+        //W1 should overlap itself
+        assertTrue(checker.overlapLeft(w1, w1));
+        
+        //W1 should overlap W2
+        assertTrue(checker.overlapLeft(w1, w2));
+        
+        //W1 shouldn't overlap W3
+        assertFalse(checker.overlapLeft(w1, w3));
+    }
+    
+    /**
+     * Test whether overLapTop works in case of true and false.
+     */
+    @Test
+    public void overLapTopTFTest() {
+        WorldObject w1 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(0, 1));
+        WorldObject w3 = new FloorTile(new Vector2(0, -2000));
+        
+        //W1 should overlap itself
+        assertTrue(checker.overlapTop(w1, w1));
+        
+        //W1 should overlap W2
+        assertTrue(checker.overlapTop(w1, w2));
+        
+        //W1 shouldn't overlap W3
+        assertFalse(checker.overlapTop(w1, w3));
+    }
+    
+    /**
+     * Test whether overLapRight works in case of true and false.
+     */
+    @Test
+    public void overLapRightTFTest() {
+        WorldObject w1 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(1, 0));
+        WorldObject w3 = new FloorTile(new Vector2(-2000, 0));
+
+        //W1 should overlap itself
+        assertTrue(checker.overlapRight(w1, w1));
+        
+        //W1 should overlap W2
+        assertTrue(checker.overlapRight(w1, w2));
+        
+        //W1 shouldn't overlap W3
+        assertFalse(checker.overlapRight(w1, w3));
+    }
+    
+    /**
+     * Test whether overLapTop works in case of true and false.
+     */
+    @Test
+    public void overLapBottomTFTest() {
+        WorldObject w1 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(0, 1));
+        WorldObject w3 = new FloorTile(new Vector2(0, 2000));
+        
+        //W1 should overlap itself
+        assertTrue(checker.overlapBottom(w1, w1));
+        
+        //W1 should overlap W2
+        assertTrue(checker.overlapBottom(w1, w2));
+        
+        //W1 shouldn't overlap W3
+        assertFalse(checker.overlapBottom(w1, w3));
+    }
+    
+    @Test
+    public void xBounceTest() {
+        WorldObject w1 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(1, 0));
+        WorldObject w6 = new FloorTile(new Vector2(0, 2000));
+        
+        world.getObjects().add(w1);
+        world.getObjects().add(w2);
+        world.getObjects().add(w6);
+        
+        checker.xBounce(w1);
+        
+    }
 
 }

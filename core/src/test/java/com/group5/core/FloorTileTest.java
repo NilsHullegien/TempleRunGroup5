@@ -45,7 +45,6 @@ public class FloorTileTest {
         FloorTile f1 = new FloorTile(new Vector2(0,0));
         FloorTile f2 = new FloorTile(new Vector2(0,0));
         
-        System.out.println("HashCode: " + f1.hashCode());
         assertTrue(f1.hashCode() == f2.hashCode());
     }
 
