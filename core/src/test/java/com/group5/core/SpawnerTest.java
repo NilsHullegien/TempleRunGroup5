@@ -161,5 +161,15 @@ public class SpawnerTest {
 		assertTrue(spawner.getMostRightPos() == 2100);
 	}
 	
+	/**
+	 * Test getFloorSize if it returns 0 when there are 
+	 * no WorldObjects.
+	 */
+	@Test
+	public void getFloorSizeReturnZeroTest() {
+	    //No WorldObjects by default
+	    assertTrue(spawner.getFloorSize() == 0.f);
+	}
+	
 
 }
