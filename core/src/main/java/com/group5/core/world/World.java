@@ -66,7 +66,7 @@ public class World {
      */
     public World() {
         collider = new CollisionChecker(this);
-        gravity = new Vector2(0, -150.f);
+        gravity = new Vector2(0, 75);
         objects = new ArrayList<WorldObject>();
         spawner = new Spawner(this);
         ip = new InputProcessor() {
@@ -81,10 +81,11 @@ public class World {
                 System.out.println("Player Y: " + player.getY());
                 if (keycode == jumpButton) {
                     jumpTime = System.currentTimeMillis() - timerStart;
-                    if (jumpTime >= 1000L) {
-                        jumpTime = 1000L;
+                    if (jumpTime >= 250L) {
+                        jumpTime = 250L;
                     }
-                    player.setIsJumping(true);
+                    //player.setjump(jumpTime/250* 20f);
+                    player.setjump(20f);
                 }
                 return false;
             }
@@ -96,7 +97,7 @@ public class World {
              */
             @Override
             public boolean keyDown(final int keycode) {
-                if (keycode == jumpButton && player.getY() <= 65) {
+                if (keycode == jumpButton) {
                     System.out.println("Timer started");
                     timerStart = System.currentTimeMillis();
                 }

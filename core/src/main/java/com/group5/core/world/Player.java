@@ -12,10 +12,21 @@ public class Player extends AnimatedWorldObject {
      */
     private Vector2 speed;
     /**
-     * Boolean used for the check if the player is jumping or not. (jumping
-     * means player.getY() < 65).
+     * Speed the player jumps with.
      */
-    private boolean isJumping = false;
+    private float jumpspeed = 0;
+    /**
+     * time Player is in the air.
+     */
+    private float falltime = 0;
+    /**
+     * Boolean if the player is jumping.
+     */
+    private boolean jumping = false;
+    /**
+     * Bouncefudge.
+     */
+    private float bouncefudge = 1000;
 
     /**
      * Constructs a new Player positioned at the given coordinates.
@@ -26,27 +37,35 @@ public class Player extends AnimatedWorldObject {
     public Player(final Vector2 coord, final int sizex, final int sizey) {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png")
         , coord, sizex, sizey, 6, 5, 2);
-        speed = new Vector2(250, 0);
+        speed = new Vector2(500, 0);
     }
 
     @Override
     public void update(final float delta, final World world) {
-        // TODO: There's a cleaner way to handle this
-        float oldX = getX();
-        setX(oldX + speed.x * delta + world.getGravity().x * delta);
+        setX(getX() + delta * speed.x);
+        if (world.getCollider().checkCollision(this) && jumping) {
+                speed.y = this.jumpspeed;
+                jumping = false;
+            }
         if (world.getCollider().checkCollision(this)) {
-            setX(oldX);
+            world.getCollider().yBounce(this, bouncefudge);
         }
-
-        float oldY = getY();
-        setY(oldY + speed.y * delta + world.getGravity().y * delta);
-        if (world.getCollider().checkCollision(this)) {
-            setY(oldY);
-        }
+         if (world.getCollider().checkCollision(this) && speed.y < 0) {
+            jumping = false;
+            speed.y = 0;
+            falltime = 0;
+            jumpspeed = 0;
+        } else {
+            this.falltime = this.falltime  + (float) delta;
+            // fudgy jump to let it look okay
+            float jumpmovement = (float) (jumpspeed * Math.sqrt(falltime) * 1.2);
+            speed.y =  jumpmovement - (float) (0.5 * world.getGravity().y * (falltime) * (falltime));
+       }
+        setY(getY() + speed.y);
+        jumping = false;
         //update the animation
         super.update(delta, world);
     }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -67,43 +86,18 @@ public class Player extends AnimatedWorldObject {
      * The function that let the player jump up. (falling down is done by the
      * gravity). NOTE: the actual movement of the player is done in the
      * updateJumpPosition(float) method.
-     * @param jumping
+     * @param jumpingspeed
      *            The time the player jumps.
      */
-    public void jump(final float jumping) {
-        if (isJumping && getY() <= jumping / 5) {
-            float jumpTime = jumping;
-            for (int i = 0; i < 20; i++) {
-                jumpTime = (float) (jumpTime / 5 * 0.2 * 0.05);
-                updatePlayerPos(jumpTime);
-            }
-            jumpTime = 0;
-        }
+    public void setjump(final float jumpingspeed) {
+        jumping = true;
+        this.jumpspeed = jumpingspeed;
     }
-
     /**
-     * Updates the position of the player.
-     * @param y
-     *            the height the player jumps.
+     * Get the speed of the player.
+     * @return Vector2
      */
-    public void updatePlayerPos(final float y) {
-        setY(getY() + y);
-    }
-
-    /**
-     * Checks if the player is jumping.
-     * @return the isJumping variable.
-     */
-    public boolean isJumping() {
-        return isJumping;
-    }
-
-    /**
-     * Set the isJumping variable.
-     * @param isJ
-     *            the new value for isJumping (boolean)
-     */
-    public void setIsJumping(final boolean isJ) {
-        isJumping = isJ;
+    public Vector2 getSpeed() {
+        return this.speed;
     }
 }

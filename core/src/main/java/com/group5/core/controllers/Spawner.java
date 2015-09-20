@@ -1,8 +1,7 @@
 package com.group5.core.controllers;
 
-import java.util.Random;
+import java.util.ArrayList;
 
-import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Obstacle;
 import com.group5.core.world.World;
@@ -19,24 +18,17 @@ public class Spawner {
     private World world;
 
     /**
-     * Max distance in pixels two neighbouring floortiles can be.
+     * Director class for the spawner.
      */
-    private float interval;
-
-    /**
-     * The width of the floor texture.
-     */
-    private float floorWidth;
+    private Director director;
 
     /**
      * Constructor of the spawner for the world.
-     * @param w
-     * the world the spawner is created for.
+     * @param w the world the spawner is created for.
      */
     public Spawner(final World w) {
         world = w;
-        interval = 200;
-        floorWidth = 1024;
+        director = new Director(this);
     }
 
     /**
@@ -46,8 +38,7 @@ public class Spawner {
     public float getLastFloor() {
         FloorTile floor = null;
         for (WorldObject w : world.getObjects()) {
-            if (w instanceof FloorTile
-                    && (floor == null || w.getX() > floor.getX())) {
+            if (w instanceof FloorTile && (floor == null || w.getX() > floor.getX())) {
                 floor = (FloorTile) w;
             }
         }
@@ -66,22 +57,79 @@ public class Spawner {
     }
 
     /**
+     * Method to get the size of the FloorTile.
+     * @return 0 or the size of the FloorTile as a float.
+     */
+    public float getFloorSize() {
+        FloorTile floor = null;
+        for (WorldObject w : world.getObjects()) {
+            if (w instanceof FloorTile) {
+                floor = (FloorTile) w;
+                return floor.getTexture().getWidth();
+            }
+        }
+        return 0.f;
+    }
+
+    /**
+     * Method to get the size of the Player.
+     * @return the size of the Player as a float.
+     */
+    public float getPlayerSize() {
+        return world.getPlayer().getWidth();
+    }
+
+    /**
+     * Method for the spawner to find the last obstacle position.
+     * @return 0 or the most right position of the last obstacle.
+     */
+    public float getLastObstacle() {
+        Obstacle obstacle = null;
+        for (WorldObject w : world.getObjects()) {
+            if (w instanceof Obstacle && (obstacle == null || w.getX() > obstacle.getX())) {
+                obstacle = (Obstacle) w;
+            }
+        }
+        if (obstacle == null) {
+            return 0;
+        }
+        return obstacle.getX() + obstacle.getTexture().getWidth();
+    }
+
+    /**
+     * Method to get the rightmost position that is of interest for the spawner.
+     * In case that the director state is in the ObstacleCourse state this
+     * method can also return the rightmost position of the last obstacle.
+     * @return 0 or the rightmost position of the last obstacle or floor.
+     */
+    public float getMostRightPos() {
+        float lastObst = getLastObstacle();
+        float lastFloor = getLastFloor();
+        if (director.getState().getSlice().equals("ObstacleCourse") && lastObst > lastFloor) {
+                return lastObst;
+        }
+        return lastFloor;
+    }
+
+    /**
+     * Method to get the director class of this spawner.
+     * @return the director of this spawner.
+     */
+    public Director getDirector() {
+        return director;
+    }
+
+    /**
      * Method to spawn new objects into the world. Objects will be added within
-     * a certain range. The number of obstacles on the added floortiles are
-     * random. As well as the distance between two floortiles.
+     * a certain range. The objects that will be added are selected by the
+     * director.
      */
     public void spawnBlocks() {
-        if (getLastFloor() - getPlayerPosition() < 700) {
-            Random rand = new Random();
-            int gap = rand.nextInt((int) interval);
-            if (rand.nextBoolean()) {
-                int numObstacles = rand.nextInt(2) + 2;
-                for (int i = 1; i < numObstacles; i++) {
-                    world.add(new Obstacle(new Vector2(getLastFloor() + gap
-                            + (floorWidth / numObstacles) * i, 64)));
-                }
+        if (getMostRightPos() - getPlayerPosition() < 700) {
+            ArrayList<WorldObject> listToAdd = director.direct();
+            for (WorldObject w : listToAdd) {
+                world.add(w);
             }
-            world.add(new FloorTile(new Vector2(getLastFloor() + gap, 0)));
         }
     }
 }
