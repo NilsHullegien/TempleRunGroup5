@@ -45,20 +45,20 @@ public class CollisionChecker {
              if (obj != w && overlap(w, obj)) {
                  if (overlapTop(w, obj)) {
                      float diff = obj.getHeight() + obj.getY() - w.getY();
-                if (diff < maxdiff) {
-                     // crazily enough need to recompute the difference here
-                     w.setY(w.getY() + obj.getHeight() + obj.getY() - w.getY());
-                     System.out.println(diff);
-                }
-                     } else {
-                         if (overlapBottom(w, obj)) {
-                             float diff = w.getY() + w.getHeight() - obj.getY();
-                             if (diff < maxdiff) {
-                            // crazily enough need to recompute the difference here
+                     if (diff < maxdiff) {
+                         // crazily enough need to recompute the difference here
+                         w.setY(w.getY() + obj.getHeight() + obj.getY() - w.getY());
+                         System.out.println(diff);
+                     }
+                 } else {
+                     if (overlapBottom(w, obj)) {
+                         float diff = w.getY() + w.getHeight() - obj.getY();
+                         if (diff < maxdiff) {
+                             // crazily enough need to recompute the difference here
                              w.setY(w.getY() - w.getY() + w.getHeight() - obj.getY());
-                             }
-                            }
                          }
+                     }
+                 }
             }
         }
         }
@@ -71,11 +71,11 @@ public class CollisionChecker {
             if (obj != w && overlap(w, obj)) {
                 if (overlapLeft(w, obj)) {
                     w.setX(w.getX() + obj.getX() - (w.getWidth() + w.getX()));
-                    } else {
+                } else {
                     if (overlapRight(obj, w)) {
                     w.setX(w.getX() + obj.getX() + obj.getWidth() -  w.getX());
                     }
-                  }
+                }
             }
         }
     }

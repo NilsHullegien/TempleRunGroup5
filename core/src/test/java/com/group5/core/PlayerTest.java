@@ -5,6 +5,7 @@ import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
+import com.group5.core.world.WorldObject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,10 +27,11 @@ public class PlayerTest {
     @Before
     public void setUp() {
         // TODO: Probably should use a stubbed world here
-        World world = Mockito.mock(World.class);
+        World world = new World();
         this.world = world;
         
         p1 = new Player(new Vector2(0,0), 0, 0);
+        world.setPlayer(p1);
     }
     
     
@@ -121,12 +123,19 @@ public class PlayerTest {
     }
     
     @Test
-    public void updateJumpingAndSpeedS0Test() {
+    public void updateSpeedNeg1Test() {
         //Set jumping to true
-        //p1.setjump(10);
-        //p1.update(50, world);
-        //assertFalse(p1.getJumping());
+        WorldObject wo = new FloorTile(new Vector2(1000,0));
+        world.getObjects().add(wo);
+        System.out.println(world.getCollider().checkCollision(p1));
+        System.out.println(world.getObjects().size());
+        System.out.println(world.getCollider().overlap(p1, wo));
+        System.out.println(p1.getX() + p1.getWidth() + " > " +  wo.getX());
+        System.out.println(p1.getX() + " < " + wo.getX() + wo.getWidth());
+        p1.setjump(10);
+        p1.setJumping(true);
+        p1.update(50, world);
+        p1.getSpeed().y = -1;
+        assertFalse(p1.getJumping());
     }
-    
-
 }

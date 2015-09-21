@@ -291,4 +291,13 @@ public class World {
     public InputProcessor getInputProcessor() {
         return ip;
     }
+
+    /**
+     * Method that sets the spawner of the world.
+     * Used for testing.
+     * @param sp the new spawner.
+     */
+    public void setSpawner(final Spawner sp) {
+        spawner = sp;
+    }
 }

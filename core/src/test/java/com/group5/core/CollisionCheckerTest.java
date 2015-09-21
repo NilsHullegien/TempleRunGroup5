@@ -10,6 +10,7 @@ import com.group5.core.world.WorldObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -38,7 +39,7 @@ public class CollisionCheckerTest {
 
         //two objects with the same coordinates overlap
         WorldObject w1 = new FloorTile(new Vector2(0, 0));
-        WorldObject w2 = new FloorTile(new Vector2(0, 0));
+        WorldObject w2 = new FloorTile(new Vector2(1, 0));
         assertTrue(checker.overlap(w1, w2));
 
         w2.setY(64);
@@ -149,18 +150,29 @@ public class CollisionCheckerTest {
         assertFalse(checker.overlapBottom(w1, w3));
     }
     
+    /**
+     * Test for xbounce method
+     * Needs to be done with bounding boxes
+     */
     @Test
     public void xBounceTest() {
-        WorldObject w1 = new FloorTile(new Vector2(0, 0));
-        WorldObject w2 = new FloorTile(new Vector2(1, 0));
+        WorldObject w1Default = new FloorTile(new Vector2(0, 0));
+        WorldObject w1OverlapLeft = new FloorTile(new Vector2(100, 0));
         WorldObject w6 = new FloorTile(new Vector2(0, 2000));
         
-        world.getObjects().add(w1);
-        world.getObjects().add(w2);
+        world.getObjects().add(w1Default);
+        world.getObjects().add(w1OverlapLeft);
         world.getObjects().add(w6);
         
-        checker.xBounce(w1);
+        assertTrue(world.getObjects().get(1).getX() == 100.f);
+        assertTrue(world.getObjects().get(2).getX() == 0.f);
         
+        checker.xBounce(w1Default);
+        
+        //Unchanged
+        assertTrue(world.getObjects().get(1).getX() == 100.f);
+        assertTrue(world.getObjects().get(2).getX() == 0.f);
+      
     }
 
 }
