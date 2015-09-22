@@ -34,7 +34,7 @@ public class FloorTileTest {
         assertFalse(f1.equals(f4));
 
         //a floortile is never the same this as an object of a different type
-        Player p = new Player(new Vector2(0, 0), 0, 0);
+        Player p = new Player(new Vector2(0, 0), new Vector2(0, 0));
         assertFalse(f1.equals(p));
 
     }

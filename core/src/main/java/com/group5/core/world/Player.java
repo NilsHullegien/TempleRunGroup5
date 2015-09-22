@@ -34,9 +34,8 @@ public class Player extends AnimatedWorldObject {
      * @param sizex size of player in pixels
      * @param sizey size of player in pixels
      */
-    public Player(final Vector2 coord, final int sizex, final int sizey) {
-        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
-        , coord, sizex, sizey, 6, 5, 2);
+    public Player(final Vector2 coord, final Vector2 size) {
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png"), size, coord, 6, 5, 2);
         speed = new Vector2(500, 0);
     }
 

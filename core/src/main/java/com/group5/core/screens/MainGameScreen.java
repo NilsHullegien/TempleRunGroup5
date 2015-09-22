@@ -71,7 +71,7 @@ public class MainGameScreen implements Screen {
      *            the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(new Vector2(100, 500), 100, 100);
+        Player player = new Player(new Vector2(100, 500), new Vector2(100, 100));
         this.batch = b;
         this.world = new World();
         this.world.setPlayer(player);

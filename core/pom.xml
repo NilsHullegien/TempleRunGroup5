@@ -19,6 +19,10 @@
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-box2d</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-backend-headless</artifactId>
             <version>1.6.5</version>
             <scope>test</scope>

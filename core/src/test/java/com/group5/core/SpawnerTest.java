@@ -34,7 +34,7 @@ public class SpawnerTest {
 	public void setup() {
 		world = new World();
 		spawner = new Spawner(world);
-		player = new Player(new Vector2(0, 0), 0, 0);
+		player = new Player(new Vector2(0, 0), new Vector2(0, 0));
 		world.setPlayer(player);
 		director = spawner.getDirector();
 		director.setState(0);

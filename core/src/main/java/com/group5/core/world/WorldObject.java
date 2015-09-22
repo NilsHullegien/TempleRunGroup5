@@ -14,20 +14,38 @@ public abstract class WorldObject {
      * Position of object.
      */
     private Vector2 pos;
+
+    /**
+     * Size of object.
+     */
+    private Vector2 size;
+
     /**
      * The texture of the object.
      */
     private Texture texture;
+
+    /** Constructs a world object with the given coordinates and texture, and the texture size as size.
+     *
+     * @param tex location of the texture of the object
+     * @param coord coordinate of object
+     */
+    public WorldObject(final Texture tex, final Vector2 coord) {
+        this(tex, new Vector2(tex.getWidth(), tex.getHeight()), coord);
+    }
+
     /**
-     * Constructs a new world object with the given coordinates and texture.
+     * Constructs a new world object with the given coordinates, size and texture.
      *
      * @param tex    location of the texture of the object
+     * @param size   size of the object
      * @param coord  coordinate of object
      */
     public WorldObject(final Texture tex,
-                       final Vector2 coord
-                        ) {
+                       final Vector2 size,
+                       final Vector2 coord) {
         this.pos = coord;
+        this.size = size;
         this.texture = tex;
     }
     /**
@@ -44,8 +62,8 @@ public abstract class WorldObject {
      *
      * @return the object's width
      */
-    public int getWidth() {
-        return texture.getWidth();
+    public float getWidth() {
+        return size.x;
     }
 
     /**
@@ -71,8 +89,8 @@ public abstract class WorldObject {
      *
      * @return the object's height
      */
-    public int getHeight() {
-        return texture.getHeight();
+    public float getHeight() {
+        return size.y;
     }
 
     /**
@@ -116,8 +134,8 @@ public abstract class WorldObject {
         }
         WorldObject that = (WorldObject) obj;
         return texture == that.texture
-                && Math.abs(that.getX() - this.getX()) < 0.01f
-                && Math.abs(that.getY() - this.getY()) < 0.01f;
+                && this.size.equals(that.size)
+                && this.pos.equals(that.pos);
     }
 
     /**

@@ -26,46 +26,24 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * The total duration of a animationcycle.
      */
     private float animationduration;
-    /**
-     * Scaling of x for correct representation on screen of animation.
-     */
-    private float screenx;
-    /**
-     * Scaling of y for correct representation on screen of animation.
-     */
-    private float screeny;
-
-    @Override
-    public int getWidth() {
-        return (int) screenx;
-    }
-
-    @Override
-    public int getHeight() {
-        return (int) screeny;
-    }
 
     /**
      * Object in the world that shows a animated sprite.
      * @param tex Texture
+     * @param size Screen size of the object
      * @param coord Initial position
-     * @param sx the size of the object
-     * @param sy the size of the object
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
      * @param duration Total duration of animation
      */
     public AnimatedWorldObject(final Texture tex,
-                       final Vector2 coord,
-                       final int sx,
-                       final int sy,
-                       final int framecols,
-                       final int framerows,
-                       final float duration) {
-        super(tex, coord);
+                               final Vector2 size,
+                               final Vector2 coord,
+                               final int framecols,
+                               final int framerows,
+                               final float duration) {
+        super(tex, size, coord);
         this.amountframes = framecols * framerows;
-        this.screenx = sx;
-        this.screeny = sy;
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
     }
@@ -98,7 +76,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
       * @param batch The batch in which the animatedsprite should be rendered.
       */
     public void doRender(final SpriteBatch batch) {
-           batch.draw(animation.getKeyFrame(currenttime, true), this.getX(), this.getY(), screenx, screeny);
+           batch.draw(animation.getKeyFrame(currenttime, true), this.getX(), this.getY(), getWidth(), getHeight());
     }
     /**
      * Update the animationframe, should be called per frame.

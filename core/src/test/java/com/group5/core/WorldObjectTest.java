@@ -26,7 +26,7 @@ public class WorldObjectTest {
      */
     @Test
     public void WordObjectConstructorTest() {
-        world.add(new Player(new Vector2(5, 10),0 ,0));
+        world.add(new Player(new Vector2(5, 10), new Vector2(0, 0)));
         WorldObject obj = world.getObjects().get(0);
 
         //create a new object and check whether the starting positions are correctly initialised

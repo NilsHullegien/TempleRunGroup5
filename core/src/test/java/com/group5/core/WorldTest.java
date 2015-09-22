@@ -36,9 +36,9 @@ public class WorldTest {
         
         world.add(new FloorTile(new Vector2(0,1)));
         assertTrue(world.getObjects().get(1).equals(new FloorTile(new Vector2(0,1))));
-        
-        world.add(new Player(new Vector2(0,1),0,0));
-        assertTrue(world.getObjects().get(2).equals(new Player(new Vector2(0, 1), 0, 0)));
+
+        world.add(new Player(new Vector2(0,1), new Vector2(0, 0)));
+        assertTrue(world.getObjects().get(2).equals(new Player(new Vector2(0, 1), new Vector2(0, 0))));
     }
 
     /**
@@ -46,10 +46,10 @@ public class WorldTest {
      */
     @Test
     public void setPlayerTest() {
-        world.setPlayer(new Player(new Vector2(0,0),0,0));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(0,0),0,0)));
-        world.setPlayer(new Player(new Vector2(1,0), 0, 0));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(1,0),0,0)));
+        world.setPlayer(new Player(new Vector2(0, 0), new Vector2(0, 0)));
+        assertTrue(world.getPlayer().equals(new Player(new Vector2(0, 0), new Vector2(0, 0))));
+        world.setPlayer(new Player(new Vector2(1,0), new Vector2(0, 0)));
+        assertTrue(world.getPlayer().equals(new Player(new Vector2(1, 0), new Vector2(0, 0))));
     }
 
     /**
@@ -58,7 +58,7 @@ public class WorldTest {
     @Test
     public void testObjectDisappearsWhenTooFarLeft() {
         World w = new World();
-        w.setPlayer(new Player(new Vector2(10000.f, 0.f),100,100));
+        w.setPlayer(new Player(new Vector2(10000.f, 0.f), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(0,0));
         w.add(disappearing);
@@ -74,7 +74,7 @@ public class WorldTest {
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
         World w = new World();
-        w.setPlayer(new Player(new Vector2(0,0),100,100));
+        w.setPlayer(new Player(new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(0,0));
         w.add(disappearing);
@@ -90,7 +90,7 @@ public class WorldTest {
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
         World w = new World();
-        w.setPlayer(new Player(new Vector2(0,0),100,100));
+        w.setPlayer(new Player(new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(10000.f, 0.f));
         w.add(disappearing);
