@@ -21,6 +21,6 @@ public class Obstacle extends WorldObject {
      * No implementation.
      */
     @Override
-    public void update(final float delta, final World world) {
+    public void update(final float delta, final WorldManager worldManager) {
     }
 }

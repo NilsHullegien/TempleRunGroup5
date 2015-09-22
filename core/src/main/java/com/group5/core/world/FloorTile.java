@@ -18,7 +18,7 @@ public class FloorTile extends WorldObject {
     }
 
     @Override
-    public void update(final float delta, final World w) {
+    public void update(final float delta, final WorldManager w) {
 
     }
 

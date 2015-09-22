@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 /**
- * Represents an object that has a presence in a World.
+ * Represents an object that has a presence in a WorldManager.
  */
 public abstract class WorldObject {
 
@@ -111,7 +111,7 @@ public abstract class WorldObject {
         return this.texture;
     }
     /**
-     * Call function to render a World Object.
+     * Call function to render a WorldManager Object.
      * @param batch The batch the object should draw in
      */
     public void doRender(final SpriteBatch batch) {
@@ -139,10 +139,10 @@ public abstract class WorldObject {
     }
 
     /**
-     * Updates the state of the object according to the world's state.
+     * Updates the state of the object according to the worldManager's state.
      *
      * @param delta the time that has passed since the previous frame.
-     * @param world the world that the object is currently situated in.
+     * @param worldManager the worldManager that the object is currently situated in.
      */
-    public abstract void update(final float delta, final World world);
+    public abstract void update(final float delta, final WorldManager worldManager);
 }

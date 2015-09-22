@@ -2,7 +2,7 @@ package com.group5.core;
 
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,33 +12,33 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests for the world object.
+ * Tests for the worldManager object.
  */
 @RunWith(GdxTestRunner.class)
-public class WorldTest {
+public class WorldManagerTest {
 
 
-    private World world;
+    private WorldManager worldManager;
 
     @Before
     public void setUp() {
-        // TODO: Probably should use a stubbed world here
-        this.world = new World();
+        // TODO: Probably should use a stubbed worldManager here
+        this.worldManager = new WorldManager();
     }
 
     /**
-     * Check whether you can correctly insert items into the world
+     * Check whether you can correctly insert items into the worldManager
      */
     @Test
     public void addTest() {
-        world.add(new FloorTile(new Vector2(0, 0)));
-        assertTrue(world.getObjects().get(0).equals(new FloorTile(new Vector2(0,0))));
+        worldManager.add(new FloorTile(new Vector2(0, 0)));
+        assertTrue(worldManager.getObjects().get(0).equals(new FloorTile(new Vector2(0,0))));
         
-        world.add(new FloorTile(new Vector2(0,1)));
-        assertTrue(world.getObjects().get(1).equals(new FloorTile(new Vector2(0,1))));
+        worldManager.add(new FloorTile(new Vector2(0,1)));
+        assertTrue(worldManager.getObjects().get(1).equals(new FloorTile(new Vector2(0,1))));
 
-        world.add(new Player(new Vector2(0,1), new Vector2(0, 0)));
-        assertTrue(world.getObjects().get(2).equals(new Player(new Vector2(0, 1), new Vector2(0, 0))));
+        worldManager.add(new Player(new Vector2(0,1), new Vector2(0, 0)));
+        assertTrue(worldManager.getObjects().get(2).equals(new Player(new Vector2(0, 1), new Vector2(0, 0))));
     }
 
     /**
@@ -46,10 +46,10 @@ public class WorldTest {
      */
     @Test
     public void setPlayerTest() {
-        world.setPlayer(new Player(new Vector2(0, 0), new Vector2(0, 0)));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(0, 0), new Vector2(0, 0))));
-        world.setPlayer(new Player(new Vector2(1,0), new Vector2(0, 0)));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(1, 0), new Vector2(0, 0))));
+        worldManager.setPlayer(new Player(new Vector2(0, 0), new Vector2(0, 0)));
+        assertTrue(worldManager.getPlayer().equals(new Player(new Vector2(0, 0), new Vector2(0, 0))));
+        worldManager.setPlayer(new Player(new Vector2(1,0), new Vector2(0, 0)));
+        assertTrue(worldManager.getPlayer().equals(new Player(new Vector2(1, 0), new Vector2(0, 0))));
     }
 
     /**
@@ -57,7 +57,7 @@ public class WorldTest {
      */
     @Test
     public void testObjectDisappearsWhenTooFarLeft() {
-        World w = new World();
+        WorldManager w = new WorldManager();
         w.setPlayer(new Player(new Vector2(10000.f, 0.f), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(0,0));
@@ -73,7 +73,7 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
-        World w = new World();
+        WorldManager w = new WorldManager();
         w.setPlayer(new Player(new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(0,0));
@@ -89,7 +89,7 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
-        World w = new World();
+        WorldManager w = new WorldManager();
         w.setPlayer(new Player(new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(new Vector2(10000.f, 0.f));

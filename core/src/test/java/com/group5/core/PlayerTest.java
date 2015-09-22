@@ -3,7 +3,7 @@ package com.group5.core;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,12 +16,12 @@ import static org.junit.Assert.assertTrue;
 public class PlayerTest {
 
     
-    private World world;
+    private WorldManager worldManager;
     
     @Before
     public void setUp() {
-        // TODO: Probably should use a stubbed world here
-        this.world = new World();
+        // TODO: Probably should use a stubbed worldManager here
+        this.worldManager = new WorldManager();
     }
     
     

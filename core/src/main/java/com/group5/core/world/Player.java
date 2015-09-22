@@ -39,16 +39,16 @@ public class Player extends AnimatedWorldObject {
     }
 
     @Override
-    public void update(final float delta, final World world) {
+    public void update(final float delta, final WorldManager worldManager) {
         setX(getX() + delta * speed.x);
-        if (world.getCollider().checkCollision(this) && jumping) {
+        if (worldManager.getCollider().checkCollision(this) && jumping) {
                 speed.y = this.jumpspeed;
                 jumping = false;
             }
-        if (world.getCollider().checkCollision(this)) {
-            world.getCollider().yBounce(this, bouncefudge);
+        if (worldManager.getCollider().checkCollision(this)) {
+            worldManager.getCollider().yBounce(this, bouncefudge);
         }
-         if (world.getCollider().checkCollision(this) && speed.y < 0) {
+         if (worldManager.getCollider().checkCollision(this) && speed.y < 0) {
             jumping = false;
             speed.y = 0;
             falltime = 0;
@@ -57,12 +57,12 @@ public class Player extends AnimatedWorldObject {
             this.falltime = this.falltime  + (float) delta;
             // fudgy jump to let it look okay
             float jumpmovement = (float) (jumpspeed * Math.sqrt(falltime) * 1.2);
-            speed.y =  jumpmovement - (float) (0.5 * world.getGravity().y * (falltime) * (falltime));
+            speed.y =  jumpmovement - (float) (0.5 * worldManager.getGravity().y * (falltime) * (falltime));
        }
         setY(getY() + speed.y);
         jumping = false;
         //update the animation
-        super.update(delta, world);
+        super.update(delta, worldManager);
     }
     @Override
     public int hashCode() {

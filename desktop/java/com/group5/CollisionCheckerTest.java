@@ -2,7 +2,7 @@ package com.group5;
 
 import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.world.FloorTile;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -12,7 +12,7 @@ public class CollisionCheckerTest {
     @Test
     public void overlapTest() {
 
-        World w = new World();
+        WorldManager w = new WorldManager();
 
         WorldController.add(new FloorTile(0, 0));
 

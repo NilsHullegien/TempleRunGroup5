@@ -21,7 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
 /**
@@ -35,12 +35,12 @@ public class MainGameScreen implements Screen {
     private SpriteBatch batch;
 
     /**
-     * The world that contains all game objects.
+     * The worldManager that contains all game objects.
      */
-    private World world;
+    private WorldManager worldManager;
 
     /**
-     * The camera the world is viewed with.
+     * The camera the worldManager is viewed with.
      */
     private OrthographicCamera camera;
 
@@ -73,18 +73,18 @@ public class MainGameScreen implements Screen {
     public MainGameScreen(final SpriteBatch b) {
         Player player = new Player(new Vector2(100, 500), new Vector2(100, 100));
         this.batch = b;
-        this.world = new World();
-        this.world.setPlayer(player);
+        this.worldManager = new WorldManager();
+        this.worldManager.setPlayer(player);
 
-        world.setPlayer(player);
-        world.add(new FloorTile(new Vector2(0, 0)));
+        worldManager.setPlayer(player);
+        worldManager.add(new FloorTile(new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
-        Gdx.input.setInputProcessor(world.getInputProcessor());
+        Gdx.input.setInputProcessor(worldManager.getInputProcessor());
     }
 
     @Override
@@ -103,19 +103,19 @@ public class MainGameScreen implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        world.update(delta);
+        worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for (WorldObject obj : world.getObjects()) {
+        for (WorldObject obj : worldManager.getObjects()) {
             obj.doRender(batch);
         }
 
-        if (!gameOverMenuActive && !(world.getGameStatus())) {
+        if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);

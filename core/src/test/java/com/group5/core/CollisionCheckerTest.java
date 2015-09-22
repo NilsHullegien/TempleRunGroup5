@@ -3,8 +3,7 @@ package com.group5.core;
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.world.FloorTile;
-import com.group5.core.world.Player;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
 import org.junit.Before;
@@ -16,14 +15,14 @@ import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class CollisionCheckerTest {
-    private World world;
+    private WorldManager worldManager;
     private CollisionChecker checker;
 
     @Before
     public void setUp() {
-        // TODO: Probably should use a stubbed world here
-        this.world = new World();
-        this.checker = world.getCollider();
+        // TODO: Probably should use a stubbed worldManager here
+        this.worldManager = new WorldManager();
+        this.checker = worldManager.getCollider();
     }
 
     /**
@@ -31,10 +30,10 @@ public class CollisionCheckerTest {
      */
     @Test
     public void overlapTest() {
-        world.add(new FloorTile(new Vector2(0, 0)));
+        worldManager.add(new FloorTile(new Vector2(0, 0)));
 
         //an object overlaps with itself
-        assertTrue(checker.overlap(world.getObjects().get(0), world.getObjects().get(0)));
+        assertTrue(checker.overlap(worldManager.getObjects().get(0), worldManager.getObjects().get(0)));
 
         //two objects with the same coordinates overlap
         WorldObject w1 = new FloorTile(new Vector2(0, 0));
@@ -58,19 +57,19 @@ public class CollisionCheckerTest {
      */
     @Test
     public void checkCollisionTest(){
-    	world.add(new FloorTile(new Vector2(0, 0)));
+    	worldManager.add(new FloorTile(new Vector2(0, 0)));
     	//only one object, so no collision
-    	assertFalse(checker.checkCollision(world.getObjects().get(0)));
+    	assertFalse(checker.checkCollision(worldManager.getObjects().get(0)));
  
     	//two objects, but they don't touch
-    	world.add(new FloorTile(new Vector2(0, 64)));
-       	assertFalse(checker.checkCollision(world.getObjects().get(0)));
-       	assertFalse(checker.checkCollision(world.getObjects().get(1)));
+    	worldManager.add(new FloorTile(new Vector2(0, 64)));
+       	assertFalse(checker.checkCollision(worldManager.getObjects().get(0)));
+       	assertFalse(checker.checkCollision(worldManager.getObjects().get(1)));
         
-    	world.add(new FloorTile(new Vector2(0, 0)));
+    	worldManager.add(new FloorTile(new Vector2(0, 0)));
     	//two objects that overlap, so there will be a collision
-    	assertTrue(checker.checkCollision(world.getObjects().get(0)));
-    	assertTrue(checker.checkCollision(world.getObjects().get(2)));
+    	assertTrue(checker.checkCollision(worldManager.getObjects().get(0)));
+    	assertTrue(checker.checkCollision(worldManager.getObjects().get(2)));
     }
 
 

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Represents an object that has a presence in a World.
+ * Represents an object that has a presence in a WorldManager.
  */
 public abstract class AnimatedWorldObject extends WorldObject {
     /**
@@ -81,9 +81,9 @@ public abstract class AnimatedWorldObject extends WorldObject {
     /**
      * Update the animationframe, should be called per frame.
      * @param delta The difference in time since the last update
-     * @param world The world the object is in
+     * @param worldManager The worldManager the object is in
      */
-    public void update(final float delta, final World world) {
+    public void update(final float delta, final WorldManager worldManager) {
         currenttime += delta;
     }
 }

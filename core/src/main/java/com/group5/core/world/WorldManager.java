@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Functions as a container for spawned items in the game.
  */
-public class World {
+public class WorldManager {
     /**
      * The collision checker that is used to verify this world's state.
      */
@@ -64,7 +64,7 @@ public class World {
     /**
      * Constructs a new, empty world with a default gravity.
      */
-    public World() {
+    public WorldManager() {
         collider = new CollisionChecker(this);
         gravity = new Vector2(0, 75);
         objects = new ArrayList<WorldObject>();

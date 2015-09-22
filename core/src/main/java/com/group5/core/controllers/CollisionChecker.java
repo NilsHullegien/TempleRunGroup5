@@ -1,6 +1,6 @@
 package com.group5.core.controllers;
 
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
 /**
@@ -8,17 +8,17 @@ import com.group5.core.world.WorldObject;
  */
 public class CollisionChecker {
     /**
-     * The world to check collisions on.
+     * The worldManager to check collisions on.
      */
-    private World world;
+    private WorldManager worldManager;
 
     /**
-     * Creates a new collision checker for the given world.
+     * Creates a new collision checker for the given worldManager.
      *
-     * @param w the world to check collisions for
+     * @param w the worldManager to check collisions for
      */
-    public CollisionChecker(final World w) {
-        this.world = w;
+    public CollisionChecker(final WorldManager w) {
+        this.worldManager = w;
     }
 
     /**
@@ -28,7 +28,7 @@ public class CollisionChecker {
      * @return True when the object is colliding with another object
      */
     public boolean checkCollision(final WorldObject w) {
-        for (WorldObject obj : world.getObjects()) {
+        for (WorldObject obj : worldManager.getObjects()) {
             if (obj != w && overlap(w, obj)) {
                 return true;
             }
@@ -41,7 +41,7 @@ public class CollisionChecker {
      * @param maxdiff the maximum difference
      */
     public void yBounce(final WorldObject w, final float maxdiff) {
-        for (WorldObject obj : world.getObjects()) {
+        for (WorldObject obj : worldManager.getObjects()) {
              if (obj != w && overlap(w, obj)) {
                  if (overlapTop(w, obj)) {
                      float diff = obj.getHeight() + obj.getY() - w.getY();
@@ -67,7 +67,7 @@ public class CollisionChecker {
      * @param w object to bounce back
      */
     public void xBounce(final WorldObject w) {
-        for (WorldObject obj : world.getObjects()) {
+        for (WorldObject obj : worldManager.getObjects()) {
             if (obj != w && overlap(w, obj)) {
                 if (overlapLeft(w, obj)) {
                     w.setX(w.getX() + obj.getX() - (w.getWidth() + w.getX()));

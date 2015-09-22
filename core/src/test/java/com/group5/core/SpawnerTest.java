@@ -2,6 +2,7 @@ package com.group5.core;
 
 import static org.junit.Assert.*;
 
+import com.group5.core.world.WorldManager;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +12,6 @@ import com.group5.core.controllers.Spawner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Obstacle;
 import com.group5.core.world.Player;
-import com.group5.core.world.World;
 
 /**
  * Spawner Test class. 
@@ -19,7 +19,7 @@ import com.group5.core.world.World;
  */
 public class SpawnerTest {
 	
-	private World world;
+	private WorldManager worldManager;
 	
 	private Spawner spawner;
 	
@@ -32,10 +32,10 @@ public class SpawnerTest {
 	 */
 	@Before
 	public void setup() {
-		world = new World();
-		spawner = new Spawner(world);
+		worldManager = new WorldManager();
+		spawner = new Spawner(worldManager);
 		player = new Player(new Vector2(0, 0), new Vector2(0, 0));
-		world.setPlayer(player);
+		worldManager.setPlayer(player);
 		director = spawner.getDirector();
 		director.setState(0);
 	}
@@ -61,7 +61,7 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloor() {
-		world.add(new FloorTile(new Vector2(100, 100)));
+		worldManager.add(new FloorTile(new Vector2(100, 100)));
 		assertTrue(spawner.getLastFloor() == 1124);
 	}
 	
@@ -70,9 +70,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloorMultiple() {
-		world.add(new FloorTile(new Vector2(0, 100)));
-		world.add(new FloorTile(new Vector2(50, 100)));
-		world.add(new FloorTile(new Vector2(150, 100)));
+		worldManager.add(new FloorTile(new Vector2(0, 100)));
+		worldManager.add(new FloorTile(new Vector2(50, 100)));
+		worldManager.add(new FloorTile(new Vector2(150, 100)));
 		assertTrue(spawner.getLastFloor() == 1174);
 	}
 	
@@ -81,9 +81,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastFloorMultipleUnordered() {
-		world.add(new FloorTile(new Vector2(150, 100)));
-		world.add(new FloorTile(new Vector2(0, 100)));
-		world.add(new FloorTile(new Vector2(50, 100)));
+		worldManager.add(new FloorTile(new Vector2(150, 100)));
+		worldManager.add(new FloorTile(new Vector2(0, 100)));
+		worldManager.add(new FloorTile(new Vector2(50, 100)));
 		assertTrue(spawner.getLastFloor() == 1174);
 	}
 	
@@ -92,7 +92,7 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetFloorSize() {
-		world.add(new FloorTile(new Vector2(100, 200)));
+		worldManager.add(new FloorTile(new Vector2(100, 200)));
 		assertTrue(spawner.getFloorSize() == 1024);
 	}
 	
@@ -101,7 +101,7 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastObstacle() {
-		world.add(new Obstacle(new Vector2(0, 100)));
+		worldManager.add(new Obstacle(new Vector2(0, 100)));
 		assertTrue(spawner.getLastObstacle() == 100);
 	}
 	
@@ -110,9 +110,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastObstacleMultiple() {
-		world.add(new Obstacle(new Vector2(0, 100)));
-		world.add(new Obstacle(new Vector2(100, 100)));
-		world.add(new Obstacle(new Vector2(200, 100)));
+		worldManager.add(new Obstacle(new Vector2(0, 100)));
+		worldManager.add(new Obstacle(new Vector2(100, 100)));
+		worldManager.add(new Obstacle(new Vector2(200, 100)));
 		assertTrue(spawner.getLastObstacle() == 300);
 	}
 	
@@ -121,9 +121,9 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetLastObstacleMultipleUnordered() {
-		world.add(new Obstacle(new Vector2(100, 100)));
-		world.add(new Obstacle(new Vector2(200, 100)));
-		world.add(new Obstacle(new Vector2(0, 100)));
+		worldManager.add(new Obstacle(new Vector2(100, 100)));
+		worldManager.add(new Obstacle(new Vector2(200, 100)));
+		worldManager.add(new Obstacle(new Vector2(0, 100)));
 		assertTrue(spawner.getLastObstacle() == 300);
 	}
 	
@@ -132,8 +132,8 @@ public class SpawnerTest {
 	 */
 	@Test
 	public void testGetMostRightPos() {
-		world.add(new FloorTile(new Vector2(100, 100)));
-		world.add(new Obstacle(new Vector2(200, 200)));
+		worldManager.add(new FloorTile(new Vector2(100, 100)));
+		worldManager.add(new Obstacle(new Vector2(200, 200)));
 		assertTrue(spawner.getMostRightPos() == 1124);
 	}
 	
@@ -144,8 +144,8 @@ public class SpawnerTest {
 	@Test
 	public void testGetMostRightPosObstacleCourse() {
 		director.setState(1);
-		world.add(new FloorTile(new Vector2(100, 100)));
-		world.add(new Obstacle(new Vector2(200, 200)));
+		worldManager.add(new FloorTile(new Vector2(100, 100)));
+		worldManager.add(new Obstacle(new Vector2(200, 200)));
 		assertTrue(spawner.getMostRightPos() == 1124);
 	}
 	
@@ -156,8 +156,8 @@ public class SpawnerTest {
 	@Test
 	public void testGetMostRightPosObstacleCourseFurthest() {
 		director.setState(1);
-		world.add(new FloorTile(new Vector2(100, 100)));
-		world.add(new Obstacle(new Vector2(2000, 200)));
+		worldManager.add(new FloorTile(new Vector2(100, 100)));
+		worldManager.add(new Obstacle(new Vector2(2000, 200)));
 		assertTrue(spawner.getMostRightPos() == 2100);
 	}
 	
