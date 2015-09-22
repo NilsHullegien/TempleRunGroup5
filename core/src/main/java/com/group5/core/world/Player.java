@@ -58,7 +58,7 @@ public class Player extends AnimatedWorldObject {
         } else {
             this.falltime = this.falltime  + (float) delta;
             // fudgy jump to let it look okay
-            float jumpmovement = (float) (jumpspeed * Math.sqrt(falltime) * 1.2);
+            float jumpmovement = (float) (jumpspeed * falltime) + jumpspeed;
             speed.y =  jumpmovement - (float) (0.5 * world.getGravity().y * (falltime) * (falltime));
        }
         setY(getY() + speed.y);
