@@ -5,9 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.badlogic.gdx.math.Vector2;
 import com.group5.core.world.Obstacle;
+import com.group5.core.world.World;
 
 /**
  * Test class for the Obstacle class. 
@@ -15,6 +17,8 @@ import com.group5.core.world.Obstacle;
  */
 public class ObstacleTest {
 
+    private World world = Mockito.mock(World.class);
+    
 	/**
 	 * Test method to check the equals for the same object.
 	 */
@@ -51,6 +55,16 @@ public class ObstacleTest {
 		Obstacle obstacle = new Obstacle(new Vector2(0, 0));
 		Obstacle sameProp = new Obstacle(new Vector2(0, 0));
 		assertTrue(obstacle.equals(sameProp));
+	}
+	
+	@Test
+	public void updateTest() {
+	    Obstacle obstacle = new Obstacle(new Vector2(0,0));
+	    obstacle.update(500, world);
+	    
+	    //Verify nothing happens.
+	    assertTrue(obstacle.getX() == 0);
+	    assertTrue(obstacle.getY() == 0);
 	}
 
 }

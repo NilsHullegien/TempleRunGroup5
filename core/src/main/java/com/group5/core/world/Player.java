@@ -93,11 +93,39 @@ public class Player extends AnimatedWorldObject {
         jumping = true;
         this.jumpspeed = jumpingspeed;
     }
+
     /**
      * Get the speed of the player.
      * @return Vector2
      */
     public Vector2 getSpeed() {
         return this.speed;
+    }
+
+    /**
+     * Returns the jumpSpeed of the player.
+     * Used for testing.
+     * @return jumpSpeed of the player.
+     */
+    public float getJumpSpeed() {
+        return jumpspeed;
+    }
+
+    /**
+     * Returns whether or not the player is jumping.
+     * Used for testing.
+     * @return jumping true if the player is jumping.
+     */
+    public boolean getJumping() {
+        return jumping;
+    }
+
+    /**
+     * Sets the players status of jumping.
+     * Used for testing.
+     * @param jump the new boolean value for jumping (True/False).
+     */
+    public void setJumping(final boolean jump) {
+        jumping = jump;
     }
 }

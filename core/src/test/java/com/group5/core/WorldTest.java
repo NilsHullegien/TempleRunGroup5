@@ -1,13 +1,18 @@
 package com.group5.core;
 
+import com.group5.core.controllers.Spawner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.World;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -98,6 +103,56 @@ public class WorldTest {
         w.update(0);
 
         assertTrue(w.contains(disappearing));
+    }
+    
+    /**
+     * Test whether getSpawner and setSpawner work the way they should.
+     */
+    @Test
+    public void getAndSetSpawnerTest() {
+        Spawner spawn = new Spawner(world);
+        assertFalse(world.getSpawner().equals(spawn));
+        world.setSpawner(spawn);
+        assertTrue(world.getSpawner().equals(spawn));
+    }
+    
+    /**
+     * Test whether getJumpTime and SetJumpTime work the way they should.
+     */
+    @Test
+    public void getAndSetJumpTimeTest() {
+        //Default value
+        assertTrue(world.getJumpTime() == 0L);
+        //Change value and verify it actually changed.
+        world.setJumpTime(500L);
+        assertTrue(world.getJumpTime() == 500L);
+    }
+    
+    /**
+     * Test whether getInputProcessor works properly.
+     */
+    @Test
+    public void getInputProcessorTest() {
+        InputProcessor ip = Mockito.mock(InputProcessor.class);
+        assertFalse(world.getInputProcessor().toString() == null);
+    }
+    
+    /**
+     * Test whether getGameStatus works properly.
+     */
+    @Test
+    public void getGameStatusTest() {
+        //Set player is already tested.
+        world.setPlayer(new Player(new Vector2(0,0), 0, 0));
+        
+        //By default, gameStatus is true.
+        assertTrue(world.getGameStatus());
+        
+        //Player is now dead and gameStatus should be false.
+        world.getPlayer().setY(-1.f);
+        assertFalse(world.getGameStatus());
+        
+        
     }
 
 }
