@@ -6,7 +6,7 @@
         <groupId>com.group5</groupId>
         <artifactId>endlessrunner</artifactId>
         <version>1.0-SNAPSHOT</version>
-        
+
     </parent>
 
     <artifactId>endlessrunner-desktop</artifactId>
