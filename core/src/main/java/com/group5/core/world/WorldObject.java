@@ -38,14 +38,14 @@ public abstract class WorldObject {
      * Constructs a new world object with the given coordinates, size and texture.
      *
      * @param tex    location of the texture of the object
-     * @param size   size of the object
+     * @param siz   size of the object
      * @param coord  coordinate of object
      */
     public WorldObject(final Texture tex,
-                       final Vector2 size,
+                       final Vector2 siz,
                        final Vector2 coord) {
         this.pos = coord;
-        this.size = size;
+        this.size = siz;
         this.texture = tex;
     }
     /**

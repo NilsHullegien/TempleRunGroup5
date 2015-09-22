@@ -31,8 +31,7 @@ public class Player extends AnimatedWorldObject {
     /**
      * Constructs a new Player positioned at the given coordinates.
      * @param coord coordinate
-     * @param sizex size of player in pixels
-     * @param sizey size of player in pixels
+     * @param size size of player in pixels
      */
     public Player(final Vector2 coord, final Vector2 size) {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png"), size, coord, 6, 5, 2);
