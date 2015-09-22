@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
+import com.group5.core.world.StateMachinePlayer;
 import com.group5.core.world.World;
 import com.group5.core.world.WorldObject;
 
@@ -120,6 +121,7 @@ public class MainGameScreen implements Screen {
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
+        StateMachinePlayer.checkPlayerState(world);
         batch.end();
         stage.act();
         stage.draw();
