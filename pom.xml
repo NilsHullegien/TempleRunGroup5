@@ -94,6 +94,7 @@
                         <lineRate>60</lineRate>-->
                         <haltOnFailure>true</haltOnFailure>
                         <totalLineRate>50</totalLineRate>
+                        <totalBranchRate>60</totalBranchRate>
                     </check>
                 </configuration>
             </plugin>
