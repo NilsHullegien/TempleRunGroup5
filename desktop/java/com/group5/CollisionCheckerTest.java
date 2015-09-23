@@ -20,7 +20,7 @@ public class CollisionCheckerTest {
         assertTrue(CollisionChecker.overlap(w.getObjects().get(0), w.getObjects().get(0)));
 
 		/*WorldObject w2 = new FloorTile(0,0);
-		assertTrue(CollisionChecker.overlap(w1, w2));
+        assertTrue(CollisionChecker.overlap(w1, w2));
 		
 		w2 = new FloorTile(0,64);
 		

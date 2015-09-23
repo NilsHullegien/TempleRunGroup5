@@ -3,7 +3,11 @@ package com.group5.core.util;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
@@ -17,6 +21,7 @@ public class LoggerTest {
 
     /**
      * Initializes the test logger and input reader.
+     *
      * @throws IOException if something goes wrong while instantiating reader
      */
     @Before
@@ -39,6 +44,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the log method contains all required data.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -53,6 +59,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the debug method contains all required data and the debug level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -67,6 +74,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the debug method without a tag contains all required data and the debug level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -80,6 +88,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the info method contains all required data and the info level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -94,6 +103,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the info method without a tag contains all required data and the info level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -107,6 +117,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the warning method contains all required data and the warning level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -121,6 +132,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the warning method without a tag contains all required data and the warning level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -134,6 +146,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the error method contains all required data and the error level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -148,6 +161,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the error method without a tag contains all required data and the error level.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -161,6 +175,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the log method with the none level is not printed.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -173,6 +188,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the log method with a level below the set threshold level is not printed.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test
@@ -185,6 +201,7 @@ public class LoggerTest {
 
     /**
      * Tests whether a call to the dispose method disables the input reader.
+     *
      * @throws IOException if something goes wrong reading from the logger output
      */
     @Test

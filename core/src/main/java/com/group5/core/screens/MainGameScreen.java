@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -60,6 +61,11 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
+     * Box2D shape renderer for debugging.
+     */
+    private Box2DDebugRenderer physicsRenderer;
+
+    /**
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
@@ -67,17 +73,18 @@ public class MainGameScreen implements Screen {
     /**
      * Constructs a new main game screen that plays the actual game.
      *
-     * @param b
-     *            the SpriteBatch to draw textures with
+     * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(new Vector2(100, 500), new Vector2(100, 100));
         this.batch = b;
         this.worldManager = new WorldManager();
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
         this.worldManager.setPlayer(player);
 
+        this.physicsRenderer = new Box2DDebugRenderer();
+
         worldManager.setPlayer(player);
-        worldManager.add(new FloorTile(new Vector2(0, 0)));
+        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -103,9 +110,10 @@ public class MainGameScreen implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
@@ -123,6 +131,9 @@ public class MainGameScreen implements Screen {
         batch.end();
         stage.act();
         stage.draw();
+
+        // Enable if you want to see physics outlined
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
     }
 
     /**
@@ -169,7 +180,7 @@ public class MainGameScreen implements Screen {
      */
     private void createDefaultLabelSkin() {
 
-      //create font
+        //create font
         BitmapFont font = new BitmapFont();
         labelSkin = new Skin();
         labelSkin.add("default", font);
@@ -192,7 +203,7 @@ public class MainGameScreen implements Screen {
      * Create the skin for the buttons in the game over menu.
      */
     private void createDefaultButtonSkin() {
-      //create font
+        //create font
         BitmapFont font = new BitmapFont();
         buttonSkin = new Skin();
         buttonSkin.add("default", font);

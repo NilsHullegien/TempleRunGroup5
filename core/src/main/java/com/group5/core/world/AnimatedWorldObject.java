@@ -29,12 +29,13 @@ public abstract class AnimatedWorldObject extends WorldObject {
 
     /**
      * Object in the world that shows a animated sprite.
-     * @param tex Texture
-     * @param size Screen size of the object
-     * @param coord Initial position
+     *
+     * @param tex       Texture
+     * @param size      Screen size of the object
+     * @param coord     Initial position
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
-     * @param duration Total duration of animation
+     * @param duration  Total duration of animation
      */
     public AnimatedWorldObject(final Texture tex,
                                final Vector2 size,
@@ -50,14 +51,15 @@ public abstract class AnimatedWorldObject extends WorldObject {
 
     /**
      * Creates an Animation.
-     * @param tex Texture used
+     *
+     * @param tex       Texture used
      * @param framecols framecols Amount of horizontal slices of texture
      * @param framerows framerows Amount of vertical slices of texture
      * @return Animation
      */
-     public Animation createFrames(final Texture tex,
-             final int framecols,
-             final int framerows) {
+    public Animation createFrames(final Texture tex,
+                                  final int framecols,
+                                  final int framerows) {
         TextureRegion[][] tmp = TextureRegion.split(tex,
                 tex.getWidth() / framecols,
                 tex.getHeight() / framerows);
@@ -65,22 +67,33 @@ public abstract class AnimatedWorldObject extends WorldObject {
         int index = 0;
         for (int i = 0; i < framerows; i++) {
             for (int j = 0; j < framecols; j++) {
-                frames[index++] = tmp [i][j];
+                frames[index++] = tmp[i][j];
             }
         }
         return new Animation(animationduration / amountframes, frames);
     }
 
-     /**
-      * Render the animation.
-      * @param batch The batch in which the animatedsprite should be rendered.
-      */
+    /**
+     * Render the animation.
+     *
+     * @param batch The batch in which the animatedsprite should be rendered.
+     */
     public void doRender(final SpriteBatch batch) {
-           batch.draw(animation.getKeyFrame(currenttime, true), this.getX(), this.getY(), getWidth(), getHeight());
+        Vector2 pos = getPhysicsBody().getPosition();
+        setX(pos.x);
+        setY(pos.y);
+        batch.draw(animation.getKeyFrame(currenttime, true),
+                this.getX() * 50.f, this.getY() * 50.f,
+                0, 0,
+                getWidth() * 50.f, getHeight() * 50.f,
+                1, 1,
+                (float) Math.toDegrees(getPhysicsBody().getAngle()));
     }
+
     /**
      * Update the animationframe, should be called per frame.
-     * @param delta The difference in time since the last update
+     *
+     * @param delta        The difference in time since the last update
      * @param worldManager The worldManager the object is in
      */
     public void update(final float delta, final WorldManager worldManager) {

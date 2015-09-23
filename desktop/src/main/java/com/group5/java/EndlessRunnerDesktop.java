@@ -10,10 +10,11 @@ import com.group5.core.EndlessRunner;
 public abstract class EndlessRunnerDesktop {
     /**
      * Main method that starts the game.
-w     * @param args the command line parameters passed in
+     * w     * @param args the command line parameters passed in
      */
     public static void main(final String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.vSyncEnabled = true;
         new LwjglApplication(new EndlessRunner(), config);
     }
 }

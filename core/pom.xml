@@ -24,13 +24,20 @@
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-backend-headless</artifactId>
-            <version>1.6.5</version>
+            <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-platform</artifactId>
             <classifier>natives-desktop</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.badlogicgames.gdx</groupId>
+            <artifactId>gdx-box2d-platform</artifactId>
+            <classifier>natives-desktop</classifier>
+            <version>1.7.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
