@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
@@ -19,11 +18,6 @@ import java.util.List;
  * Functions as a container for spawned items in the game.
  */
 public class WorldManager {
-
-    /**
-     * The collision checker that is used to verify this world's state.
-     */
-    private CollisionChecker collider;
     /**
      * The Box2D physics world.
      */
@@ -65,7 +59,6 @@ public class WorldManager {
     public WorldManager() {
         physicsWorld = new World(new Vector2(0, -20), true);
 
-        collider = new CollisionChecker(this);
         objects = new ArrayList<WorldObject>();
         spawner = new Spawner(this);
         ip = new InputProcessor() {
@@ -187,15 +180,6 @@ public class WorldManager {
      */
     public boolean contains(final WorldObject object) {
         return objects.contains(object);
-    }
-
-    /**
-     * Returns the world's collider.
-     *
-     * @return the world's collider
-     */
-    public CollisionChecker getCollider() {
-        return collider;
     }
 
     /**
