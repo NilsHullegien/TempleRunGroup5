@@ -110,13 +110,4 @@ public class Player extends AnimatedWorldObject {
             b.applyLinearImpulse(0, 20 + 20 + (20 * jumpIntensity), b.getWorldCenter().x, b.getWorldCenter().y, true);
         }
     }
-
-    /**
-     * Get the speed of the player.
-     *
-     * @return Vector2
-     */
-    public Vector2 getSpeed() {
-        return this.speed;
-    }
 }

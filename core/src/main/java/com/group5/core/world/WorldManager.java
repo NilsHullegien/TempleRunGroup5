@@ -271,7 +271,7 @@ public class WorldManager {
     /**
      * Inner class that handles Box2D collisions.
      */
-    private static class PlayerCollisionListener implements ContactListener {
+    public static class PlayerCollisionListener implements ContactListener {
         /**
          * The player that is influenced by collisions.
          */

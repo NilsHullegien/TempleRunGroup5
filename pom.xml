@@ -81,6 +81,7 @@
                 <configuration>
                     <instrumentation>
                         <ignores>
+                            <ignore>com.group5.core.world.WorldManager.PlayerCollisionListener</ignore>
                             <ignore>com.group5.core.screens.*</ignore>
                             <ignore>com.group5.core.EndlessRunner</ignore>
                             <ignore>com.group5.java.EndlessRunnerDesktop</ignore>
@@ -92,7 +93,6 @@
                         <branchRate>60</branchRate>
                         <lineRate>60</lineRate>-->
                         <haltOnFailure>true</haltOnFailure>
-                        <totalBranchRate>60</totalBranchRate>
                         <totalLineRate>50</totalLineRate>
                     </check>
                 </configuration>
