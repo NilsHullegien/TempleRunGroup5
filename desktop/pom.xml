@@ -6,6 +6,7 @@
         <groupId>com.group5</groupId>
         <artifactId>endlessrunner</artifactId>
         <version>1.0-SNAPSHOT</version>
+
     </parent>
 
     <artifactId>endlessrunner-desktop</artifactId>
@@ -48,6 +49,18 @@
         </resources>
 
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <check>
+                        <haltOnFailure>false</haltOnFailure>
+                        <totalBranchRate>0</totalBranchRate>
+                        <totalLineRate>0</totalLineRate>
+                    </check>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
