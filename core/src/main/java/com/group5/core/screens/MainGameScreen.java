@@ -66,6 +66,12 @@ public class MainGameScreen implements Screen {
     private boolean gameOverMenuActive = false;
 
     /**
+     * Creates a state machine for the player.
+     * This state machine keeps track of whether the player is jumping of running.
+     */
+    private StateMachinePlayer statePlayer;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b
@@ -86,6 +92,7 @@ public class MainGameScreen implements Screen {
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
         Gdx.input.setInputProcessor(world.getInputProcessor());
+        statePlayer = new StateMachinePlayer(world.getPlayer());
     }
 
     @Override
@@ -121,7 +128,7 @@ public class MainGameScreen implements Screen {
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
-        StateMachinePlayer.checkPlayerState(world);
+        statePlayer.checkPlayerState(world);
         batch.end();
         stage.act();
         stage.draw();

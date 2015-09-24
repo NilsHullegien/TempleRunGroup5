@@ -127,4 +127,12 @@ public abstract class WorldObject {
      * @param world the world that the object is currently situated in.
      */
     public abstract void update(final float delta, final World world);
+
+    /**
+     * Sets the texture of a WorldObject.
+     * @param t the new texture that the worldObject should get.
+     */
+    public void setTexture(final Texture t) {
+        texture = t;
+    }
 }
