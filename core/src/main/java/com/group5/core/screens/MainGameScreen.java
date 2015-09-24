@@ -83,7 +83,6 @@ public class MainGameScreen implements Screen {
 
         world.setPlayer(player);
         world.add(new FloorTile(new Vector2(0, 0)));
-
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
@@ -128,7 +127,7 @@ public class MainGameScreen implements Screen {
         }
         score = score + delta;
 
-        scoreLabel.setText(Float.toString(score));
+        scoreLabel.setText(Integer.toString(Math.round(score)));
         batch.end();
         stage.act();
         stage.draw();
