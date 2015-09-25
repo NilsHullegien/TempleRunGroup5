@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -63,6 +64,11 @@ public class MainGameScreen implements Screen {
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
+    
+    /**
+     * Repeating background. 
+     */
+    private Sprite background;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -78,6 +84,7 @@ public class MainGameScreen implements Screen {
 
         world.setPlayer(player);
         world.add(new FloorTile(new Vector2(0, 0)));
+        background = new Sprite(EndlessRunner.get().getTextureCache().load("background.png"));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -111,6 +118,8 @@ public class MainGameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        background.setX(camera.position.x - (camera.viewportWidth / 2));
+        background.draw(batch);
         for (WorldObject obj : world.getObjects()) {
             obj.doRender(batch);
         }
