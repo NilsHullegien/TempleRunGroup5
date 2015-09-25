@@ -99,4 +99,29 @@ public abstract class AnimatedWorldObject extends WorldObject {
     public void update(final float delta, final WorldManager worldManager) {
         currenttime += delta;
     }
+
+    /**
+     * Getter for the duration of the animation.
+     * @return the time the animation takes.
+     */
+    public float getAnimationDuration() {
+        return animationduration;
+    }
+
+    /**
+     * Getter for the amount of frames the animation is.
+     * @return the amount of frames the animation takes to cycle.
+     */
+    public int getAmountFrames() {
+        return amountframes;
+    }
+
+    /**
+     * Sets the Animation for the AnimatedWorldObject.
+     * (For now only used for Player).
+     * @param a the new animation.
+     */
+    public void setAnimation(final Animation a) {
+        animation = a;
+    }
 }

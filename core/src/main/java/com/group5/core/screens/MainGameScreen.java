@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
+import com.group5.core.world.StateMachinePlayer;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
@@ -71,6 +72,12 @@ public class MainGameScreen implements Screen {
     private boolean gameOverMenuActive = false;
 
     /**
+     * Creates a state machine for the player.
+     * This state machine keeps track of whether the player is jumping of running.
+     */
+    private StateMachinePlayer statePlayer;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b the SpriteBatch to draw textures with
@@ -91,6 +98,7 @@ public class MainGameScreen implements Screen {
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
+        statePlayer = new StateMachinePlayer(worldManager.getPlayer());
         Gdx.input.setInputProcessor(worldManager.getInputProcessor());
     }
 
@@ -128,6 +136,7 @@ public class MainGameScreen implements Screen {
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
+        statePlayer.checkPlayerState(worldManager);
         batch.end();
         stage.act();
         stage.draw();
