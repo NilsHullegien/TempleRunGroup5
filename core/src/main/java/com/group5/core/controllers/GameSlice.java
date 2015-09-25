@@ -43,16 +43,17 @@ public class GameSlice {
 
     /**
      * Constructor of the GameSlice class.
-     * @param slice String of the kind of slice.
-     * @param floorNumber float that gives chance for if a floor spawns.
-     * @param noGapFloorNumber float that gives chance for if there is a gap between floors.
-     * @param obstaclesNumber float that gives chance for if an obstacle spawns.
+     *
+     * @param slice               String of the kind of slice.
+     * @param floorNumber         float that gives chance for if a floor spawns.
+     * @param noGapFloorNumber    float that gives chance for if there is a gap between floors.
+     * @param obstaclesNumber     float that gives chance for if an obstacle spawns.
      * @param noGapObstacleNumber float that gives chance for if there is a space between obstacles or floors.
-     * @param yPositionObstacle float that gives the y Position of the Obstacle.
-     * @param yPositionFloor float that gives the y Position of the Floor.
+     * @param yPositionObstacle   float that gives the y Position of the Obstacle.
+     * @param yPositionFloor      float that gives the y Position of the Floor.
      */
     public GameSlice(final String slice, final float floorNumber, final float noGapFloorNumber, final float obstaclesNumber,
-            final float noGapObstacleNumber, final float yPositionObstacle, final float yPositionFloor) {
+                     final float noGapObstacleNumber, final float yPositionObstacle, final float yPositionFloor) {
         this.state = slice;
         this.floorRNG = floorNumber;
         this.noGapFloorRNG = noGapFloorNumber;
@@ -64,6 +65,7 @@ public class GameSlice {
 
     /**
      * Method to get the slice.
+     *
      * @return the String of the slice.
      */
     public String getSlice() {
@@ -72,6 +74,7 @@ public class GameSlice {
 
     /**
      * Method to get the floorRNG.
+     *
      * @return the floorRNG as a float.
      */
     public float getFloorRNG() {
@@ -80,6 +83,7 @@ public class GameSlice {
 
     /**
      * Method to get the noGapfloorRNG.
+     *
      * @return the noGapFloorRNG as a float.
      */
     public float getNoGapFloorRNG() {
@@ -88,6 +92,7 @@ public class GameSlice {
 
     /**
      * Method to get the obstaclesRNG.
+     *
      * @return the obstaclesRNG as a float.
      */
     public float getObstaclesRNG() {
@@ -96,6 +101,7 @@ public class GameSlice {
 
     /**
      * Method to get the noGapobstacleRNG.
+     *
      * @return the noGapObstacleRNG as a float.
      */
     public float getNoGapObstacleRNG() {
@@ -104,6 +110,7 @@ public class GameSlice {
 
     /**
      * Method to get the y position of the obstacle.
+     *
      * @return the y position of the obstacle as a float.
      */
     public float getYPosObstacles() {
@@ -112,6 +119,7 @@ public class GameSlice {
 
     /**
      * Method to get the y position of the floor.
+     *
      * @return the y position of the floor as a float.
      */
     public float getYPosFloor() {
