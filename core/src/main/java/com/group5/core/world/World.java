@@ -78,14 +78,13 @@ public class World {
              */
             @Override
             public boolean keyUp(final int keycode) {
-                System.out.println("Player Y: " + player.getY());
                 if (keycode == jumpButton) {
                     jumpTime = System.currentTimeMillis() - timerStart;
                     if (jumpTime >= 250L) {
                         jumpTime = 250L;
                     }
                     //player.setjump(jumpTime/250* 20f);
-                    player.setjump(20f);
+                    player.setjump(10f);
                 }
                 return false;
             }

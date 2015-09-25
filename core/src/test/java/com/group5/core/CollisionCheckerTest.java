@@ -51,6 +51,7 @@ public class CollisionCheckerTest {
 
         // same thing for the right side
         assertFalse(checker.overlap(w1, w2));
+        checker.yBounce(w2, 1000);
 
     }
 
@@ -72,6 +73,8 @@ public class CollisionCheckerTest {
     	//two objects that overlap, so there will be a collision
     	assertTrue(checker.checkCollision(world.getObjects().get(0)));
     	assertTrue(checker.checkCollision(world.getObjects().get(2)));
+
+        checker.xBounce(new FloorTile(new Vector2(0, 0)));
     }
     
     /**
