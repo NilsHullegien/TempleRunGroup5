@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -71,6 +72,11 @@ public class MainGameScreen implements Screen {
     private boolean gameOverMenuActive = false;
 
     /**
+     * Repeating background.
+     */
+    private Sprite background;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b the SpriteBatch to draw textures with
@@ -81,6 +87,7 @@ public class MainGameScreen implements Screen {
         Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
         this.worldManager.setPlayer(player);
 
+        background = new Sprite(EndlessRunner.get().getTextureCache().load("background.png"));
         this.physicsRenderer = new Box2DDebugRenderer();
 
         worldManager.setPlayer(player);
@@ -119,6 +126,8 @@ public class MainGameScreen implements Screen {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        background.setX(camera.position.x - (camera.viewportWidth / 2));
+        background.draw(batch);
         for (WorldObject obj : worldManager.getObjects()) {
             obj.doRender(batch);
         }
