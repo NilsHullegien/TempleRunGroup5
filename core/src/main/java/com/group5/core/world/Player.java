@@ -1,6 +1,12 @@
 package com.group5.core.world;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.EndlessRunner;
 
 /**
@@ -11,61 +17,70 @@ public class Player extends AnimatedWorldObject {
      * The current speed the player is moving at.
      */
     private Vector2 speed;
+
     /**
-     * Speed the player jumps with.
+     * Whether or not the player is dead.
      */
-    private float jumpspeed = 0;
-    /**
-     * time Player is in the air.
-     */
-    private float falltime = 0;
-    /**
-     * Boolean if the player is jumping.
-     */
-    private boolean jumping = false;
-    /**
-     * Bouncefudge.
-     */
-    private float bouncefudge = 1000;
+    private boolean dead = false;
 
     /**
      * Constructs a new Player positioned at the given coordinates.
-     * @param coord coordinate
-     * @param sizex size of player in pixels
-     * @param sizey size of player in pixels
+     *
+     * @param physicsWorld the physics world to create the player's body in
+     * @param coord        coordinate
+     * @param size         size of player in pixels
      */
-    public Player(final Vector2 coord, final int sizex, final int sizey) {
-        super(EndlessRunner.get().getTextureCache().load("chickentime.png")
-        , coord, sizex, sizey, 6, 5, 2);
-        speed = new Vector2(500, 0);
+    public Player(final World physicsWorld, final Vector2 coord, final Vector2 size) {
+        super(EndlessRunner.get().getTextureCache().load("chickentime.png"), size, coord, 6, 5, 2);
+        speed = new Vector2(5, 0);
+
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(new Vector2(getX(), getY()));
+
+        Body body = physicsWorld.createBody(def);
+        PolygonShape bodyShape = new PolygonShape();
+        bodyShape.setAsBox(getWidth() / 2f, getHeight() / 2f, new Vector2(getWidth() / 2f, getHeight() / 2f), 0);
+
+        FixtureDef fixture = new FixtureDef();
+        fixture.shape = bodyShape;
+        fixture.density = 1.0f;
+        fixture.friction = 0.8f;
+        fixture.restitution = 0.1f;
+
+        Fixture f = body.createFixture(fixture);
+        f.setUserData(this);
+
+        bodyShape.dispose();
+        setPhysicsBody(body);
+    }
+
+    /**
+     * Checks whether the player is dead.
+     * @return whether the player is dead
+     */
+    public boolean isDead() {
+        dead = dead || getY() < 0.f;
+        return dead;
+    }
+
+    /**
+     * Kills the player instantly.
+     */
+    public void kill() {
+        dead = true;
     }
 
     @Override
-    public void update(final float delta, final World world) {
-        setX(getX() + delta * speed.x);
-        if (world.getCollider().checkCollision(this) && jumping) {
-                speed.y = this.jumpspeed;
-                jumping = false;
-            }
-        if (world.getCollider().checkCollision(this)) {
-            world.getCollider().yBounce(this, bouncefudge);
-        }
-         if (world.getCollider().checkCollision(this) && speed.y < 0) {
-            jumping = false;
-            speed.y = 0;
-            falltime = 0;
-            jumpspeed = 0;
-        } else {
-            this.falltime = this.falltime  + (float) delta;
-            // fudgy jump to let it look okay
-            float jumpmovement = (float) (jumpspeed * falltime) + jumpspeed;
-            speed.y =  jumpmovement - (float) (0.5 * world.getGravity().y * (falltime) * (falltime));
-       }
-        setY(getY() + speed.y);
-        jumping = false;
+    public void update(final float delta, final WorldManager worldManager) {
         //update the animation
-        super.update(delta, world);
+        super.update(delta, worldManager);
+        Body b = getPhysicsBody();
+        if (b.getLinearVelocity().x < 10) {
+            b.applyLinearImpulse(2, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
+        }
     }
+
     @Override
     public int hashCode() {
         int hash = 5;
@@ -86,18 +101,13 @@ public class Player extends AnimatedWorldObject {
      * The function that let the player jump up. (falling down is done by the
      * gravity). NOTE: the actual movement of the player is done in the
      * updateJumpPosition(float) method.
-     * @param jumpingspeed
-     *            The time the player jumps.
+     *
+     * @param jumpIntensity How hard the player jumps.
      */
-    public void setjump(final float jumpingspeed) {
-        jumping = true;
-        this.jumpspeed = jumpingspeed;
-    }
-    /**
-     * Get the speed of the player.
-     * @return Vector2
-     */
-    public Vector2 getSpeed() {
-        return this.speed;
+    public void jump(final float jumpIntensity) {
+        Body b = getPhysicsBody();
+        if (Math.abs(b.getLinearVelocity().y) < 1e-3f) {
+            b.applyLinearImpulse(0, 20 + 20 + (20 * jumpIntensity), b.getWorldCenter().x, b.getWorldCenter().y, true);
+        }
     }
 }

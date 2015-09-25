@@ -77,10 +77,10 @@ public class StateMachinePlayer {
      * In this method, the animations and the texture are set as well.
      * @param w the world in which the player is.
      */
-    public void checkPlayerState(final World w) {
+    public void checkPlayerState(final WorldManager w) {
         Player p = w.getPlayer();
         //If the player doesn't collide with anything, it must be jumping
-        if (w.getCollider().checkCollision(p)) {
+        if (Math.abs(p.getPhysicsBody().getLinearVelocity().y) < 1) {
             p.setTexture(directory.getTexture(1));
             p.setAnimation(runningAnim);
         } else {

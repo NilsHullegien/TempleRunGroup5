@@ -14,6 +14,7 @@ public abstract class EndlessRunnerDesktop {
      */
     public static void main(final String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.vSyncEnabled = true;
         new LwjglApplication(new EndlessRunner(), config);
     }
 }

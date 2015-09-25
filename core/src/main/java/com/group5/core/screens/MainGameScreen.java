@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -22,7 +23,7 @@ import com.group5.core.EndlessRunner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.StateMachinePlayer;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
 /**
@@ -36,12 +37,12 @@ public class MainGameScreen implements Screen {
     private SpriteBatch batch;
 
     /**
-     * The world that contains all game objects.
+     * The worldManager that contains all game objects.
      */
-    private World world;
+    private WorldManager worldManager;
 
     /**
-     * The camera the world is viewed with.
+     * The camera the worldManager is viewed with.
      */
     private OrthographicCamera camera;
 
@@ -61,6 +62,11 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
+     * Box2D shape renderer for debugging.
+     */
+    private Box2DDebugRenderer physicsRenderer;
+
+    /**
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
@@ -74,25 +80,26 @@ public class MainGameScreen implements Screen {
     /**
      * Constructs a new main game screen that plays the actual game.
      *
-     * @param b
-     *            the SpriteBatch to draw textures with
+     * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
-        Player player = new Player(new Vector2(100, 500), 100, 100);
         this.batch = b;
-        this.world = new World();
-        this.world.setPlayer(player);
+        this.worldManager = new WorldManager();
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
+        this.worldManager.setPlayer(player);
 
-        world.setPlayer(player);
-        world.add(new FloorTile(new Vector2(0, 0)));
+        this.physicsRenderer = new Box2DDebugRenderer();
+
+        worldManager.setPlayer(player);
+        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
-        Gdx.input.setInputProcessor(world.getInputProcessor());
-        statePlayer = new StateMachinePlayer(world.getPlayer());
+        statePlayer = new StateMachinePlayer(worldManager.getPlayer());
+        Gdx.input.setInputProcessor(worldManager.getInputProcessor());
     }
 
     @Override
@@ -111,27 +118,31 @@ public class MainGameScreen implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        world.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + world.getPlayer().getX() - 100.f,
+        worldManager.update(delta);
+
+        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for (WorldObject obj : world.getObjects()) {
+        for (WorldObject obj : worldManager.getObjects()) {
             obj.doRender(batch);
         }
 
-        if (!gameOverMenuActive && !(world.getGameStatus())) {
+        if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             stage.getActors().get(0).setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
-        statePlayer.checkPlayerState(world);
+        statePlayer.checkPlayerState(worldManager);
         batch.end();
         stage.act();
         stage.draw();
+
+        // Enable if you want to see physics outlined
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
     }
 
     /**
@@ -178,7 +189,7 @@ public class MainGameScreen implements Screen {
      */
     private void createDefaultLabelSkin() {
 
-      //create font
+        //create font
         BitmapFont font = new BitmapFont();
         labelSkin = new Skin();
         labelSkin.add("default", font);
@@ -201,7 +212,7 @@ public class MainGameScreen implements Screen {
      * Create the skin for the buttons in the game over menu.
      */
     private void createDefaultButtonSkin() {
-      //create font
+        //create font
         BitmapFont font = new BitmapFont();
         buttonSkin = new Skin();
         buttonSkin.add("default", font);
