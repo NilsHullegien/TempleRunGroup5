@@ -69,12 +69,26 @@ public class MainGameScreen implements Screen {
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
-    
+
+    /**
+     * Score of the game.
+     */
     private float score;
-    
+
+    /**
+     * Label that indicates the score.
+     */
     private Label scoreLabel;
-    
+
+    /**
+     * Table that contains the game over screen.
+     */
     private Table gameOverTable;
+
+    /**
+     * Label that indicates the final score.
+     */
+    private Label gameOverScore;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -134,6 +148,8 @@ public class MainGameScreen implements Screen {
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             gameOverTable.setVisible(true);
+            gameOverScore.setText("Score:" + Integer.toString(Math.round(score)));
+            scoreLabel.setVisible(false);
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta;
@@ -156,6 +172,7 @@ public class MainGameScreen implements Screen {
         gameOverTable = new Table();
 
         Label topText = new Label("Game over!", labelSkin);
+        gameOverScore = new Label("", labelSkin);
         topText.setPosition(0, 0);
         TextButton restartButton = new TextButton("New game", buttonSkin); // Use the initialized buttonSkin
 
@@ -178,6 +195,8 @@ public class MainGameScreen implements Screen {
         gameOverTable.setVisible(false);
         gameOverTable.add(topText).expandX().width(200.f);
         gameOverTable.row();
+        gameOverTable.add(gameOverScore).width(200.f);
+        gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
@@ -186,12 +205,15 @@ public class MainGameScreen implements Screen {
         stage.addActor(gameOverTable);
     }
 
+    /**
+     * Create a label which will indicate the score.
+     */
     private void createScoreLabel() {
         scoreLabel = new Label(Float.toString(score), labelSkin);
         stage.addActor(scoreLabel);
-        
+
     }
-    
+
     /**
      * Create the skin for a default label.
      */
