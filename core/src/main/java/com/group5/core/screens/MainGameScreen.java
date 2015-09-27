@@ -73,6 +73,8 @@ public class MainGameScreen implements Screen {
     private float score;
     
     private Label scoreLabel;
+    
+    private Table gameOverTable;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -131,7 +133,7 @@ public class MainGameScreen implements Screen {
 
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
-            stage.getActors().get(0).setVisible(true);
+            gameOverTable.setVisible(true);
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta;
@@ -151,7 +153,7 @@ public class MainGameScreen implements Screen {
     private void gameOverScreenSetup() {
 
         //the screen consists of one table containing one label and two buttons.
-        Table t = new Table();
+        gameOverTable = new Table();
 
         Label topText = new Label("Game over!", labelSkin);
         topText.setPosition(0, 0);
@@ -171,17 +173,17 @@ public class MainGameScreen implements Screen {
                 EndlessRunner.get().create();
             }
         });
-        t.setFillParent(true);
-        t.setColor(Color.BLUE);
-        t.setVisible(false);
-        t.add(topText).expandX().width(200.f);
-        t.row();
+        gameOverTable.setFillParent(true);
+        gameOverTable.setColor(Color.BLUE);
+        gameOverTable.setVisible(false);
+        gameOverTable.add(topText).expandX().width(200.f);
+        gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
-        t.add(t2);
+        gameOverTable.add(t2);
         //t.setVisible(false);
-        stage.addActor(t);
+        stage.addActor(gameOverTable);
     }
 
     private void createScoreLabel() {
