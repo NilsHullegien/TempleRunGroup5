@@ -1,6 +1,6 @@
 package com.group5.core.controllers;
 
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
 /**
@@ -10,14 +10,14 @@ public class CollisionChecker {
     /**
      * The world to check collisions on.
      */
-    private World world;
+    private WorldManager world;
 
     /**
      * Creates a new collision checker for the given world.
      *
      * @param w the world to check collisions for
      */
-    public CollisionChecker(final World w) {
+    public CollisionChecker(final WorldManager w) {
         this.world = w;
     }
 

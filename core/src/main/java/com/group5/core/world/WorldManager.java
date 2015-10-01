@@ -1,9 +1,13 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.controllers.CollisionChecker;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
@@ -13,49 +17,37 @@ import java.util.List;
 /**
  * Functions as a container for spawned items in the game.
  */
-public class World {
+public class WorldManager {
     /**
-     * The collision checker that is used to verify this world's state.
+     * The Box2D physics world.
      */
-    private CollisionChecker collider;
-
+    private World physicsWorld;
     /**
      * The objects that are present in this world.
      */
     private ArrayList<WorldObject> objects;
-
-    /**
-     * The gravity this world is operating in.
-     */
-    private Vector2 gravity;
-
     /**
      * Gets the time the player held down the jumpButton. Getter and setter are
      * provided.
      */
     private long jumpTime;
-
     /**
      * The current player in the game. A game can only have one player at any
      * given time.
      */
     private Player player;
-
     /**
      * The button pressed for jumping.
      */
     private char jumpButton = Keys.W;
-
     /**
      * Timer start and stop for determining how long the player jumps.
      */
     private long timerStart = 0L;
-
     /**
      * The spawner that spawns new objects into the world.
      */
     private Spawner spawner;
-
     /**
      * Input processor used in LibGDX. Registers when key is pressed/released
      */
@@ -64,9 +56,9 @@ public class World {
     /**
      * Constructs a new, empty world with a default gravity.
      */
-    public World() {
-        collider = new CollisionChecker(this);
-        gravity = new Vector2(0, 75);
+    public WorldManager() {
+        physicsWorld = new World(new Vector2(0, -20), true);
+
         objects = new ArrayList<WorldObject>();
         spawner = new Spawner(this);
         ip = new InputProcessor() {
@@ -83,8 +75,7 @@ public class World {
                     if (jumpTime >= 250L) {
                         jumpTime = 250L;
                     }
-                    //player.setjump(jumpTime/250* 20f);
-                    player.setjump(10f);
+                    player.jump(jumpTime / 250.f);
                 }
                 return false;
             }
@@ -97,7 +88,6 @@ public class World {
             @Override
             public boolean keyDown(final int keycode) {
                 if (keycode == jumpButton) {
-                    System.out.println("Timer started");
                     timerStart = System.currentTimeMillis();
                 }
                 return false;
@@ -106,12 +96,13 @@ public class World {
             // ////////////////
             // UNUSED METHODS//
             // ////////////////
+
             /**
              * Unused.
              */
             @Override
             public boolean touchUp(final int screenX, final int screenY,
-                    final int pointer, final int button) {
+                                   final int pointer, final int button) {
                 return false;
             }
 
@@ -120,7 +111,7 @@ public class World {
              */
             @Override
             public boolean touchDragged(final int screenX, final int screenY,
-                    final int pointer) {
+                                        final int pointer) {
                 return false;
             }
 
@@ -129,7 +120,7 @@ public class World {
              */
             @Override
             public boolean touchDown(final int screenX, final int screenY,
-                    final int pointer, final int button) {
+                                     final int pointer, final int button) {
                 return false;
             }
 
@@ -164,10 +155,18 @@ public class World {
     }
 
     /**
+     * Returns the world manager's physics world.
+     *
+     * @return the world manager's physics world
+     */
+    public World getPhysicsWorld() {
+        return physicsWorld;
+    }
+
+    /**
      * Adds an object to the world.
      *
-     * @param object
-     *            Object you want to add to the world
+     * @param object Object you want to add to the world
      */
     public void add(final WorldObject object) {
         objects.add(object);
@@ -184,25 +183,8 @@ public class World {
     }
 
     /**
-     * Returns the world's collider.
-     *
-     * @return the world's collider
-     */
-    public CollisionChecker getCollider() {
-        return collider;
-    }
-
-    /**
-     * Returns the world's operating gravity.
-     *
-     * @return the world's operating gravity
-     */
-    public Vector2 getGravity() {
-        return gravity;
-    }
-
-    /**
      * Returns the objects contained in the world.
+     *
      * @return the objects contained in the world.
      */
     public List<WorldObject> getObjects() {
@@ -211,6 +193,7 @@ public class World {
 
     /**
      * Returns the world's spawner.
+     *
      * @return Spawner which spawns new objects into the world.
      */
     public Spawner getSpawner() {
@@ -218,18 +201,8 @@ public class World {
     }
 
     /**
-     * Set the (new) current player.
-     * @param p
-     *            The new player.
-     */
-    public void setPlayer(final Player p) {
-        objects.remove(player);
-        player = p;
-        objects.add(p);
-    }
-
-    /**
      * Return the current player.
+     *
      * @return the current player.
      */
     public Player getPlayer() {
@@ -237,9 +210,23 @@ public class World {
     }
 
     /**
+     * Set the (new) current player.
+     *
+     * @param p The new player.
+     */
+    public void setPlayer(final Player p) {
+        objects.remove(player);
+        player = p;
+        objects.add(p);
+
+
+        physicsWorld.setContactListener(new PlayerCollisionListener(player));
+    }
+
+    /**
      * Updates all objects present in the world.
-     * @param delta
-     * the time that has passed since the previous frame.
+     *
+     * @param delta the time that has passed since the previous frame.
      */
     public void update(final float delta) {
         spawner.spawnBlocks();
@@ -248,55 +235,78 @@ public class World {
         while (wIter.hasNext()) {
             w = wIter.next();
 
-            if ((w.getX() + w.getTexture().getWidth()) < (player.getX() - 1000)) {
+            if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
+                if (w.getPhysicsBody() != null) {
+                    physicsWorld.destroyBody(w.getPhysicsBody());
+                }
                 wIter.remove();
                 continue;
             }
 
             w.update(delta, this);
         }
+        physicsWorld.step(1 / 60f, 6, 2);
     }
 
-    /**
-     * Sets the jumpTime variable.
-     * @param newTime
-     *            The time jumpTime needs to be set to.
-     */
-    public void setJumpTime(final long newTime) {
-        jumpTime = newTime;
-    }
-
-    /**
-     * Returns the jumpTime variable.
-     * @return the jumpTime variable.
-     */
-    public long getJumpTime() {
-        return jumpTime;
-    }
     /**
      * Check whether the player is still alive.
+     *
      * @return True if the player is still alive, else false.
      */
     public boolean getGameStatus() {
-        return !(player.getY() < 0.f);
+        return !player.isDead();
     }
 
     /**
      * Getter for the inputProcessor used to capture:
      * key presses and releases.
      * Used in MainGameScreen.render();
+     *
      * @return the InputProcessor
      */
     public InputProcessor getInputProcessor() {
         return ip;
     }
 
-    /**
-     * Method that sets the spawner of the world.
-     * Used for testing.
-     * @param sp the new spawner.
-     */
-    public void setSpawner(final Spawner sp) {
-        spawner = sp;
+    public static class PlayerCollisionListener implements ContactListener {
+        /**
+         * The player that is influenced by collisions.
+         */
+        private Player player;
+
+        /**
+         * Constructs a new collision listener that influences the given player.
+         * @param p the player to influence
+         */
+        public PlayerCollisionListener(final Player p) {
+            this.player = p;
+        }
+
+        /**
+         * Method called when the player collides with something.
+         * @param Contact the contact the player gets. 
+         */
+        @Override
+        public void beginContact(final Contact contact) {
+            if (contact.getFixtureA().getUserData() == player && contact.getFixtureB().getUserData() instanceof Obstacle
+                    || contact.getFixtureB().getUserData() == player && contact.getFixtureA().getUserData() instanceof Obstacle) {
+                player.kill();
+            }
+        }
+
+        @Override
+        public void endContact(final Contact contact) {
+
+        }
+
+        @Override
+        public void preSolve(final Contact contact, final Manifold oldManifold) {
+
+        }
+
+        @Override
+        public void postSolve(final Contact contact, final ContactImpulse impulse) {
+
+        }
     }
 }

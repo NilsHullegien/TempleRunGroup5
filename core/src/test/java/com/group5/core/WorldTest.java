@@ -3,7 +3,7 @@ package com.group5.core;
 import com.group5.core.controllers.Spawner;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
-import com.group5.core.world.World;
+import com.group5.core.world.WorldManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -23,12 +24,14 @@ import static org.junit.Assert.assertTrue;
 public class WorldTest {
 
 
-    private World world;
+    private WorldManager world;
+    
+    private World physicsWorld;
 
     @Before
     public void setUp() {
         // TODO: Probably should use a stubbed world here
-        this.world = new World();
+        this.world = new WorldManager();
     }
 
     /**
@@ -36,14 +39,14 @@ public class WorldTest {
      */
     @Test
     public void addTest() {
-        world.add(new FloorTile(new Vector2(0, 0)));
-        assertTrue(world.getObjects().get(0).equals(new FloorTile(new Vector2(0,0))));
+        world.add(new FloorTile(physicsWorld, new Vector2(0, 0)));
+        assertTrue(world.getObjects().get(0).equals(new FloorTile(physicsWorld, new Vector2(0,0))));
         
-        world.add(new FloorTile(new Vector2(0,1)));
-        assertTrue(world.getObjects().get(1).equals(new FloorTile(new Vector2(0,1))));
+        world.add(new FloorTile(physicsWorld, new Vector2(0,1)));
+        assertTrue(world.getObjects().get(1).equals(new FloorTile(physicsWorld, new Vector2(0,1))));
         
-        world.add(new Player(new Vector2(0,1),0,0));
-        assertTrue(world.getObjects().get(2).equals(new Player(new Vector2(0, 1), 0, 0)));
+        world.add(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20)));
+        assertTrue(world.getObjects().get(2).equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20))));
     }
 
     /**
@@ -51,10 +54,10 @@ public class WorldTest {
      */
     @Test
     public void setPlayerTest() {
-        world.setPlayer(new Player(new Vector2(0,0),0,0));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(0,0),0,0)));
-        world.setPlayer(new Player(new Vector2(1,0), 0, 0));
-        assertTrue(world.getPlayer().equals(new Player(new Vector2(1,0),0,0)));
+        world.setPlayer(new Player(physicsWorld, new Vector2(0,0), new Vector2(20, 20)));
+        assertTrue(world.getPlayer().equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20, 20))));
+        world.setPlayer(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20)));
+        assertTrue(world.getPlayer().equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20))));
     }
 
     /**
@@ -62,10 +65,9 @@ public class WorldTest {
      */
     @Test
     public void testObjectDisappearsWhenTooFarLeft() {
-        World w = new World();
-        w.setPlayer(new Player(new Vector2(10000.f, 0.f),100,100));
+        WorldManager w = new WorldManager();
 
-        FloorTile disappearing = new FloorTile(new Vector2(0,0));
+        FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(0,0));
         w.add(disappearing);
 
         w.update(0);
@@ -78,10 +80,9 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
-        World w = new World();
-        w.setPlayer(new Player(new Vector2(0,0),100,100));
+        WorldManager w = new WorldManager();
 
-        FloorTile disappearing = new FloorTile(new Vector2(0,0));
+        FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(0,0));
         w.add(disappearing);
 
         w.update(0);
@@ -94,10 +95,9 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
-        World w = new World();
-        w.setPlayer(new Player(new Vector2(0,0),100,100));
+        WorldManager w = new WorldManager();
 
-        FloorTile disappearing = new FloorTile(new Vector2(10000.f, 0.f));
+        FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(10000.f, 0.f));
         w.add(disappearing);
 
         w.update(0);
@@ -112,20 +112,7 @@ public class WorldTest {
     public void getAndSetSpawnerTest() {
         Spawner spawn = new Spawner(world);
         assertFalse(world.getSpawner().equals(spawn));
-        world.setSpawner(spawn);
         assertTrue(world.getSpawner().equals(spawn));
-    }
-    
-    /**
-     * Test whether getJumpTime and SetJumpTime work the way they should.
-     */
-    @Test
-    public void getAndSetJumpTimeTest() {
-        //Default value
-        assertTrue(world.getJumpTime() == 0L);
-        //Change value and verify it actually changed.
-        world.setJumpTime(500L);
-        assertTrue(world.getJumpTime() == 500L);
     }
     
     /**
@@ -143,7 +130,6 @@ public class WorldTest {
     @Test
     public void getGameStatusTest() {
         //Set player is already tested.
-        world.setPlayer(new Player(new Vector2(0,0), 0, 0));
         
         //By default, gameStatus is true.
         assertTrue(world.getGameStatus());

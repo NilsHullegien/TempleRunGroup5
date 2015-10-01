@@ -16,26 +16,36 @@
             <dependency>
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx</artifactId>
-                <version>1.6.5</version>
+                <version>1.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.badlogicgames.gdx</groupId>
+                <artifactId>gdx-box2d</artifactId>
+                <version>1.7.0</version>
             </dependency>
 
             <!-- desktop-specific dependencies -->
             <dependency>
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx-backend-lwjgl</artifactId>
-                <version>1.6.5</version>
+                <version>1.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>com.badlogicgames.gdx</groupId>
+                <artifactId>gdx-box2d-platform</artifactId>
+                <version>1.7.0</version>
             </dependency>
             <dependency>
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx-backend-headless</artifactId>
-                <version>1.6.5</version>
+                <version>1.7.0</version>
                 <scope>test</scope>
             </dependency>
 
             <dependency>
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx-platform</artifactId>
-                <version>1.6.5</version>
+                <version>1.7.0</version>
                 <classifier>natives-desktop</classifier>
             </dependency>
 
@@ -43,7 +53,7 @@
             <dependency>
                 <groupId>com.badlogicgames.gdx</groupId>
                 <artifactId>gdx</artifactId>
-                <version>1.6.5</version>
+                <version>1.7.0</version>
                 <classifier>sources</classifier>
                 <scope>provided</scope>
             </dependency>
@@ -71,6 +81,7 @@
                 <configuration>
                     <instrumentation>
                         <ignores>
+                            <ignore>com.group5.core.world.WorldManager.PlayerCollisionListener</ignore>
                             <ignore>com.group5.core.screens.*</ignore>
                             <ignore>com.group5.core.EndlessRunner</ignore>
                             <ignore>com.group5.java.EndlessRunnerDesktop</ignore>
@@ -82,8 +93,8 @@
                         <branchRate>60</branchRate>
                         <lineRate>60</lineRate>-->
                         <haltOnFailure>true</haltOnFailure>
-                        <totalBranchRate>60</totalBranchRate>
                         <totalLineRate>50</totalLineRate>
+                        <totalBranchRate>60</totalBranchRate>
                     </check>
                 </configuration>
             </plugin>
