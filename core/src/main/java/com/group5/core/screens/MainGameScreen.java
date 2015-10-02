@@ -152,7 +152,7 @@ public class MainGameScreen implements Screen {
             scoreLabel.setVisible(false);
             Gdx.input.setInputProcessor(stage);
         }
-        score = score + delta;
+        score = score + delta * worldManager.getPlayer().getSpeed().len();
 
         scoreLabel.setText(Integer.toString(Math.round(score)));
         batch.end();
