@@ -1,23 +1,17 @@
 package com.group5.core;
 
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.controllers.CollisionChecker;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
-import com.group5.core.world.WorldObject;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.world.FloorTile;
-import com.group5.core.world.Player;
-import com.group5.core.world.WorldManager;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

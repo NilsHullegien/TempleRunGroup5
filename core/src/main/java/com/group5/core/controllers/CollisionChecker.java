@@ -1,3 +1,7 @@
+/**
+ * @TODO: Is this class redundant???
+ */
+
 package com.group5.core.controllers;
 
 import com.group5.core.world.WorldManager;

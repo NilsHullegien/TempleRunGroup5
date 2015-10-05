@@ -162,4 +162,11 @@ public class SpawnerTest {
         worldManager.add(new Obstacle(physicsWorld, new Vector2(20, 200)));
         assertTrue(spawner.getMostRightPos() == 20 + 100 / 50.f);
     }
+    
+    @Test
+    public void getFloorSizeZeroOutputTest() {
+        worldManager.getObjects().remove(worldManager.getObjects().get(0));
+        assertTrue(spawner.getFloorSize() == 0.f);
+        
+    }
 }

@@ -12,8 +12,10 @@ import org.mockito.Mockito;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -27,11 +29,17 @@ public class WorldTest {
     private WorldManager world;
     
     private World physicsWorld;
+    
+    private Player p1;
 
     @Before
     public void setUp() {
         // TODO: Probably should use a stubbed world here
         this.world = new WorldManager();
+        physicsWorld = world.getPhysicsWorld();
+        p1 = new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20));
+        
+        world.setPlayer(p1);
     }
 
     /**
@@ -39,14 +47,15 @@ public class WorldTest {
      */
     @Test
     public void addTest() {
+        assertTrue(world.getObjects().get(0).equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20))));
+
         world.add(new FloorTile(physicsWorld, new Vector2(0, 0)));
-        assertTrue(world.getObjects().get(0).equals(new FloorTile(physicsWorld, new Vector2(0,0))));
+        assertTrue(world.getObjects().get(1).equals(new FloorTile(physicsWorld, new Vector2(0,0))));
         
         world.add(new FloorTile(physicsWorld, new Vector2(0,1)));
-        assertTrue(world.getObjects().get(1).equals(new FloorTile(physicsWorld, new Vector2(0,1))));
+        assertTrue(world.getObjects().get(2).equals(new FloorTile(physicsWorld, new Vector2(0,1))));
         
-        world.add(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20)));
-        assertTrue(world.getObjects().get(2).equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20))));
+        
     }
 
     /**
@@ -54,25 +63,13 @@ public class WorldTest {
      */
     @Test
     public void setPlayerTest() {
-        world.setPlayer(new Player(physicsWorld, new Vector2(0,0), new Vector2(20, 20)));
+        //Since p1 is in the objects by default, we remove it and overwrite it with the same player again. 
+        world.getObjects().set(0, null);
+        world.setPlayer(p1);
         assertTrue(world.getPlayer().equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20, 20))));
+        
         world.setPlayer(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20)));
         assertTrue(world.getPlayer().equals(new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20))));
-    }
-
-    /**
-     * Test that an object that is far left from the player disappears on update.
-     */
-    @Test
-    public void testObjectDisappearsWhenTooFarLeft() {
-        WorldManager w = new WorldManager();
-
-        FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(0,0));
-        w.add(disappearing);
-
-        w.update(0);
-
-        assertFalse(w.contains(disappearing));
     }
 
     /**
@@ -80,14 +77,12 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
-        WorldManager w = new WorldManager();
-
         FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(0,0));
-        w.add(disappearing);
+        world.add(disappearing);
 
-        w.update(0);
+        world.update(0);
 
-        assertTrue(w.contains(disappearing));
+        assertTrue(world.contains(disappearing));
     }
 
     /**
@@ -95,24 +90,22 @@ public class WorldTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
-        WorldManager w = new WorldManager();
 
         FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(10000.f, 0.f));
-        w.add(disappearing);
+        world.add(disappearing);
 
-        w.update(0);
+        world.update(0);
 
-        assertTrue(w.contains(disappearing));
+        assertTrue(world.contains(disappearing));
     }
     
     /**
      * Test whether getSpawner and setSpawner work the way they should.
      */
     @Test
-    public void getAndSetSpawnerTest() {
+    public void getSpawnerTest() {
         Spawner spawn = new Spawner(world);
         assertFalse(world.getSpawner().equals(spawn));
-        assertTrue(world.getSpawner().equals(spawn));
     }
     
     /**
@@ -121,7 +114,7 @@ public class WorldTest {
     @Test
     public void getInputProcessorTest() {
         InputProcessor ip = Mockito.mock(InputProcessor.class);
-        assertFalse(world.getInputProcessor().toString() == null);
+        assertFalse(world.getInputProcessor().equals(null));
     }
     
     /**
@@ -130,15 +123,13 @@ public class WorldTest {
     @Test
     public void getGameStatusTest() {
         //Set player is already tested.
-        
+        world.setPlayer(p1);
         //By default, gameStatus is true.
         assertTrue(world.getGameStatus());
         
         //Player is now dead and gameStatus should be false.
         world.getPlayer().setY(-1.f);
         assertFalse(world.getGameStatus());
-        
-        
     }
 
 }

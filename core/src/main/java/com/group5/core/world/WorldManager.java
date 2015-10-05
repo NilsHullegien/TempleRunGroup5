@@ -234,7 +234,6 @@ public class WorldManager {
         Iterator<WorldObject> wIter = objects.iterator();
         while (wIter.hasNext()) {
             w = wIter.next();
-
             if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
                 if (w.getPhysicsBody() != null) {
                     physicsWorld.destroyBody(w.getPhysicsBody());
@@ -268,6 +267,10 @@ public class WorldManager {
         return ip;
     }
 
+    /**
+     * Creates a player collision listener.
+     * Currently only beginContact(contact) is used.
+     */
     public static class PlayerCollisionListener implements ContactListener {
         /**
          * The player that is influenced by collisions.
@@ -284,7 +287,7 @@ public class WorldManager {
 
         /**
          * Method called when the player collides with something.
-         * @param Contact the contact the player gets. 
+         * @param Contact the contact the player gets.
          */
         @Override
         public void beginContact(final Contact contact) {

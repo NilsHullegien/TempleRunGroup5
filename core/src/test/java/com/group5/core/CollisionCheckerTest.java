@@ -1,6 +1,9 @@
+//Redundant Test class
+
 //package com.group5.core;
 //
 //import com.badlogic.gdx.math.Vector2;
+//import com.badlogic.gdx.physics.box2d.World;
 //import com.group5.core.controllers.CollisionChecker;
 //import com.group5.core.world.FloorTile;
 //import com.group5.core.world.Player;
@@ -19,12 +22,16 @@
 //public class CollisionCheckerTest {
 //    private WorldManager world;
 //    private CollisionChecker checker;
+//    private World physicsWorld;
 //
 //    @Before
 //    public void setUp() {
 //        // TODO: Probably should use a stubbed world here
 //        this.world = new WorldManager();
-//        this.checker = world.getCollider();
+//        
+//        physicsWorld = world.getPhysicsWorld();
+//        
+//        this.checker = ;
 //    }
 //
 //    /**
