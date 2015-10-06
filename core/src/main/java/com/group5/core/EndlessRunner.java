@@ -8,6 +8,7 @@ import com.group5.core.util.TextureCache;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -69,6 +70,16 @@ public class EndlessRunner extends Game {
             input = new FileInputStream("./game.properties");
 
             config.load(input);
+
+            String logFile = config.getProperty("log_file");
+            if (logFile != null) {
+                try {
+                    FileOutputStream f = new FileOutputStream(logFile, true);
+                    Logger.set(new Logger(f));
+                } catch (Exception ex) {
+                    Logger.get().error("Settings", "Invalid settings file: " + logFile);
+                }
+            }
 
             String threshold = config.getProperty("log_threshold", "DEBUG");
             try {
