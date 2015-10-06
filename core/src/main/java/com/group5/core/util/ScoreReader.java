@@ -16,7 +16,7 @@ public abstract class ScoreReader {
 
     /**
      * Read the scores from a properties file and feed them to the ScoreContainer.
-     * @param infile
+     * @param infile File you that has to be looked into
      */
     public static void read(final String infile) {
         Properties prop = new Properties();
