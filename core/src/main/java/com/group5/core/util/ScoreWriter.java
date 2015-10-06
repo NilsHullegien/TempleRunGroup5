@@ -13,23 +13,11 @@ import java.util.Properties;
  */
 public abstract class ScoreWriter {
 
-
-
     /**
-     * Write some scores to a file.
-     * @param args stuffs
+     * Write a set of scores to a file.
+     * @param list List of score items to write to a file
      */
-    public static void main(final String[] args) {
-        writeScore();
-
-    }
-
-
-
-    /**
-     * Write a set of score to a file.
-     */
-    public static void writeScore() {
+    public static void writeScore(final ArrayList<ScoreItem> list) {
 
         Properties prop = new Properties();
 
@@ -40,18 +28,17 @@ public abstract class ScoreWriter {
         ArrayList<ScoreItem> l = new ArrayList<ScoreItem>();
         l.add(i1);
         l.add(i2);
+        prop.setProperty("size", Integer.toString(list.size()));
 
-        System.out.println(System.getProperty("user.dir"));
         try {
-            output = new FileOutputStream("src/main/java/com/group5/core/util/scores.properties");
+            output = new FileOutputStream("scores.properties");
 
 
 
-            for (int i = 0; i < l.size(); i++) {
-                prop.setProperty("rank" + Integer.toString(i), Integer.toString(l.get(i).getRank()));
-                prop.setProperty("score" + Integer.toString(i), Integer.toString(l.get(i).getScore()));
-                prop.setProperty("name" + Integer.toString(i), l.get(i).getName());
-                System.out.println("hallo");
+            for (int i = 0; i < list.size(); i++) {
+                prop.setProperty("rank" + Integer.toString(i), Integer.toString(list.get(i).getRank()));
+                prop.setProperty("score" + Integer.toString(i), Integer.toString(list.get(i).getScore()));
+                prop.setProperty("name" + Integer.toString(i), list.get(i).getName());
             }
 
 
@@ -69,7 +56,6 @@ public abstract class ScoreWriter {
                 }
             }
         }
-        System.out.println("hoi2");
 
     }
 

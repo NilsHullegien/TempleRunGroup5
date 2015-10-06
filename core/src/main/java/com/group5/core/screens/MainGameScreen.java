@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
+import com.group5.core.util.ScoreContainer;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
@@ -150,6 +151,7 @@ public class MainGameScreen implements Screen {
             gameOverTable.setVisible(true);
             gameOverScore.setText("Score:" + Integer.toString(Math.round(score)));
             scoreLabel.setVisible(false);
+            ScoreContainer.addScore(Math.round(score));
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();

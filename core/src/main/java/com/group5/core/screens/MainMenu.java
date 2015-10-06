@@ -105,8 +105,7 @@ public class MainMenu implements Screen {
         createDefaultSkin();
         buttonSetup();
         loadBackground();
-
-        //ScoreReader.read();
+        ScoreReader.read("scores.properties");
     }
 
     /**
