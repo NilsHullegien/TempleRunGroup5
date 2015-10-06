@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
+import com.group5.core.util.ScoreReader;
 
 /**
  * The main menu screen of the game.
@@ -66,6 +67,7 @@ public class MainMenu implements Screen {
         newGameButton.setPosition(Gdx.graphics.getWidth() / 5.f, Gdx.graphics.getHeight() / 8.f);
 
         newGameButton.addListener(new ClickListener() {
+            @Override
             public void clicked(final InputEvent event, final float x, final float y) {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
             }
@@ -77,6 +79,7 @@ public class MainMenu implements Screen {
         quitButton.setPosition(Gdx.graphics.getWidth() / 5.f * 3, Gdx.graphics.getHeight() / 8.f);
 
         quitButton.addListener(new ClickListener() {
+            @Override
             public void clicked(final InputEvent event, final float x, final float y) {
                 Gdx.app.exit();
             }
@@ -95,6 +98,10 @@ public class MainMenu implements Screen {
         createDefaultSkin();
         buttonSetup();
         loadBackground();
+
+        //System.out.println(System.getProperty("user.dir"));
+        //System.out.println("Dingneg");
+        ScoreReader.read();
     }
 
     /**

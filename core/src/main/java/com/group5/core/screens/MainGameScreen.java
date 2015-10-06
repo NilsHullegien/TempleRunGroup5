@@ -178,6 +178,7 @@ public class MainGameScreen implements Screen {
 
         restartButton.setPosition(0, 0);
         restartButton.addListener(new ClickListener() {
+            @Override
             public void clicked(final InputEvent event, final float x, final float y) {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
             }
@@ -186,6 +187,7 @@ public class MainGameScreen implements Screen {
         TextButton menuButton = new TextButton("Menu", buttonSkin);
         menuButton.setPosition(0, 0);
         menuButton.addListener(new ClickListener() {
+            @Override
             public void clicked(final InputEvent event, final float x, final float y) {
                 EndlessRunner.get().create();
             }
@@ -225,8 +227,8 @@ public class MainGameScreen implements Screen {
         labelSkin.add("default", font);
 
         //create texture
-        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5
-                , (int) Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5
+                , Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         labelSkin.add("background", new Texture(pixmap));
@@ -248,8 +250,8 @@ public class MainGameScreen implements Screen {
         buttonSkin.add("default", font);
 
         //create texture
-        Pixmap pixmap = new Pixmap((int) Gdx.graphics.getWidth() / 5
-                , (int) Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5
+                , Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         buttonSkin.add("background", new Texture(pixmap));
