@@ -155,7 +155,8 @@ public abstract class WorldObject {
                 1, 1,
                 (float) Math.toDegrees(getPhysicsBody().getAngle()),
                 0, 0,
-                (int) getWidth(), (int) getHeight(),
+                (int) (getWidth() / WorldManager.PHYSICS_SCALE_FACTOR),
+                (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
                 false, false);
     }
 
