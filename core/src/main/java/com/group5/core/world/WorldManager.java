@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.WorldManifold;
 import com.group5.core.controllers.Spawner;
 
 import java.util.ArrayList;
@@ -287,9 +288,17 @@ public class WorldManager {
 
         @Override
         public void beginContact(final Contact contact) {
-            if (contact.getFixtureA().getUserData() == player && contact.getFixtureB().getUserData() instanceof Obstacle
-                    || contact.getFixtureB().getUserData() == player && contact.getFixtureA().getUserData() instanceof Obstacle) {
-                player.kill();
+            if (contact.getFixtureA().getUserData() == player
+                    && contact.getFixtureB().getUserData() instanceof Obstacle
+                    || contact.getFixtureB().getUserData() == player
+                    && contact.getFixtureA().getUserData() instanceof Obstacle) {
+                WorldManifold w = contact.getWorldManifold();
+                float angle = w.getNormal().angle();
+                if (angle < 45
+                        || angle > 135 && angle < 225
+                        || angle > 315) {
+                    player.kill();
+                }
             }
         }
 
