@@ -135,11 +135,15 @@ public class MainGameScreen implements Screen {
 
         worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f
+                        + worldManager.getPlayer().getX() / WorldManager.PHYSICS_SCALE_FACTOR - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(
+                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR,
+                        1 / WorldManager.PHYSICS_SCALE_FACTOR,
+                        1));
         batch.begin();
         for (WorldObject obj : worldManager.getObjects()) {
             obj.doRender(batch);
@@ -160,7 +164,7 @@ public class MainGameScreen implements Screen {
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined);
     }
 
     /**

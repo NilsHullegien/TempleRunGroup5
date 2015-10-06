@@ -8,7 +8,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.EndlessRunner;
-import com.group5.core.util.Logger;
 
 /**
  * Represents a game character controlled by the user.

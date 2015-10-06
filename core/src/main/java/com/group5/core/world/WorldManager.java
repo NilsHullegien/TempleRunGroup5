@@ -19,6 +19,12 @@ import java.util.List;
  * Functions as a container for spawned items in the game.
  */
 public class WorldManager {
+
+    /**
+     * The scale with which pixel values have to be multiplied to get world-scale values.
+     */
+    public static final float PHYSICS_SCALE_FACTOR = 1 / 50.f;
+
     /**
      * The Box2D physics world.
      */
@@ -236,7 +242,7 @@ public class WorldManager {
         while (wIter.hasNext()) {
             w = wIter.next();
 
-            if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
+            if ((w.getX() + w.getWidth()) < (player.getX() - 20)) {
                 if (w.getPhysicsBody() != null) {
                     physicsWorld.destroyBody(w.getPhysicsBody());
                 }
