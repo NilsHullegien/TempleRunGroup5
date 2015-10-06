@@ -234,7 +234,6 @@ public class WorldManager {
         Iterator<WorldObject> wIter = objects.iterator();
         while (wIter.hasNext()) {
             w = wIter.next();
-
             if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
                 if (w.getPhysicsBody() != null) {
                     physicsWorld.destroyBody(w.getPhysicsBody());
@@ -269,7 +268,8 @@ public class WorldManager {
     }
 
     /**
-     * Inner class that handles Box2D collisions.
+     * Creates a player collision listener.
+     * Currently only beginContact(contact) is used.
      */
     public static class PlayerCollisionListener implements ContactListener {
         /**
@@ -285,6 +285,10 @@ public class WorldManager {
             this.player = p;
         }
 
+        /**
+         * Method called when the player collides with something.
+         * @param Contact the contact the player gets.
+         */
         @Override
         public void beginContact(final Contact contact) {
             if (contact.getFixtureA().getUserData() == player && contact.getFixtureB().getUserData() instanceof Obstacle
@@ -307,5 +311,23 @@ public class WorldManager {
         public void postSolve(final Contact contact, final ContactImpulse impulse) {
 
         }
+    }
+
+    /**
+     * ONLY USED FOR TESTING.
+     * returns the value of timerStart.
+     * @return timerStart (long).
+     */
+    public long testingOnlygetTimerStart() {
+        return timerStart;
+    }
+
+    /**
+     * ONLY USED FOR TESTING.
+     * returns the value of jumpTime.
+     * @return timerStart (long).
+     */
+    public long testingOnlygetJumpTime() {
+        return jumpTime;
     }
 }

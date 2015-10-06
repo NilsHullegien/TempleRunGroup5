@@ -101,18 +101,19 @@ public class MainGameScreen implements Screen {
         this.worldManager = new WorldManager();
         Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
         this.worldManager.setPlayer(player);
-
+System.out.println("1");
         this.physicsRenderer = new Box2DDebugRenderer();
-
+System.out.println("2");
         worldManager.setPlayer(player);
         worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
-
+System.out.println("3");
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
         camera.position.set(camera.viewportWidth / 2.f + player.getX(),
                 camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
         Gdx.input.setInputProcessor(worldManager.getInputProcessor());
+System.out.println("4");
     }
 
     @Override

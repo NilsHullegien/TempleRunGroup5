@@ -45,5 +45,13 @@ public class FloorTileTest {
         assertFalse(f1.equals(p));
 
     }
+    
+    @Test
+    public void hashCodeTest() {
+        FloorTile f1 = new FloorTile(physicsWorld, new Vector2(0,0));
+        FloorTile f2 = new FloorTile(physicsWorld, new Vector2(0,0));
+        
+        assertTrue(f1.hashCode() == f2.hashCode());
+    }
 
 }

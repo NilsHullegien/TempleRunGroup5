@@ -1,24 +1,35 @@
 package com.group5.core;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.world.Obstacle;
-import org.junit.Before;
-import org.junit.Test;
+import com.group5.core.world.WorldManager;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.Before;
 
 /**
  * Test class for the Obstacle class.
  */
 public class ObstacleTest {
     private World physicsWorld;
+    
+    private Obstacle obstacle;
 
+    private WorldManager world;
+    
     @Before
     public void setUp() {
-        physicsWorld = new World(new Vector2(0.f, 0.f), true);
+        world = new WorldManager();
+        
+        physicsWorld = world.getPhysicsWorld();
+        
+        obstacle = Mockito.mock(Obstacle.class);
     }
 
     /**
@@ -26,7 +37,6 @@ public class ObstacleTest {
      */
     @Test
     public void testEqualsSame() {
-        Obstacle obstacle = new Obstacle(physicsWorld, new Vector2(0, 0));
         assertTrue(obstacle.equals(obstacle));
     }
 
@@ -35,7 +45,6 @@ public class ObstacleTest {
      */
     @Test
     public void testEqualsDif() {
-        Obstacle obstacle = new Obstacle(physicsWorld, new Vector2(0, 0));
         Obstacle dif = new Obstacle(physicsWorld, new Vector2(0, 10));
         assertFalse(obstacle.equals(dif));
     }
@@ -45,7 +54,6 @@ public class ObstacleTest {
      */
     @Test
     public void testEqualsNull() {
-        Obstacle obstacle = new Obstacle(physicsWorld, new Vector2(0, 0));
         assertFalse(obstacle.equals(null));
     }
 

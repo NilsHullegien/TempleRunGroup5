@@ -125,4 +125,40 @@ public class GameSlice {
     public float getYPosFloor() {
         return yPosFloor;
     }
+
+    /**
+     * TESTING ONLY!
+     * Set FloorRNG value.
+     * @param i new value of FloorRNG
+     */
+    public void testingOnlysetFloorRNG(final int i) {
+        floorRNG = i;
+    }
+
+    /**
+     * TESTING ONLY!
+     * Set noGapFloorRNG value.
+     * @param i new value of noGapFloorRNG.
+     */
+    public void testingOnlysetNoGapFloorRNG(final int i) {
+        noGapFloorRNG = i;
+    }
+
+    /**
+     * TESTING ONLY!
+     * Set obstaclesRNG value.
+     * @param i new value of obstaclesRNG.
+     */
+    public void testingOnlysetObstaclesRNG(final int i) {
+        obstaclesRNG = i;
+    }
+
+    /**
+     * TESTING ONLY!
+     * Set noGapObstacle value.
+     * @param i new value of noGapObstacleRNG.
+     */
+    public void testingOnlysetNoGapObstacleRNG(final int i) {
+        noGapObstacleRNG = i;
+    }
 }
