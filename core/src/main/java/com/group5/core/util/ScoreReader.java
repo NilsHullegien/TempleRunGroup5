@@ -1,5 +1,6 @@
 package com.group5.core.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,42 +24,35 @@ public abstract class ScoreReader {
 
         ArrayList<ScoreItem> l = new ArrayList<ScoreItem>();
 
-        try {
+        File f = new File("scores.properties");
+        if (f.exists()) {
+            try {
 
-            input = new FileInputStream("scores.properties");
+                input = new FileInputStream("scores.properties");
 
-            // load a properties file
-            prop.load(input);
-
-
-            System.out.println(prop.getProperty("size", "0"));
-
+                // load a properties file
+                prop.load(input);
 
 
+                for (int i = 0; i < Integer.parseInt(prop.getProperty("size")); i++) {
+                    Integer rank = Integer.parseInt(prop.getProperty("rank" + Integer.toString(i)));
+                    Integer score = Integer.parseInt(prop.getProperty("score" + Integer.toString(i)));
+                    String name = prop.getProperty("name" + Integer.toString(i));
+                    l.add(new ScoreItem(rank, score, name));
 
-
-            for (int i = 0; i < 2; i++) {
-                Integer rank = Integer.parseInt(prop.getProperty("rank" + Integer.toString(i)));
-                Integer score = Integer.parseInt(prop.getProperty("score" + Integer.toString(i)));
-                String name = prop.getProperty("name" + Integer.toString(i));
-
-                System.out.println(rank);
-                System.out.println(score);
-
-                l.add(new ScoreItem(rank, score, name));
-
-            }
+                }
 
 
 
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (input != null) {
-                try {
-                    input.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

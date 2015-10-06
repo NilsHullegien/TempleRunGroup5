@@ -57,5 +57,13 @@ public class ScoreItem {
     public String getName() {
         return name;
     }
+
+    /**
+     * Set a new rank value for this score item.
+     * @param rankValue the new rank value
+     */
+    public void setRank(final int rankValue) {
+        rank = rankValue;
+    }
 }
 
