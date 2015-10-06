@@ -56,12 +56,7 @@ public class ObstacleTest {
     public void testEqualsNull() {
         assertFalse(obstacle.equals(null));
     }
-    
-	@Test
-	public void updateTest() {
-	    //Verify nothing happens.
-	    Mockito.verify(obstacle, Mockito.never()).update(0, world);
-	}
+
     /**
      * Test method to check two different instances with the same properties.
      */

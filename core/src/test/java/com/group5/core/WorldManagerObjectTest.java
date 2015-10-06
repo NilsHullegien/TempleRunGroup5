@@ -55,7 +55,6 @@ public class WorldManagerObjectTest {
     
     @Test
     public void equalsNullTest() {
-        System.out.println("TEST");
         WorldManager w1 = new WorldManager();
         assertFalse(w1.equals(p1));
     }

@@ -312,4 +312,22 @@ public class WorldManager {
 
         }
     }
+
+    /**
+     * ONLY USED FOR TESTING.
+     * returns the value of timerStart.
+     * @return timerStart (long).
+     */
+    public long testingOnlygetTimerStart() {
+        return timerStart;
+    }
+
+    /**
+     * ONLY USED FOR TESTING.
+     * returns the value of jumpTime.
+     * @return timerStart (long).
+     */
+    public long testingOnlygetJumpTime() {
+        return jumpTime;
+    }
 }

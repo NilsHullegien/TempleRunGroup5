@@ -1,10 +1,13 @@
 package com.group5.core;
 
+import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,12 +24,16 @@ public class WorldManagerTest {
 
     private WorldManager worldManager;
     private World physicsWorld;
+    private InputProcessor inputpr;
+    private Player p1;
 
     @Before
     public void setUp() {
         // TODO: Probably should use a stubbed worldManager here
         this.worldManager = new WorldManager();
         this.physicsWorld = worldManager.getPhysicsWorld();
+        inputpr = worldManager.getInputProcessor();
+        p1 = new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20));
     }
 
     /**
@@ -49,7 +56,7 @@ public class WorldManagerTest {
      */
     @Test
     public void setPlayerTest() {
-        worldManager.setPlayer(new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20)));
+        worldManager.setPlayer(p1);
         assertTrue(worldManager.getPlayer().equals(new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20))));
         worldManager.setPlayer(new Player(physicsWorld, new Vector2(1, 0), new Vector2(20, 20)));
         assertTrue(worldManager.getPlayer().equals(new Player(physicsWorld, new Vector2(1, 0), new Vector2(20, 20))));
@@ -60,15 +67,14 @@ public class WorldManagerTest {
      */
     @Test
     public void testObjectDisappearsWhenTooFarLeft() {
-        WorldManager w = new WorldManager();
-        w.setPlayer(new Player(w.getPhysicsWorld(), new Vector2(10000.f, 0.f), new Vector2(100, 100)));
+        worldManager.setPlayer(new Player(physicsWorld, new Vector2(10000.f, 0.f), new Vector2(100, 100)));
 
-        FloorTile disappearing = new FloorTile(w.getPhysicsWorld(), new Vector2(0, 0));
-        w.add(disappearing);
+        FloorTile disappearing = new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0));
+        worldManager.add(disappearing);
 
-        w.update(0);
+        worldManager.update(0);
 
-        assertFalse(w.contains(disappearing));
+        assertFalse(worldManager.contains(disappearing));
     }
 
     /**
@@ -76,15 +82,14 @@ public class WorldManagerTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenVisible() {
-        WorldManager w = new WorldManager();
-        w.setPlayer(new Player(physicsWorld, new Vector2(0, 0), new Vector2(100, 100)));
+        worldManager.setPlayer(new Player(physicsWorld, new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(0, 0));
-        w.add(disappearing);
+        worldManager.add(disappearing);
 
-        w.update(0);
+        worldManager.update(0);
 
-        assertTrue(w.contains(disappearing));
+        assertTrue(worldManager.contains(disappearing));
     }
 
     /**
@@ -92,15 +97,95 @@ public class WorldManagerTest {
      */
     @Test
     public void testObjectDoesNotDisappearWhenFarRight() {
-        WorldManager w = new WorldManager();
-        w.setPlayer(new Player(physicsWorld, new Vector2(0, 0), new Vector2(100, 100)));
+        worldManager.setPlayer(new Player(physicsWorld, new Vector2(0, 0), new Vector2(100, 100)));
 
         FloorTile disappearing = new FloorTile(physicsWorld, new Vector2(10000.f, 0.f));
-        w.add(disappearing);
+        worldManager.add(disappearing);
 
-        w.update(0);
+        worldManager.update(0);
 
-        assertTrue(w.contains(disappearing));
+        assertTrue(worldManager.contains(disappearing));
+    }
+    
+    @Test
+    public void inputProcessorKeyDownNotJumpButtonTest() {
+        inputpr.keyDown(Keys.K);
+        //Input of a random key will not trigger the timer to start.
+        assertTrue(worldManager.testingOnlygetTimerStart() == 0);
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorKeyDownJumpButtonTest() {
+        inputpr.keyDown(Keys.W);
+        assertFalse(worldManager.testingOnlygetTimerStart() == 0);
+    }
+    
+    @Test
+    public void inputProcessorKeyUpNotJumpButtonTest() {
+        inputpr.keyUp(Keys.K);
+        //Input of a random key will not trigger jump time to be modified.
+        assertTrue(worldManager.testingOnlygetJumpTime() == 0);
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorKeyUpJumpButtonTest() {
+        worldManager.setPlayer(p1);
+        inputpr.keyUp(Keys.W);
+        assertFalse(worldManager.testingOnlygetJumpTime() == 0);
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorKeyTypedJumpButtonTest() {
+        assertFalse(inputpr.keyTyped((char) Keys.K));
+        assertFalse(inputpr.keyTyped((char) Keys.W));
     }
 
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorTouchUpTest() {
+        assertFalse(inputpr.touchUp(0, 0, 0, 0));
+    }
+
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorTouchDraggedTest() {
+        assertFalse(inputpr.touchDragged(0,  0,  0));
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorTouchDownTest() {
+        assertFalse(inputpr.touchDown(0, 0,  0,  0));
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorScrolledTest() {
+        assertFalse(inputpr.scrolled(0));
+    }
+    
+    /**
+     * Value of the jump button is still hard coded here...
+     */
+    @Test
+    public void inputProcessorMouseMovedTest() {
+        assertFalse(inputpr.mouseMoved(0, 0));
+    }
 }
