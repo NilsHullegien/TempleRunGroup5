@@ -58,7 +58,7 @@ public class WorldManager {
      * Constructs a new, empty world with a default gravity.
      */
     public WorldManager() {
-        physicsWorld = new World(new Vector2(0, -20), true);
+        physicsWorld = new World(new Vector2(0, -50), true);
 
         objects = new ArrayList<WorldObject>();
         spawner = new Spawner(this);
