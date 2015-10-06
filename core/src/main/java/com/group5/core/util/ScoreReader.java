@@ -17,18 +17,18 @@ public abstract class ScoreReader {
     /**
      * Read the scores from a properties file and feed them to the ScoreContainer.
      */
-    public static void read() {
+    public static void read(String infile) {
         Properties prop = new Properties();
 
         InputStream input = null;
 
         ArrayList<ScoreItem> l = new ArrayList<ScoreItem>();
 
-        File f = new File("scores.properties");
+        File f = new File(infile);
         if (f.exists()) {
             try {
 
-                input = new FileInputStream("scores.properties");
+                input = new FileInputStream(infile);
 
                 // load a properties file
                 prop.load(input);

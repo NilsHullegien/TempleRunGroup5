@@ -20,8 +20,6 @@ public abstract class ScoreContainer {
      */
     public static void initialize(final ArrayList<ScoreItem> scoreList) {
         list.addAll(scoreList);
-        System.out.println("gelukt!");
-        System.out.println(list.size());
     }
 
     /**
@@ -31,7 +29,7 @@ public abstract class ScoreContainer {
     public static void addScore(final int score) {
 
         //TODO implement a way to change names
-        String name = "placeHolder";
+        String name = "placeholder";
         int lowest = list.size() + 1;
         for (int i = 0; i < list.size(); i++) {
             if (score > list.get(i).getScore() && list.get(i).getRank() < lowest) {
@@ -64,5 +62,20 @@ public abstract class ScoreContainer {
 
     }
 
+    /**
+     * Return the list with score items.
+     * @return The list of score items
+     */
+    public static ArrayList<ScoreItem> getList() {
+        return list;
+    }
+
+    /**
+     * Update the list.
+     * @param newList The new list
+     */
+    public static void setList(final ArrayList<ScoreItem> newList) {
+        list = newList;
+    }
 
 }

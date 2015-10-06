@@ -98,10 +98,7 @@ public class MainMenu implements Screen {
         createDefaultSkin();
         buttonSetup();
         loadBackground();
-
-        //System.out.println(System.getProperty("user.dir"));
-        //System.out.println("Dingneg");
-        ScoreReader.read();
+        ScoreReader.read("scores.properties");
     }
 
     /**
