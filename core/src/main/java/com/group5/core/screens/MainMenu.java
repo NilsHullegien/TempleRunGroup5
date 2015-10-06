@@ -75,6 +75,13 @@ public class MainMenu implements Screen {
         TextButton highscoreButton = new TextButton("Highscore", skin); // Use the initialized skin
         highscoreButton.setPosition(Gdx.graphics.getWidth() / 5.f * 2, Gdx.graphics.getHeight() / 8.f);
 
+        highscoreButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(final InputEvent event, final float x, final float y) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new HighScoreScreen(batch));
+            }
+        });
+        
         TextButton quitButton = new TextButton("Quit game", skin); // Use the initialized skin
         quitButton.setPosition(Gdx.graphics.getWidth() / 5.f * 3, Gdx.graphics.getHeight() / 8.f);
 
@@ -99,9 +106,7 @@ public class MainMenu implements Screen {
         buttonSetup();
         loadBackground();
 
-        //System.out.println(System.getProperty("user.dir"));
-        //System.out.println("Dingneg");
-        ScoreReader.read();
+        //ScoreReader.read();
     }
 
     /**
