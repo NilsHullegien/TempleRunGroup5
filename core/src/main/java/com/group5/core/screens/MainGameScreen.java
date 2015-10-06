@@ -71,12 +71,33 @@ public class MainGameScreen implements Screen {
     private boolean gameOverMenuActive = false;
 
     /**
+     * Score of the game.
+     */
+    private float score;
+
+    /**
+     * Label that indicates the score.
+     */
+    private Label scoreLabel;
+
+    /**
+     * Table that contains the game over screen.
+     */
+    private Table gameOverTable;
+
+    /**
+     * Label that indicates the final score.
+     */
+    private Label gameOverScore;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
         this.batch = b;
+        this.score = 0;
         this.worldManager = new WorldManager();
         Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
         this.worldManager.setPlayer(player);
@@ -98,6 +119,7 @@ public class MainGameScreen implements Screen {
     public void show() {
         createDefaultButtonSkin();
         createDefaultLabelSkin();
+        createScoreLabel();
         gameOverScreenSetup();
     }
 
@@ -125,9 +147,14 @@ public class MainGameScreen implements Screen {
 
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
-            stage.getActors().get(0).setVisible(true);
+            gameOverTable.setVisible(true);
+            gameOverScore.setText("Score:" + Integer.toString(Math.round(score)));
+            scoreLabel.setVisible(false);
             Gdx.input.setInputProcessor(stage);
         }
+        score = score + delta * worldManager.getPlayer().getSpeed().len();
+
+        scoreLabel.setText(Integer.toString(Math.round(score)));
         batch.end();
         stage.act();
         stage.draw();
@@ -142,9 +169,10 @@ public class MainGameScreen implements Screen {
     private void gameOverScreenSetup() {
 
         //the screen consists of one table containing one label and two buttons.
-        Table t = new Table();
+        gameOverTable = new Table();
 
         Label topText = new Label("Game over!", labelSkin);
+        gameOverScore = new Label("", labelSkin);
         topText.setPosition(0, 0);
         TextButton restartButton = new TextButton("New game", buttonSkin); // Use the initialized buttonSkin
 
@@ -162,17 +190,28 @@ public class MainGameScreen implements Screen {
                 EndlessRunner.get().create();
             }
         });
-        t.setFillParent(true);
-        t.setColor(Color.BLUE);
-        t.setVisible(false);
-        t.add(topText).expandX().width(200.f);
-        t.row();
+        gameOverTable.setFillParent(true);
+        gameOverTable.setColor(Color.BLUE);
+        gameOverTable.setVisible(false);
+        gameOverTable.add(topText).expandX().width(200.f);
+        gameOverTable.row();
+        gameOverTable.add(gameOverScore).width(200.f);
+        gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
-        t.add(t2);
+        gameOverTable.add(t2);
         //t.setVisible(false);
-        stage.addActor(t);
+        stage.addActor(gameOverTable);
+    }
+
+    /**
+     * Create a label which will indicate the score.
+     */
+    private void createScoreLabel() {
+        scoreLabel = new Label(Float.toString(score), labelSkin);
+        stage.addActor(scoreLabel);
+
     }
 
     /**
