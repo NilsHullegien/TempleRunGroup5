@@ -16,8 +16,9 @@ public abstract class ScoreWriter {
     /**
      * Write a set of scores to a file.
      * @param list List of score items to write to a file
+     * @param infile file to write to
      */
-    public static void writeScore(final ArrayList<ScoreItem> list) {
+    public static void writeScore(final ArrayList<ScoreItem> list, final String infile) {
 
         Properties prop = new Properties();
 
@@ -31,7 +32,7 @@ public abstract class ScoreWriter {
         prop.setProperty("size", Integer.toString(list.size()));
 
         try {
-            output = new FileOutputStream("scores.properties");
+            output = new FileOutputStream(infile);
 
 
 
