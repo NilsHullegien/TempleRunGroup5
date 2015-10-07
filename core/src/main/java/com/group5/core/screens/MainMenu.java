@@ -46,7 +46,8 @@ public class MainMenu implements Screen {
     /**
      * Constructs a new main menu.
      *
-     * @param b the SpriteBatch to draw things with
+     * @param b
+     *            the SpriteBatch to draw things with
      */
     public MainMenu(final SpriteBatch b) {
         this.batch = b;
@@ -56,38 +57,54 @@ public class MainMenu implements Screen {
      * Loads the MainMenu background.
      */
     private void loadBackground() {
-        backgroundSprite = new Sprite(EndlessRunner.get().getTextureCache().load("background.png"));
+        backgroundSprite = new Sprite(EndlessRunner.get().getTextureCache()
+                .load("background.png"));
     }
 
     /**
      * Sets up all the buttons for the Main Menu.
      */
     private void buttonSetup() {
-        TextButton newGameButton = new TextButton("New game", skin); // Use the initialized skin
-        newGameButton.setPosition(Gdx.graphics.getWidth() / 5.f, Gdx.graphics.getHeight() / 8.f);
+        TextButton newGameButton = new TextButton("New game", skin); // Use the
+                                                                     // initialized
+                                                                     // skin
+        newGameButton.setPosition(Gdx.graphics.getWidth() / 5.f,
+                Gdx.graphics.getHeight() / 8.f);
 
         newGameButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x, final float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+            public void clicked(final InputEvent event, final float x,
+                    final float y) {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new MainGameScreen(batch));
             }
         });
-        TextButton highscoreButton = new TextButton("Highscore", skin); // Use the initialized skin
-        highscoreButton.setPosition(Gdx.graphics.getWidth() / 5.f * 2, Gdx.graphics.getHeight() / 8.f);
+        TextButton highscoreButton = new TextButton("Highscore", skin); // Use
+                                                                        // the
+                                                                        // initialized
+                                                                        // skin
+        highscoreButton.setPosition(Gdx.graphics.getWidth() / 5.f * 2,
+                Gdx.graphics.getHeight() / 8.f);
 
         highscoreButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x, final float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new HighScoreScreen(batch));
+            public void clicked(final InputEvent event, final float x,
+                    final float y) {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new HighScoreScreen(batch));
             }
         });
-        
-        TextButton quitButton = new TextButton("Quit game", skin); // Use the initialized skin
-        quitButton.setPosition(Gdx.graphics.getWidth() / 5.f * 3, Gdx.graphics.getHeight() / 8.f);
+
+        TextButton quitButton = new TextButton("Quit game", skin); // Use the
+                                                                   // initialized
+                                                                   // skin
+        quitButton.setPosition(Gdx.graphics.getWidth() / 5.f * 3,
+                Gdx.graphics.getHeight() / 8.f);
 
         quitButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x, final float y) {
+            public void clicked(final InputEvent event, final float x,
+                    final float y) {
                 Gdx.app.exit();
             }
         });
@@ -112,18 +129,19 @@ public class MainMenu implements Screen {
      * Creates a simple skin for the buttons.
      */
     private void createDefaultSkin() {
-        //create font
+        // create font
         BitmapFont font = new BitmapFont();
         skin = new Skin();
         skin.add("default", font);
 
-        //create texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         skin.add("background", new Texture(pixmap));
 
-        //create button style
+        // create button style
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = skin.newDrawable("background", Color.GRAY);
         textButtonStyle.down = skin.newDrawable("background", Color.DARK_GRAY);
@@ -137,11 +155,11 @@ public class MainMenu implements Screen {
     public void render(final float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //draw the background
+        // draw the background
         batch.begin();
         backgroundSprite.draw(batch);
         batch.end();
-        //draw the buttons
+        // draw the buttons
         stage.act();
         stage.draw();
     }
@@ -169,6 +187,5 @@ public class MainMenu implements Screen {
         stage.dispose();
         skin.dispose();
     }
-
 
 }

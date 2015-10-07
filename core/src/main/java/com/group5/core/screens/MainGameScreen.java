@@ -94,19 +94,22 @@ public class MainGameScreen implements Screen {
     /**
      * Constructs a new main game screen that plays the actual game.
      *
-     * @param b the SpriteBatch to draw textures with
+     * @param b
+     *            the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
         this.batch = b;
         this.score = 0;
         this.worldManager = new WorldManager();
-        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(
+                2, 10), new Vector2(2, 2));
         this.worldManager.setPlayer(player);
 
         this.physicsRenderer = new Box2DDebugRenderer();
 
         worldManager.setPlayer(player);
-        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
+        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(),
+                new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -136,7 +139,8 @@ public class MainGameScreen implements Screen {
 
         worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f
+                + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
@@ -149,7 +153,8 @@ public class MainGameScreen implements Screen {
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             gameOverTable.setVisible(true);
-            gameOverScore.setText("Score:" + Integer.toString(Math.round(score)));
+            gameOverScore.setText("Score:"
+                    + Integer.toString(Math.round(score)));
             scoreLabel.setVisible(false);
             ScoreContainer.addScore(Math.round(score));
             Gdx.input.setInputProcessor(stage);
@@ -162,7 +167,8 @@ public class MainGameScreen implements Screen {
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(),
+                camera.combined.scale(50.f, 50.f, 1.f));
     }
 
     /**
@@ -170,19 +176,25 @@ public class MainGameScreen implements Screen {
      */
     private void gameOverScreenSetup() {
 
-        //the screen consists of one table containing one label and two buttons.
+        // the screen consists of one table containing one label and two
+        // buttons.
         gameOverTable = new Table();
 
         Label topText = new Label("Game over!", labelSkin);
         gameOverScore = new Label("", labelSkin);
         topText.setPosition(0, 0);
-        TextButton restartButton = new TextButton("New game", buttonSkin); // Use the initialized buttonSkin
+        TextButton restartButton = new TextButton("New game", buttonSkin); // Use
+                                                                           // the
+                                                                           // initialized
+                                                                           // buttonSkin
 
         restartButton.setPosition(0, 0);
         restartButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x, final float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
+            public void clicked(final InputEvent event, final float x,
+                    final float y) {
+                ((Game) Gdx.app.getApplicationListener())
+                        .setScreen(new MainGameScreen(batch));
             }
         });
 
@@ -190,7 +202,8 @@ public class MainGameScreen implements Screen {
         menuButton.setPosition(0, 0);
         menuButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x, final float y) {
+            public void clicked(final InputEvent event, final float x,
+                    final float y) {
                 EndlessRunner.get().create();
             }
         });
@@ -205,7 +218,7 @@ public class MainGameScreen implements Screen {
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
         gameOverTable.add(t2);
-        //t.setVisible(false);
+        // t.setVisible(false);
         stage.addActor(gameOverTable);
     }
 
@@ -223,14 +236,14 @@ public class MainGameScreen implements Screen {
      */
     private void createDefaultLabelSkin() {
 
-        //create font
+        // create font
         BitmapFont font = new BitmapFont();
         labelSkin = new Skin();
         labelSkin.add("default", font);
 
-        //create texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5
-                , Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         labelSkin.add("background", new Texture(pixmap));
@@ -246,24 +259,26 @@ public class MainGameScreen implements Screen {
      * Create the skin for the buttons in the game over menu.
      */
     private void createDefaultButtonSkin() {
-        //create font
+        // create font
         BitmapFont font = new BitmapFont();
         buttonSkin = new Skin();
         buttonSkin.add("default", font);
 
-        //create texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5
-                , Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         buttonSkin.add("background", new Texture(pixmap));
 
-        //create button style
+        // create button style
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = buttonSkin.newDrawable("background", Color.GRAY);
-        textButtonStyle.down = buttonSkin.newDrawable("background", Color.DARK_GRAY);
+        textButtonStyle.down = buttonSkin.newDrawable("background",
+                Color.DARK_GRAY);
 
-        textButtonStyle.over = buttonSkin.newDrawable("background", Color.LIGHT_GRAY);
+        textButtonStyle.over = buttonSkin.newDrawable("background",
+                Color.LIGHT_GRAY);
         textButtonStyle.font = buttonSkin.getFont("default");
         buttonSkin.add("default", textButtonStyle);
     }
