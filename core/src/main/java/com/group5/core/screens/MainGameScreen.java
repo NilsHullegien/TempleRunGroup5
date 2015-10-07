@@ -149,6 +149,9 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
+        
+        worldManager.getPlayer().doRender(batch);
+        
         while (it.hasNext()) {
             it.next().doRender(batch);
         }
