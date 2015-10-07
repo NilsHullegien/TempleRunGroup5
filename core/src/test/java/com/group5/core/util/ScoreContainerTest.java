@@ -30,6 +30,9 @@ public class ScoreContainerTest {
 
 
 
+    /**
+     * Initialize the ScoreContainer with one element.
+     */
     @Test
     public void initializeOneElement() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
@@ -41,6 +44,9 @@ public class ScoreContainerTest {
         assertTrue(ScoreContainer.getList().get(0).getName().equals("name"));
     }
 
+    /**
+     * Initialize the ScoreContainer with multiple elements.
+     */
     @Test
     public void initializeMultipleElements() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
@@ -55,6 +61,9 @@ public class ScoreContainerTest {
 
     }
 
+    /**
+     * Add a score to an empty list.
+     */
     @Test
     public void addScoreEmptyListTest() {
         ScoreContainer.addScore(10);
@@ -63,6 +72,9 @@ public class ScoreContainerTest {
         assertTrue(ScoreContainer.getList().get(0).getName().equals("placeholder"));
     }
 
+    /**
+     * Insert a new high score into a non-empty list.
+     */
     @Test
     public void addScoreNewBestTest() {
         ScoreContainer.addScore(10);
@@ -75,6 +87,9 @@ public class ScoreContainerTest {
         assertTrue(ScoreContainer.getList().get(0).getName().equals("placeholder"));
     }
 
+    /**
+     * Insert a score that is not the best score.
+     */
     @Test
     public void addScoreNewNotBestTest() {
         ScoreContainer.addScore(11);
@@ -87,6 +102,9 @@ public class ScoreContainerTest {
         assertTrue(ScoreContainer.getList().get(0).getName().equals("placeholder"));
     }
 
+    /**
+     * Insert a new high score into a list that contains 10 items.
+     */
     @Test
     public void addScoreNewBestTenElementsTest() {
 
@@ -111,6 +129,10 @@ public class ScoreContainerTest {
         assertTrue(lowest == 2);
     }
 
+    /**
+     * Insert an element into a list that has 10 element.
+     * The new score is worse than the number 10 score and will not appear in the list.
+     */
     @Test
     public void addScoreNewWorstTenElementsTest() {
 

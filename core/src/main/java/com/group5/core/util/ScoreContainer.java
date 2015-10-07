@@ -10,6 +10,12 @@ import java.util.ArrayList;
 public abstract class ScoreContainer {
 
     /**
+     *TODO handle the file name differently.
+     * The file that the scorewriter should write to.
+     */
+    private static String infile = "scores.properties";
+
+    /**
      * List with score items.
      */
     private static ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
@@ -39,7 +45,7 @@ public abstract class ScoreContainer {
         if (lowest <= 10) {
             shift(lowest);
             list.add(new ScoreItem(lowest, score, name));
-            ScoreWriter.writeScore(list);
+            ScoreWriter.writeScore(list, infile);
         }
     }
 
