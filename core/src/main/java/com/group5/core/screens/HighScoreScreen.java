@@ -1,5 +1,7 @@
 package com.group5.core.screens;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,6 +20,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
+import com.group5.core.util.ScoreContainer;
+import com.group5.core.util.ScoreItem;
 
 /**
  * Creates a High Score screen.
@@ -34,7 +38,12 @@ public class HighScoreScreen implements Screen {
     /**
      * Skin.
      */
-    private Skin skin;
+    private Skin buttonSkin;
+
+    /**
+     * The list containing the scores.
+     */
+    private ArrayList<ScoreItem> scoreList;
 
     /**
      * Batch.
@@ -57,16 +66,6 @@ public class HighScoreScreen implements Screen {
     private Skin labelSkin = new Skin();
 
     /**
-     * Button Skin.
-     */
-    private Skin buttonSkin = new Skin();
-
-    /**
-     * Label that indicates the final score.
-     */
-    private Label gameOverScore;
-
-    /**
      * Constructor.
      * @param b spriteBatch
      */
@@ -80,9 +79,10 @@ public class HighScoreScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        createDefaultSkin();
+        createLabelSkin();
+        createButtonSkin();
         buttonSetup();
-        // gameOverScreenSetup();
+        tableSetup();
     }
 
     /**
@@ -136,37 +136,37 @@ public class HighScoreScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
-        skin.dispose();
+        buttonSkin.dispose();
     }
 
     /**
      * Creates a simple skin for the buttons.
      */
-    private void createDefaultSkin() {
+    private void createButtonSkin() {
         // create font
         BitmapFont font = new BitmapFont();
-        skin = new Skin();
-        skin.add("default", font);
+        buttonSkin = new Skin();
+        buttonSkin.add("default", font);
 
         // create texture
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
                 Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB565);
-        pixmap.setColor(Color.RED);
+        pixmap.setColor(Color.GRAY);
         pixmap.fill();
-        skin.add("background", new Texture(pixmap));
+        buttonSkin.add("background", new Texture(pixmap));
 
         // create button style
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.up = skin.newDrawable("background", Color.YELLOW);
-        textButtonStyle.down = skin.newDrawable("background", Color.RED);
+        textButtonStyle.up = buttonSkin.newDrawable("background", Color.GRAY);
+        textButtonStyle.down = buttonSkin.newDrawable("background", Color.DARK_GRAY);
 
-        textButtonStyle.over = skin.newDrawable("background", Color.RED);
-        textButtonStyle.font = skin.getFont("default");
-        skin.add("default", textButtonStyle);
+        textButtonStyle.over = buttonSkin.newDrawable("background", Color.LIGHT_GRAY);
+        textButtonStyle.font = buttonSkin.getFont("default");
+        buttonSkin.add("default", textButtonStyle);
     }
 
     /**
-     * Loads the MainMenu background.
+     * Loads the HighScoreScreen background.
      */
     private void loadBackground() {
         backgroundSprite = new Sprite(EndlessRunner.get().getTextureCache()
@@ -174,15 +174,11 @@ public class HighScoreScreen implements Screen {
     }
 
     /**
-     * Sets up all the buttons for the Main Menu.
+     * Sets up all the buttons for the HighScore Screen.
      */
     private void buttonSetup() {
-        TextButton returnButton = new TextButton("Return to Main menu", skin); // Use
-                                                                               // the
-                                                                               // initialized
-                                                                               // skin
+        TextButton returnButton = new TextButton("Return to Main menu", buttonSkin);
         returnButton.setPosition(0, Gdx.graphics.getHeight() / 10.f);
-        returnButton.setColor(Color.RED);
         returnButton.setWidth(Gdx.graphics.getWidth());
 
         returnButton.addListener(new ClickListener() {
@@ -197,55 +193,66 @@ public class HighScoreScreen implements Screen {
         stage.addActor(returnButton);
     }
 
-    /**
-     * Set up the screen that pops up when it's game over.
-     */
-    private void gameOverScreenSetup() {
+    //////////////////////////////////
+    ////////TESTING///////////////////
+    //////////////////////////////////
 
+    /**
+     * Create the skin for a default label.
+     */
+    private void createLabelSkin() {
+
+        // create font
+        BitmapFont font = new BitmapFont();
+        labelSkin = new Skin();
+        labelSkin.add("default", font);
+
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        pixmap.setColor(Color.GRAY);
+        pixmap.fill();
+        labelSkin.add("background", new Texture(pixmap));
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.background = labelSkin.newDrawable("background", Color.GRAY);
+        labelStyle.font = labelSkin.getFont("default");
+        labelStyle.fontColor = Color.RED;
+        labelSkin.add("default", labelStyle);
+    }
+
+    /**
+     * Creates the table in which the high scores are shown.
+     */
+    private void tableSetup() {
+        scoreList = ScoreContainer.getList();
         // the screen consists of one table containing one label and two
         // buttons.
         table = new Table();
+        table.reset();
+        table.clear();
+        table.left().top();
 
-        Label topText = new Label("Game over!", labelSkin);
-        gameOverScore = new Label("", labelSkin);
-        topText.setPosition(0, 0);
-        TextButton restartButton = new TextButton("New game", buttonSkin); // Use
-                                                                           // the
-                                                                           // initialized
-                                                                           // buttonSkin
+        Label rank = new Label("  RANK", labelSkin);
+        Label score = new Label("  SCORE", labelSkin);
+        Label name = new Label("  NAME", labelSkin);
+        rank.setPosition(0, 0);
+        score.setPosition(0, 1);
+        name.setPosition(0, 2);
 
-        restartButton.setPosition(0, 0);
-        restartButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(final InputEvent event, final float x,
-                    final float y) {
-                ((Game) Gdx.app.getApplicationListener())
-                        .setScreen(new MainGameScreen(batch));
-            }
-        });
-
-        TextButton menuButton = new TextButton("Menu", buttonSkin);
-        menuButton.setPosition(0, 0);
-        menuButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(final InputEvent event, final float x,
-                    final float y) {
-                EndlessRunner.get().create();
-            }
-        });
         table.setFillParent(true);
         table.setColor(Color.BLUE);
-        table.setVisible(false);
-        table.add(topText).expandX().width(200.f);
+        table.add(rank).expandX().width(50.f);
+        table.add(score).expandX().width(100.f);
+        table.add(name).expandX().width(200.f);
         table.row();
-        table.add(gameOverScore).width(200.f);
+        for (int i = 0; i <= Math.round(scoreList.size() - 1); i++) {
+            table.add(new Label(Integer.toString(scoreList.get(i).getRank()), labelSkin)).expandX().width(50.f);
+            table.add(new Label(Integer.toString(scoreList.get(i).getScore()), labelSkin)).expandX().width(100.f);
+            table.add(new Label(scoreList.get(i).getName(), labelSkin)).expandX().width(200.f);
+            table.row();
+        }
         table.row();
-        Table t2 = new Table();
-        t2.add(restartButton).width(100.f);
-        t2.add(menuButton).width(100.f);
-        table.add(t2);
-        // t.setVisible(false);
-        table.setColor(Color.RED);
         stage.addActor(table);
     }
 }

@@ -25,6 +25,7 @@ public abstract class ScoreContainer {
      * @param scoreList List of scores that are retrieved from the properties file
      */
     public static void initialize(final ArrayList<ScoreItem> scoreList) {
+        list = new ArrayList<ScoreItem>();
         list.addAll(scoreList);
     }
 

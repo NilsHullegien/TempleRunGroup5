@@ -34,17 +34,12 @@ public abstract class ScoreReader {
                 // load a properties file
                 prop.load(input);
 
-
                 for (int i = 0; i < Integer.parseInt(prop.getProperty("size")); i++) {
                     Integer rank = Integer.parseInt(prop.getProperty("rank" + Integer.toString(i)));
                     Integer score = Integer.parseInt(prop.getProperty("score" + Integer.toString(i)));
                     String name = prop.getProperty("name" + Integer.toString(i));
                     l.add(new ScoreItem(rank, score, name));
-
                 }
-
-
-
             } catch (IOException ex) {
                 ex.printStackTrace();
             } finally {
@@ -58,7 +53,5 @@ public abstract class ScoreReader {
             }
         }
         ScoreContainer.initialize(l);
-
     }
-
 }
