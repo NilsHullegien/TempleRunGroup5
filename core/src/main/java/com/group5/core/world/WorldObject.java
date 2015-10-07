@@ -56,6 +56,13 @@ public abstract class WorldObject {
         this.size = siz;
         this.texture = tex;
     }
+    
+    public WorldObject(
+            final Vector2 siz,
+            final Vector2 coord) {
+        this.pos = coord;
+        this.size = siz;
+    }
 
     /**
      * Returns the object's physics body.
@@ -137,7 +144,13 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
-
+    /**
+     * Return position of player.
+     * @return pos of Player
+     */
+    public Vector2 getPosition() {
+        return pos;
+    }
     /**
      * Call function to render a WorldManager Object.
      *

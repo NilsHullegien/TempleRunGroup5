@@ -1,5 +1,7 @@
 package com.group5.core.screens;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
+import com.group5.core.controllers.Director;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
@@ -79,12 +82,14 @@ public class MainGameScreen implements Screen {
         this.batch = b;
         this.worldManager = new WorldManager();
         Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
+        Director director = new Director(7, player.getPosition(), worldManager.getPhysicsWorld());
         this.worldManager.setPlayer(player);
+        this.worldManager.setDirector(director);
 
         this.physicsRenderer = new Box2DDebugRenderer();
 
         worldManager.setPlayer(player);
-        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
+        //worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -105,6 +110,10 @@ public class MainGameScreen implements Screen {
     public void resume() {
 
     }
+    
+    public Vector2 getCameraPosition() {
+        return new Vector2(camera.viewportWidth / 2.f, camera.viewportHeight / 2.f);
+    }
 
     @Override
     public void render(final float delta) {
@@ -112,17 +121,15 @@ public class MainGameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         worldManager.update(delta);
-
         camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for (WorldObject obj : worldManager.getObjects()) {
-            obj.doRender(batch);
+        Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
+        while (it.hasNext()) {
+            it.next().doRender(batch);
         }
-
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             stage.getActors().get(0).setVisible(true);
