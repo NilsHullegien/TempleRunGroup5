@@ -69,7 +69,6 @@ public class EndlessRunner extends Game {
             input = new FileInputStream("./game.properties");
 
             config.load(input);
-
             String threshold = config.getProperty("log_threshold", "DEBUG");
             try {
                 Logger.Level t = Enum.valueOf(Logger.Level.class, threshold);

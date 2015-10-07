@@ -9,12 +9,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.Director;
-import com.group5.core.controllers.GameSliceQueue;
-import com.group5.core.controllers.Spawner;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Functions as a container for spawned items in the game.
@@ -184,19 +180,8 @@ public class WorldManager {
     public void update(final float delta) {
         WorldObject w;
         Iterator<WorldObject> wIter = director.getObjects(false);
-        
-        //Iterator<WorldObject> wIter = director.getOnScreenObjects();
         while (wIter.hasNext()) {
             w = wIter.next();
-            System.out.println(w.getX());
-            if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
-                if (w.getPhysicsBody() != null) {
-                    physicsWorld.destroyBody(w.getPhysicsBody());
-                }
-                wIter.remove();
-                continue;
-            }
-
             w.update(delta, this);
             player.update(delta, this);
             director.update(player.getPosition());
@@ -212,12 +197,18 @@ public class WorldManager {
     public boolean getGameStatus() {
         return !player.isDead();
     }
-    
+    /**
+     * get the Director.
+     * @return the director.
+     */
     public Director getDirector() {
         return director;
     }
-    
-    public void setDirector(Director d) {
+    /**
+     * Set the director.
+     * @param d the director.
+     */
+    public void setDirector(final Director d) {
         this.director = d;
     }
 

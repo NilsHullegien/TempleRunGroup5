@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
 
 
 /**
@@ -56,14 +61,29 @@ public abstract class WorldObject {
         this.size = siz;
         this.texture = tex;
     }
-    
-    public WorldObject(
-            final Vector2 siz,
-            final Vector2 coord) {
-        this.pos = coord;
-        this.size = siz;
-    }
+    /**
+     * Create physical implementation object.
+     * @param physicsWorld world
+     * @param coord position
+     */
+    protected void createPhysicsObject(final World physicsWorld, final Vector2 coord) {
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.StaticBody;
+        def.position.set(coord);
 
+        Body body = physicsWorld.createBody(def);
+
+        PolygonShape bodyShape = new PolygonShape();
+        bodyShape.setAsBox(getWidth() / 2f, getHeight() / 2f, new Vector2(getWidth() / 2f, getHeight() / 2f), 0);
+
+        FixtureDef fixDef = new FixtureDef();
+        fixDef.shape = bodyShape;
+        Fixture f = body.createFixture(fixDef);
+        f.setUserData(this);
+
+        bodyShape.dispose();
+        setPhysicsBody(body);
+    }
     /**
      * Returns the object's physics body.
      *
