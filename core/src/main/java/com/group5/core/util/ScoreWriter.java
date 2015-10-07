@@ -24,6 +24,11 @@ public abstract class ScoreWriter {
 
         OutputStream output = null;
 
+        ScoreItem i1 = new ScoreItem(1, 10, "Nils");
+        ScoreItem i2 = new ScoreItem(2, 8, "Marcel");
+        ArrayList<ScoreItem> l = new ArrayList<ScoreItem>();
+        l.add(i1);
+        l.add(i2);
         prop.setProperty("size", Integer.toString(list.size()));
 
         try {
