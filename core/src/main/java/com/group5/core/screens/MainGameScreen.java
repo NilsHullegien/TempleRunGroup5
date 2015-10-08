@@ -92,6 +92,11 @@ public class MainGameScreen implements Screen {
     private Label gameOverScore;
 
     /**
+     * This label is only visible when the user gets a new high score in this session.
+     */
+    private Label highScoreLabel;
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b
@@ -156,6 +161,9 @@ public class MainGameScreen implements Screen {
             gameOverScore.setText("Score:"
                     + Integer.toString(Math.round(score)));
             scoreLabel.setVisible(false);
+            if (ScoreContainer.isHighScore(Math.round(score))) {
+                highScoreLabel.setVisible(true);
+            }
             ScoreContainer.addScore(Math.round(score));
             Gdx.input.setInputProcessor(stage);
         }
@@ -182,6 +190,8 @@ public class MainGameScreen implements Screen {
 
         Label topText = new Label("Game over!", labelSkin);
         gameOverScore = new Label("", labelSkin);
+        highScoreLabel = new Label("New Highscore!", labelSkin);
+        highScoreLabel.setVisible(false);
         topText.setPosition(0, 0);
         TextButton restartButton = new TextButton("New game", buttonSkin); // Use
                                                                            // the
@@ -210,7 +220,9 @@ public class MainGameScreen implements Screen {
         gameOverTable.setFillParent(true);
         gameOverTable.setColor(Color.BLUE);
         gameOverTable.setVisible(false);
-        gameOverTable.add(topText).expandX().width(200.f);
+        gameOverTable.add(highScoreLabel).expandX().width(200.f);
+        gameOverTable.row();
+        gameOverTable.add(topText).width(200.f);
         gameOverTable.row();
         gameOverTable.add(gameOverScore).width(200.f);
         gameOverTable.row();

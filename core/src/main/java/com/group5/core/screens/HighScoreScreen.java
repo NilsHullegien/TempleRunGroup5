@@ -246,7 +246,7 @@ public class HighScoreScreen implements Screen {
         table.add(score).expandX().width(100.f);
         table.add(name).expandX().width(200.f);
         table.row();
-        for (int i = 0; i <= Math.round(scoreList.size() - 1); i++) {
+        for (int i = 0; i <= (scoreList.size() - 1); i++) {
             table.add(new Label(Integer.toString(scoreList.get(i).getRank()), labelSkin)).expandX().width(50.f);
             table.add(new Label(Integer.toString(scoreList.get(i).getScore()), labelSkin)).expandX().width(100.f);
             table.add(new Label(scoreList.get(i).getName(), labelSkin)).expandX().width(200.f);

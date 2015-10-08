@@ -85,4 +85,19 @@ public abstract class ScoreContainer {
         list = newList;
     }
 
+    /**
+     * Check whether a score will be the highscore when added to the list of scores.
+     * @param score Score that you want to check
+     * @return True if this is the new best score; false if it's not
+     */
+    public static boolean isHighScore(final int score) {
+        for (ScoreItem scoreItem : list) {
+            if (scoreItem.getScore() > score) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }
