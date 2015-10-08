@@ -188,15 +188,6 @@ public class WorldManager {
         //Iterator<WorldObject> wIter = director.getOnScreenObjects();
         while (wIter.hasNext()) {
             w = wIter.next();
-            System.out.println(w.getX());
-            if ((w.getX() * 50.f + w.getWidth() * 50.f) < (player.getX() * 50.f - 1000)) {
-                if (w.getPhysicsBody() != null) {
-                    physicsWorld.destroyBody(w.getPhysicsBody());
-                }
-                wIter.remove();
-                continue;
-            }
-
             w.update(delta, this);
             player.update(delta, this);
             director.update(player.getPosition());

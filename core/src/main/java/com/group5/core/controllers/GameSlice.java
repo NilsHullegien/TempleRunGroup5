@@ -24,14 +24,18 @@ public abstract class GameSlice {
     
     private boolean playerison;
     
+    boolean ok = false;
+    
     public GameSlice (Vector2 sP, Vector2 eP) {
         this.startPoint = sP;
         this.endPoint = eP;
+        elems = new LinkedList<WorldObject>();
     }
     
     public GameSlice (GameSlice before, Vector2 sP, Vector2 eP) {
         this.startPoint = new Vector2(before.getendPoint().x + sP.x, sP.y);
         this.endPoint = new Vector2(before.getendPoint().x + eP.x, eP.y);
+        elems = new LinkedList<WorldObject>();
     }
     
     public boolean hasPlayer() {
@@ -55,11 +59,13 @@ public abstract class GameSlice {
     }
     
     private boolean checkhasPlayer(Vector2 playerpos, Vector2 camerapos) {
-        if(startPoint.x < playerpos.x && endPoint.x > playerpos.x) {
-            return true;
+        if(startPoint.x <= playerpos.x*50 && endPoint.x >= playerpos.x*50) {
+            System.out.println(startPoint.x+" has the player");
+            playerison = true;
         } else {
-            return false;
+            playerison = false;
         }
+        return playerison;
     }
     
     public boolean isonScreen() {

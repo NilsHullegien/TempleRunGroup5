@@ -102,8 +102,8 @@ public class MainGameScreen implements Screen {
         this.batch = b;
         this.score = 0;
         this.worldManager = new WorldManager();
-        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 10), new Vector2(2, 2));
-        Director director = new Director(7, player.getPosition(), worldManager.getPhysicsWorld());
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 7), new Vector2(2, 2));
+        Director director = new Director(2,1, player.getPosition(), worldManager.getPhysicsWorld(), new Vector2(200,0));
         this.worldManager.setPlayer(player);
         this.worldManager.setDirector(director);
 
@@ -148,7 +148,7 @@ public class MainGameScreen implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
+        Iterator<WorldObject> it = worldManager.getDirector().getObjects(false);
         
         worldManager.getPlayer().doRender(batch);
         

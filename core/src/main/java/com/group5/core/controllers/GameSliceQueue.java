@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.math.Vector2;
+import com.group5.core.util.Logger;
 
 public class GameSliceQueue {
     /**
@@ -15,8 +16,9 @@ public class GameSliceQueue {
 	 */
 	private int slices;
 	/**
-	 * @param num number of slices in the queue.
+	 * @param queue in playerposition
 	 */
+    private int playerinqueue;
 	public GameSliceQueue(final int num) {
 		this.slicequeue = new LinkedList<GameSlice>();
 		this.slices = num;
@@ -42,6 +44,40 @@ public class GameSliceQueue {
 	public boolean isEmpty(){
 		return slicequeue.isEmpty();
 	}
+	
+	//public void setPlayerinQueue(int i) {
+	//    this.playerinqueue = i;
+	//}
+	
+    // for now do without variables but iterate for this value,
+    // because this way less overhead
+	public int getPlayerinQueue() throws Exception {
+    int count = 0;
+    Iterator<GameSlice> it = slicequeue.iterator();
+    boolean b = true;
+    while (it.hasNext()) {
+        if(!it.hasNext()){
+            b = false;
+        }
+        GameSlice curr = it.next();
+        if (curr.hasPlayer()){
+            return count;
+    }
+        count++;
+    }
+    /*
+    while(!it.next().hasPlayer()) {
+        count++;
+        if(!it.hasNext()){
+            System.out.println("nah");
+            throw new Exception("Player is not in a slice");
+        }
+    }
+    */
+    //return count;
+    //throw new Exception("Player is not in a slice");
+    return 2000;
+	}
 	/**
 	 * 
 	 * @param param
@@ -60,14 +96,19 @@ public class GameSliceQueue {
 	        slicequeue.poll();
 	    }
 	    slicequeue.offer(g);
+	    Logger.get().info("GameSliceQueue", "Creating");
 	}
 	/**
 	 * 
 	 * @return
 	 */
 	public int length() {
-	    int i = 0;
+	    if(slicequeue.isEmpty()) {
+	        return 0;
+	    }
+	    int i = 1;
 	    Iterator<GameSlice> it = slicequeue.iterator();
+	    it.next();
 	    while (it.hasNext()) {
 	        i++;
 	        it.next();
@@ -82,6 +123,33 @@ public class GameSliceQueue {
 	    return length() >= slices;
 	}
 	
+    public Vector2 startPointslice(int slice) {
+        if(slice>slices || slice < 0){
+            new Exception("that slice does not exist");
+        }
+        Iterator<GameSlice> it = getSliceIterator();
+        GameSlice curr = it.next();
+        int count = 0;
+        if (count ==0 && !it.hasNext() && length()==2){ 
+            System.out.println("NO WAY");
+        }
+        while(!(count == slice)) {
+                curr = it.next();
+                count++;
+            }
+        return curr.startPoint;
+        
+        /*
+        for(int i=1; i <= slice; i++){
+            System.out.println(i);
+            curr = it.next();
+        }
+        System.out.println(curr.startPoint.x+"man");
+        */
+        //return curr.getstartPoint();
+
+    }
+	
 	public Iterator getOnScreenSlices() {
         LinkedList<GameSlice> ll = new LinkedList<GameSlice>();
         for (GameSlice g : slicequeue) {
@@ -94,10 +162,11 @@ public class GameSliceQueue {
 	public Iterator getSliceIterator() {
 	    return slicequeue.iterator();
 	}
+	
     public void update(Vector2 playerpos, Vector2 camerapos) {
-        GameSlice curr = slicequeue.peek();
-        while(curr.isonScreen()) {
-            curr.update(playerpos, camerapos);
+        Iterator<GameSlice> it = getSliceIterator();
+        while(it.hasNext()){
+            it.next().update(playerpos, camerapos);
         }
     }
     public GameSlice getLast() {
