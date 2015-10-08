@@ -36,7 +36,7 @@ public class HighScoreScreen implements Screen {
     private Sprite backgroundSprite;
 
     /**
-     * Skin.
+     * Skin for return to main menu button.
      */
     private Skin buttonSkin;
 
@@ -61,9 +61,20 @@ public class HighScoreScreen implements Screen {
     private Table table = new Table();
 
     /**
-     * Another skin.
+     * Skin used for table.
      */
-    private Skin labelSkin = new Skin();
+    private Skin lightSkin = new Skin();
+
+    /**
+     * Skin used for table.
+     */
+    private Skin darkSkin = new Skin();
+
+    /**
+     * Skin used for the top of the table.
+     */
+    private Skin topSkin = new Skin();
+
 
     /**
      * Constructor.
@@ -79,7 +90,9 @@ public class HighScoreScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        createLabelSkin();
+        createLightSkin();
+        createDarkSkin();
+        createTopSkin();
         createButtonSkin();
         buttonSetup();
         tableSetup();
@@ -193,32 +206,74 @@ public class HighScoreScreen implements Screen {
         stage.addActor(returnButton);
     }
 
-    //////////////////////////////////
-    ////////TESTING///////////////////
-    //////////////////////////////////
-
     /**
-     * Create the skin for a default label.
+     * Create the light skin used in the table.
      */
-    private void createLabelSkin() {
+    private void createLightSkin() {
 
         // create font
         BitmapFont font = new BitmapFont();
-        labelSkin = new Skin();
-        labelSkin.add("default", font);
+        lightSkin = new Skin();
+        lightSkin.add("default", font);
 
         // create texture
         Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
                 Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
-        pixmap.setColor(Color.GRAY);
+        pixmap.setColor(Color.LIGHT_GRAY);
         pixmap.fill();
-        labelSkin.add("background", new Texture(pixmap));
+        lightSkin.add("background", new Texture(pixmap));
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.background = labelSkin.newDrawable("background", Color.GRAY);
-        labelStyle.font = labelSkin.getFont("default");
-        labelStyle.fontColor = Color.RED;
-        labelSkin.add("default", labelStyle);
+        labelStyle.background = lightSkin.newDrawable("background", Color.GRAY);
+        labelStyle.font = lightSkin.getFont("default");
+        labelStyle.fontColor = Color.WHITE;
+        lightSkin.add("default", labelStyle);
+    }
+
+    /**
+     * Create dark skin used in the table.
+     */
+    private void createDarkSkin() {
+     // create font
+        BitmapFont font = new BitmapFont();
+        darkSkin = new Skin();
+        darkSkin.add("default", font);
+
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        pixmap.setColor(Color.DARK_GRAY);
+        pixmap.fill();
+        darkSkin.add("background", new Texture(pixmap));
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.background = darkSkin.newDrawable("background", Color.GRAY);
+        labelStyle.font = darkSkin.getFont("default");
+        labelStyle.fontColor = Color.WHITE;
+        darkSkin.add("default", labelStyle);
+    }
+
+    /**
+     * Create dark skin used in the table.
+     */
+    private void createTopSkin() {
+     // create font
+        BitmapFont font = new BitmapFont();
+        topSkin = new Skin();
+        topSkin.add("default", font);
+
+        // create texture
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
+                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        topSkin.add("background", new Texture(pixmap));
+
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.background = topSkin.newDrawable("background", Color.GRAY);
+        labelStyle.font = topSkin.getFont("default");
+        labelStyle.fontColor = Color.WHITE;
+        topSkin.add("default", labelStyle);
     }
 
     /**
@@ -233,9 +288,10 @@ public class HighScoreScreen implements Screen {
         table.clear();
         table.left().top();
 
-        Label rank = new Label("  RANK", labelSkin);
-        Label score = new Label("  SCORE", labelSkin);
-        Label name = new Label("  NAME", labelSkin);
+        Label rank = new Label("   RANK", topSkin);
+        Label score = new Label("   SCORE", topSkin);
+        Label name = new Label("   NAME", topSkin);
+        Label date = new Label("   DATE", topSkin);
         rank.setPosition(0, 0);
         score.setPosition(0, 1);
         name.setPosition(0, 2);
@@ -244,13 +300,28 @@ public class HighScoreScreen implements Screen {
         table.setColor(Color.BLUE);
         table.add(rank).expandX().width(50.f);
         table.add(score).expandX().width(100.f);
-        table.add(name).expandX().width(200.f);
+        table.add(name).expandX().width(300.f);
+        table.add(date).expandX().width(200.f);
         table.row();
-        for (int i = 0; i <= (scoreList.size() - 1); i++) {
-            table.add(new Label(Integer.toString(scoreList.get(i).getRank()), labelSkin)).expandX().width(50.f);
-            table.add(new Label(Integer.toString(scoreList.get(i).getScore()), labelSkin)).expandX().width(100.f);
-            table.add(new Label(scoreList.get(i).getName(), labelSkin)).expandX().width(200.f);
-            table.row();
+        //This should add all the scores to the table.
+        for (int i = 1; i <= (scoreList.size()); i++) {
+            for (int j = 0; j <= (scoreList.size() - 1); j++) {
+                if (scoreList.get(j).getRank() == i) {
+                    if (i % 2 == 0) {
+                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getRank()), lightSkin)).expandX().width(50.f);
+                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getScore()), lightSkin)).expandX().width(100.f);
+                        table.add(new Label("   " + scoreList.get(j).getName(), lightSkin)).expandX().width(300.f);
+                        table.add(new Label("   " + scoreList.get(j).getDate(), lightSkin)).expandX().width(200.f);
+                        table.row();
+                    } else {
+                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getRank()), darkSkin)).expandX().width(50.f);
+                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getScore()), darkSkin)).expandX().width(100.f);
+                        table.add(new Label("   " + scoreList.get(j).getName(), darkSkin)).expandX().width(300.f);
+                        table.add(new Label("   " + scoreList.get(j).getDate(), lightSkin)).expandX().width(200.f);
+                        table.row();
+                    }
+                }
+            }
         }
         table.row();
         stage.addActor(table);

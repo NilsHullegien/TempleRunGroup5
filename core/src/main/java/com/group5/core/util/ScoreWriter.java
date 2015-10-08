@@ -34,6 +34,7 @@ public abstract class ScoreWriter {
                 prop.setProperty("rank" + Integer.toString(i), Integer.toString(list.get(i).getRank()));
                 prop.setProperty("score" + Integer.toString(i), Integer.toString(list.get(i).getScore()));
                 prop.setProperty("name" + Integer.toString(i), list.get(i).getName());
+                prop.setProperty("date" + Integer.toString(i), list.get(i).getDate());
             }
 
 

@@ -37,7 +37,7 @@ public class ScoreContainerTest {
     @Test
     public void initializeOneElement() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name"));
+        list.add(new ScoreItem(1, 2, "name", "date"));
         ScoreContainer.initialize(list);
         assertTrue(ScoreContainer.getList().size() == 1);
         assertTrue(ScoreContainer.getList().get(0).getRank() == 1);
@@ -51,9 +51,9 @@ public class ScoreContainerTest {
     @Test
     public void initializeMultipleElements() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name1"));
-        list.add(new ScoreItem(3, 4, "name2"));
-        list.add(new ScoreItem(5, 6, "name3"));
+        list.add(new ScoreItem(1, 2, "name1", "date"));
+        list.add(new ScoreItem(3, 4, "name2", "date"));
+        list.add(new ScoreItem(5, 6, "name3", "date"));
         ScoreContainer.initialize(list);
         assertTrue(ScoreContainer.getList().size() == 3);
         assertTrue(ScoreContainer.getList().get(0).getRank() == 1);
@@ -67,7 +67,7 @@ public class ScoreContainerTest {
      */
     @Test
     public void addScoreEmptyListTest() {
-        ScoreContainer.addScore(10);
+        ScoreContainer.addScore(10, "placeholder", "date");
         assertTrue(ScoreContainer.getList().get(0).getRank() == 1);
         assertTrue(ScoreContainer.getList().get(0).getScore() == 10);
         assertTrue(ScoreContainer.getList().get(0).getName().equals("placeholder"));
@@ -78,8 +78,8 @@ public class ScoreContainerTest {
      */
     @Test
     public void addScoreNewBestTest() {
-        ScoreContainer.addScore(10);
-        ScoreContainer.addScore(11);
+        ScoreContainer.addScore(10, "placeholder", "date");
+        ScoreContainer.addScore(11, "placeholder", "date");
         assertTrue(ScoreContainer.getList().get(1).getRank() == 1);
         assertTrue(ScoreContainer.getList().get(1).getScore() == 11);
         assertTrue(ScoreContainer.getList().get(1).getName().equals("placeholder"));
@@ -93,8 +93,8 @@ public class ScoreContainerTest {
      */
     @Test
     public void addScoreNewNotBestTest() {
-        ScoreContainer.addScore(11);
-        ScoreContainer.addScore(10);
+        ScoreContainer.addScore(11, "placeholder", "date");
+        ScoreContainer.addScore(10, "placeholder", "date");
         assertTrue(ScoreContainer.getList().get(1).getRank() == 2);
         assertTrue(ScoreContainer.getList().get(1).getScore() == 10);
         assertTrue(ScoreContainer.getList().get(1).getName().equals("placeholder"));
@@ -109,18 +109,18 @@ public class ScoreContainerTest {
     @Test
     public void addScoreNewBestTenElementsTest() {
 
-        ScoreContainer.addScore(1);
-        ScoreContainer.addScore(2);
-        ScoreContainer.addScore(3);
-        ScoreContainer.addScore(4);
-        ScoreContainer.addScore(5);
-        ScoreContainer.addScore(6);
-        ScoreContainer.addScore(7);
-        ScoreContainer.addScore(8);
-        ScoreContainer.addScore(9);
-        ScoreContainer.addScore(10);
+        ScoreContainer.addScore(1, "placeholder", "date");
+        ScoreContainer.addScore(2, "placeholder", "date");
+        ScoreContainer.addScore(3, "placeholder", "date");
+        ScoreContainer.addScore(4, "placeholder", "date");
+        ScoreContainer.addScore(5, "placeholder", "date");
+        ScoreContainer.addScore(6, "placeholder", "date");
+        ScoreContainer.addScore(7, "placeholder", "date");
+        ScoreContainer.addScore(8, "placeholder", "date");
+        ScoreContainer.addScore(9, "placeholder", "date");
+        ScoreContainer.addScore(10, "placeholder", "date");
 
-        ScoreContainer.addScore(11);
+        ScoreContainer.addScore(11, "placeholder", "date");
         int lowest =11;
         for (int i = 0; i < ScoreContainer.getList().size(); i++) {
             if (ScoreContainer.getList().get(i).getScore() < lowest) {
@@ -137,18 +137,18 @@ public class ScoreContainerTest {
     @Test
     public void addScoreNewWorstTenElementsTest() {
 
-        ScoreContainer.addScore(1);
-        ScoreContainer.addScore(2);
-        ScoreContainer.addScore(3);
-        ScoreContainer.addScore(4);
-        ScoreContainer.addScore(5);
-        ScoreContainer.addScore(6);
-        ScoreContainer.addScore(7);
-        ScoreContainer.addScore(8);
-        ScoreContainer.addScore(9);
-        ScoreContainer.addScore(10);
+        ScoreContainer.addScore(1, "placeholder", "date");
+        ScoreContainer.addScore(2, "placeholder", "date");
+        ScoreContainer.addScore(3, "placeholder", "date");
+        ScoreContainer.addScore(4, "placeholder", "date");
+        ScoreContainer.addScore(5, "placeholder", "date");
+        ScoreContainer.addScore(6, "placeholder", "date");
+        ScoreContainer.addScore(7, "placeholder", "date");
+        ScoreContainer.addScore(8, "placeholder", "date");
+        ScoreContainer.addScore(9, "placeholder", "date");
+        ScoreContainer.addScore(10, "placeholder", "date");
 
-        ScoreContainer.addScore(0);
+        ScoreContainer.addScore(0, "placeholder", "date");
         int lowest =11;
         for (int i = 0; i < ScoreContainer.getList().size(); i++) {
             if (ScoreContainer.getList().get(i).getScore() < lowest) {
@@ -163,8 +163,8 @@ public class ScoreContainerTest {
      */
     @Test
     public void isHighScoreTest() {
-        ScoreContainer.addScore(10);
-        ScoreContainer.addScore(15);
+        ScoreContainer.addScore(10, "placeholder", "date");
+        ScoreContainer.addScore(15, "placeholder", "date");
         assertTrue(ScoreContainer.isHighScore(16));
         assertFalse(ScoreContainer.isHighScore(11));
         assertFalse(ScoreContainer.isHighScore(9));

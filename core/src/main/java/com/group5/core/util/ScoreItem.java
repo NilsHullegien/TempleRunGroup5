@@ -23,15 +23,22 @@ public class ScoreItem {
     private String name;
 
     /**
+     * The date.
+     */
+    private String date;
+
+    /**
      * Create a score item that consists of a rank, a score and a name.
      * @param rankValue the rank
      * @param scoreValue the score
      * @param nameValue the name
+     * @param dateValue the date.
      */
-    public ScoreItem(final int rankValue, final int scoreValue, final String nameValue) {
+    public ScoreItem(final int rankValue, final int scoreValue, final String nameValue, final String dateValue) {
         rank = rankValue;
         score = scoreValue;
         name = nameValue;
+        date = dateValue;
     }
 
     /**
@@ -64,6 +71,14 @@ public class ScoreItem {
      */
     public void setRank(final int rankValue) {
         rank = rankValue;
+    }
+
+    /**
+     * Return the date.
+     * @return the date.
+     */
+    public String getDate() {
+        return date;
     }
 }
 

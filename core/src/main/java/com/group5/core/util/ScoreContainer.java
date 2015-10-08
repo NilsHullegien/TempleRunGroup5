@@ -31,12 +31,11 @@ public abstract class ScoreContainer {
 
     /**
      * Check whether this score is in the top 10 of best scores. If it is, make place for it and add it to the list.
-     * @param score Score you want to check for
+     * @param score Score you want to check for.
+     * @param name The desciption added to the score.
+     * @param date Date the score was created.
      */
-    public static void addScore(final int score) {
-
-        //TODO implement a way to change names
-        String name = "placeholder";
+    public static void addScore(final int score, final String name, final String date) {
         int lowest = list.size() + 1;
         for (int i = 0; i < list.size(); i++) {
             if (score > list.get(i).getScore() && list.get(i).getRank() < lowest) {
@@ -45,7 +44,7 @@ public abstract class ScoreContainer {
         }
         if (lowest <= 10) {
             shift(lowest);
-            list.add(new ScoreItem(lowest, score, name));
+            list.add(new ScoreItem(lowest, score, name, date));
             ScoreWriter.writeScore(list, infile);
         }
     }

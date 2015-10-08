@@ -39,7 +39,7 @@ public class ScoreReaderTest {
     @Test
     public void OneElementInFileTest() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name"));
+        list.add(new ScoreItem(1, 2, "name", "date"));
         ScoreWriter.writeScore(list, "test.properties");
 
         ScoreReader.read("test.properties");
@@ -55,8 +55,8 @@ public class ScoreReaderTest {
     @Test
     public void MultipleElementsInFileTest() {
         ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name1"));
-        list.add(new ScoreItem(3, 4, "name2"));
+        list.add(new ScoreItem(1, 2, "name1", "date"));
+        list.add(new ScoreItem(3, 4, "name2", "date"));
         ScoreWriter.writeScore(list, "test.properties");
 
         ScoreReader.read("test.properties");

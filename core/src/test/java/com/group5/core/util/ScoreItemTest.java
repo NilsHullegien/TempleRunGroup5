@@ -12,7 +12,7 @@ public class ScoreItemTest {
 
     @Test
     public void scoreItemTest() {
-        ScoreItem s = new ScoreItem(1,2, "name");
+        ScoreItem s = new ScoreItem(1,2, "name", "date");
         assertTrue(s.getRank() == 1);
         assertTrue(s.getScore() == 2);
         assertTrue(s.getName().equals("name"));

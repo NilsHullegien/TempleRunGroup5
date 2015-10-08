@@ -1,5 +1,8 @@
 package com.group5.core.screens;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,6 +21,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
 import com.group5.core.util.ScoreContainer;
@@ -97,6 +103,21 @@ public class MainGameScreen implements Screen {
     private Label highScoreLabel;
 
     /**
+     * Textfield that gives a name that is added to the score in the high score screen.
+     */
+    private TextField highScoreField;
+
+    /**
+     * String used in the describtion of the score.
+     */
+    private String name = "";
+
+    /**
+     * The date formatter used for printing log timestamps.
+     */
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
+
+    /**
      * Constructs a new main game screen that plays the actual game.
      *
      * @param b
@@ -164,7 +185,6 @@ public class MainGameScreen implements Screen {
             if (ScoreContainer.isHighScore(Math.round(score))) {
                 highScoreLabel.setVisible(true);
             }
-            ScoreContainer.addScore(Math.round(score));
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();
@@ -203,6 +223,7 @@ public class MainGameScreen implements Screen {
             @Override
             public void clicked(final InputEvent event, final float x,
                     final float y) {
+                ScoreContainer.addScore(Math.round(score), name, dateFormat.format(new Date()));
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainGameScreen(batch));
             }
@@ -214,9 +235,32 @@ public class MainGameScreen implements Screen {
             @Override
             public void clicked(final InputEvent event, final float x,
                     final float y) {
+                ScoreContainer.addScore(Math.round(score), name, dateFormat.format(new Date()));
                 EndlessRunner.get().create();
             }
         });
+
+        //Create white texture
+        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGB565);
+        pixmap.setColor(Color.WHITE);
+        pixmap.fill();
+        buttonSkin.add("background", new Texture(pixmap));
+
+        //Text field that gets the input for the name shown in the highScoreScreen.
+        TextFieldStyle txtStyle = new TextFieldStyle();
+        txtStyle.font = new BitmapFont();
+        txtStyle.fontColor = Color.BLACK;
+        txtStyle.background = buttonSkin.getDrawable("background");
+
+        highScoreField = new TextField("", txtStyle);
+        highScoreField.setTextFieldListener(new TextFieldListener() {
+
+            @Override
+            public void keyTyped(final TextField textField, final char c) {
+                name = name + c;
+            }
+        });
+
         gameOverTable.setFillParent(true);
         gameOverTable.setColor(Color.BLUE);
         gameOverTable.setVisible(false);
@@ -226,11 +270,13 @@ public class MainGameScreen implements Screen {
         gameOverTable.row();
         gameOverTable.add(gameOverScore).width(200.f);
         gameOverTable.row();
+        gameOverTable.add(highScoreField).width(200.f).height(20.f);
+        gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
         gameOverTable.add(t2);
-        // t.setVisible(false);
+        //t.setVisible(false);
         stage.addActor(gameOverTable);
     }
 

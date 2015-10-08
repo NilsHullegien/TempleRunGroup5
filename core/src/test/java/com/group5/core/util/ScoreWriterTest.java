@@ -13,8 +13,12 @@ import com.group5.core.GdxTestRunner;
 @RunWith(GdxTestRunner.class)
 public class ScoreWriterTest {
 
+    private ArrayList<ScoreItem> list;
+
+
     @Before
     public void setUp() {
+        list = new ArrayList<ScoreItem>();
         File f = new File("test.properties");
         if (f.exists() && !f.isDirectory()) {
             f.delete();
@@ -24,8 +28,7 @@ public class ScoreWriterTest {
 
     @Test
     public void writeOneElementTest() {
-        ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name"));
+        list.add(new ScoreItem(1, 2, "name", "date"));
         ScoreWriter.writeScore(list, "test.properties");
         ScoreReader.read("test.properties");
         assertTrue(ScoreContainer.getList().size() == 1);
@@ -36,9 +39,8 @@ public class ScoreWriterTest {
 
     @Test
     public void writeMultipleMultipleElementsTest() {
-        ArrayList<ScoreItem> list = new ArrayList<ScoreItem>();
-        list.add(new ScoreItem(1, 2, "name1"));
-        list.add(new ScoreItem(3, 4, "name2"));
+        list.add(new ScoreItem(1, 2, "name1", "date"));
+        list.add(new ScoreItem(3, 4, "name2", "date"));
         ScoreWriter.writeScore(list, "test.properties");
         ScoreReader.read("test.properties");
         assertTrue(ScoreContainer.getList().size() == 2);
@@ -48,7 +50,6 @@ public class ScoreWriterTest {
         assertTrue(ScoreContainer.getList().get(1).getRank() == 3);
         assertTrue(ScoreContainer.getList().get(1).getScore() == 4);
         assertTrue(ScoreContainer.getList().get(1).getName().equals("name2"));
-
     }
 
 }
