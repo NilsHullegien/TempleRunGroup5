@@ -9,92 +9,117 @@ import com.group5.core.Screen;
 import com.group5.core.world.WorldObject;
 
 /**
- * GameSlice Class, here all the RNG and all needed variables for the director
- * for different gameslices.
+ * GameSlice is a 2Dimensional rectangle in which objects are placed.
  */
 public abstract class GameSlice {
-        
+    /**
+     * Leftbottom corner of gs.
+     */
     protected Vector2 startPoint;
-    
+    /**
+     * RightUp corner of gs.
+     */
     protected Vector2 endPoint;
-    
+    /**
+     * Elements in the GameSlice.
+     */
     protected Collection<WorldObject> elems;
-    
+    /**
+     * status if onscreen.
+     */
     private boolean onscreen;
-    
+    /**
+     * status if player is on GameSlice.
+     */
     private boolean playerison;
-    
-    boolean ok = false;
-    
-    public GameSlice (Vector2 sP, Vector2 eP) {
+    /**
+     * Constructor without previous gameslice.
+     * @param sP startpoint
+     * @param eP endpoint
+     */
+    public GameSlice(final Vector2 sP, final Vector2 eP) {
         this.startPoint = sP;
         this.endPoint = eP;
         elems = new LinkedList<WorldObject>();
     }
-    
-    public GameSlice (GameSlice before, Vector2 sP, Vector2 eP) {
+    /**
+     * Constructor wit previous gameslice.
+     * @param before Gameslice before this one.
+     * @param sP startpoint
+     * @param eP endpoint
+     */
+    public GameSlice(final GameSlice before, final Vector2 sP, final Vector2 eP) {
         this.startPoint = new Vector2(before.getendPoint().x + sP.x, sP.y);
         this.endPoint = new Vector2(before.getendPoint().x + eP.x, eP.y);
         elems = new LinkedList<WorldObject>();
     }
-    
+    /**
+     * Gets status has Player.
+     * @return hasplayer.
+     */
     public boolean hasPlayer() {
         return playerison;
     }
-    
-    public void adjust() throws Exception {
-        
-    }
-    
-    private boolean checkonScreen(Vector2 playerpos, Vector2 camerapos) {
+    /**
+     * Check if the slice is on(also partially) the screen.
+     * @param playerpos Playerposition
+     * @param camerapos Cameraposition
+     * @return boolean
+     */
+    private boolean checkonScreen(final Vector2 playerpos, final Vector2 camerapos) {
         float leftscreenbound = playerpos.x - camerapos.x;
         float rightscreenbound = playerpos.x + Screen.getscreenX() - camerapos.x;
-        if(leftscreenbound > endPoint.x) {
-            return false;
-        } else if (rightscreenbound < startPoint.x){
-            return false;
-        } else {
-            return true;
-        }
+        return leftscreenbound < endPoint.x && rightscreenbound < startPoint.x;
     }
-    
-    private boolean checkhasPlayer(Vector2 playerpos, Vector2 camerapos) {
-        if(startPoint.x <= playerpos.x*50 && endPoint.x >= playerpos.x*50) {
-            System.out.println(startPoint.x+" has the player");
+    /**
+     * Check if slice has the player.
+     * @param playerpos Position of player.
+     * @param camerapos Position of camera.
+     * @return if the player is on this slice.
+     */
+    private boolean checkhasPlayer(final Vector2 playerpos, final Vector2 camerapos) {
+        if (startPoint.x <= playerpos.x * 50 && endPoint.x >= playerpos.x * 50) {
+            System.out.println(startPoint.x + " has the player");
             playerison = true;
         } else {
             playerison = false;
         }
         return playerison;
     }
-    
+    /**
+     * Give status is on screen.
+     * @return is on screen.
+     */
     public boolean isonScreen() {
         return onscreen;
     }
-    
+    /**
+     * Returns leftbottomcorner.
+     * @return startPoint gameslice.
+     */
     public Vector2 getstartPoint() {
         return startPoint;
     }
-    
+    /**
+     * Returns rightupcorner.
+     * @return endPoint GameSlice.
+     */
     public Vector2 getendPoint() {
         return endPoint;
     }
-    /*
-    public Iterator<WorldObject> getAll() {
-        LinkedList ll = new LinkedList<WorldObject>();
-        for(WorldObject e: elems) {
-            e.setX(e.getX()+absolutePosition.x);
-            e.setY(e.getY()+absolutePosition.y);
-        }
-        return ll.iterator();
-    }
-    */
-    
+    /**
+     * Return all elements the GameSlice has.
+     * @return Worldobjects iterator.
+     */
     public Iterator<WorldObject> getAll() {
         return elems.iterator();
     }
-    
-    public void update (Vector2 playerpos, Vector2 camerapos){
+    /**
+     * Update the Slice.
+     * @param playerpos PlayerPostion
+     * @param camerapos cameraPostition
+     */
+    public void update(final Vector2 playerpos,  final Vector2 camerapos) {
         this.onscreen = checkonScreen(playerpos, camerapos);
         this.playerison = checkhasPlayer(playerpos, camerapos);
     }

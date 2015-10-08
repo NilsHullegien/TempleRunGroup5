@@ -56,13 +56,7 @@ public abstract class WorldObject {
         this.size = siz;
         this.texture = tex;
     }
-    
-    public WorldObject(
-            final Vector2 siz,
-            final Vector2 coord) {
-        this.pos = coord;
-        this.size = siz;
-    }
+
 
     /**
      * Returns the object's physics body.

@@ -2,92 +2,124 @@ package com.group5.core.controllers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.levels.OnlyFloorLevel;
 import com.group5.core.util.Logger;
-import com.group5.core.world.FloorTile;
-import com.group5.core.world.Obstacle;
 import com.group5.core.world.WorldObject;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Random;
 
 
 /**
  * Director class which will direct what will appear in the world.
  */
 public class Director {
-    
+    /**
+     * GameSliceQueue assigned to Director.
+     */
     private GameSliceQueue queue;
-    
+    /**
+     * Position of the player, updated every iteration.
+     */
     private Vector2 playerPosition;
-    
+    /**
+     * Camera position, meaning the location of the camera
+     * relative to the screen.
+     */
     private Vector2 cameraPosition;
-    
+    /**
+     * Physics world.
+     */
     private final World world;
-    
-    private int minfront =2 ;
-    
-    public Director(int amount, Vector2 playerpos, World world, Vector2 camerapos) {
+    /**
+     * Amount of slices that have to be in front.
+     */
+    private int minfront = 2;
+    /**
+     * Director commands the creation of levels.
+     * @param amount of slices in the queue
+     * @param playerpos current position of player
+     * @param w physicsworld
+     * @param camerapos position of camera relative to the screen
+     */
+    public Director(final int amount, final Vector2 playerpos, final World w, final Vector2 camerapos) {
         this.playerPosition = playerpos;
         this.cameraPosition = camerapos;
-        this.world = world;
+        this.world = w;
         this.queue = initiateQueue(amount, world);
     }
-    
-    public Director(int amount, int minfront, Vector2 playerpos, World world, Vector2 camerapos) {
+    /**
+     * Director commands the creation of levels.
+     * @param amount of slices in the queue
+     * @param mf minimal slices in front of the player
+     * @param playerpos current position of player
+     * @param w physicsworld
+     * @param camerapos position of camera relative to the screen
+     */
+    public Director(final int amount, final int mf, final Vector2 playerpos, final World w, final Vector2 camerapos) {
         this.playerPosition = playerpos;
-        this.queue = initiateQueue(amount, world);
         this.cameraPosition = camerapos;
-        this.world = world;
-        this.minfront = minfront;
-        initiateQueue(amount, world);
+        this.world = w;
+        this.minfront = mf;
+        this.queue = initiateQueue(amount, w);
     }
-    
-    public Iterator<WorldObject> getObjects(boolean onlyonScreen) {
+    /**
+     * Gives an iterator with all objects in some/all gameslices.
+     * @param onlyonScreen get all slices or those that are only visible
+     * @return iterator with WorldObjects
+     */
+    public Iterator<WorldObject> getObjects(final boolean onlyonScreen) {
         Iterator<GameSlice> ig;
-        if (onlyonScreen){
+        if (onlyonScreen) {
             ig = queue.getOnScreenSlices();
         } else {
             ig = queue.getSliceIterator();
         }
         LinkedList<WorldObject> ll = new LinkedList<WorldObject>();
-        while(ig.hasNext()){
+        while (ig.hasNext()) {
             Iterator<WorldObject> iw = ig.next().getAll();
-            while(iw.hasNext()) {
+            while (iw.hasNext()) {
                 ll.add(iw.next());
             }
         }
         return ll.iterator();
     }
-    
-    private GameSliceQueue initiateQueue(int amount, World world) {
-        GameSliceQueue GsQ = new GameSliceQueue(amount);
+    /**
+     * Initiate the GameSliceQueue.
+     * @param amount of gameslices
+     * @param w physicsworld
+     * @return returns the queue
+     */
+    private GameSliceQueue initiateQueue(final int amount, final World w) {
+        GameSliceQueue gsq = new GameSliceQueue(amount);
         if (amount <= 0) {
-            return GsQ;
+            return gsq;
         }
-        GsQ.addGameSlice(GameSliceCasting.cast(world));
-        System.out.println(GsQ.length());
-        while(GsQ.length()<amount) {
-           GsQ.addGameSlice(GameSliceCasting.cast(GsQ.getLast(), world));
+        gsq.addGameSlice(GameSliceCasting.cast(w));
+        System.out.println(gsq.length());
+        while (gsq.length() < amount) {
+           gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
         }
-        return GsQ;
+        return gsq;
     }
-    
-    private void addGameSlice(World world) {
+    /**
+     * Commands GameSliceCast for appropriate levelslice and sends it to the queue.
+     * @param w physicsworld
+     */
+    private void addGameSlice(final World w) {
         Logger.get().info("Director", "Adding GameSlice");
         GameSlice g;
-        if (queue.isEmpty()){
-            g = GameSliceCasting.cast(world);
+        if (queue.isEmpty()) {
+            g = GameSliceCasting.cast(w);
         } else {
-            g = GameSliceCasting.cast(queue.getLast(), world);
+            g = GameSliceCasting.cast(queue.getLast(), w);
         }
         queue.addGameSlice(g);
     }
-    
-    public void directQueue(int minimal) {
+    /**
+     * This function handles adding new GameSlice if there
+     * are to little slices in front of the player.
+     * @param minimal minfront
+     */
+    public void directQueue(final int minimal) {
         try {
             System.out.println(queue.getPlayerinQueue());
             if (queue.getPlayerinQueue() > minimal) {
@@ -99,12 +131,18 @@ public class Director {
             addGameSlice(world);
         }
     }
-    
+    /**
+     * Get the queue.
+     * @return queue
+     */
     public GameSliceQueue getQueue() {
         return queue;
     }
-    
-    public void update(Vector2 playerpos){
+    /**
+     * updates Director which commands the queue to update.
+     * @param playerpos position of player.
+     */
+    public void update(final Vector2 playerpos) {
         this.playerPosition = playerpos;
         directQueue(minfront);
         queue.update(playerpos, cameraPosition);
