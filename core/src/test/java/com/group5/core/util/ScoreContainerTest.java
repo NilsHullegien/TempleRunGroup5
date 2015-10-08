@@ -1,5 +1,6 @@
 package com.group5.core.util;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -155,6 +156,18 @@ public class ScoreContainerTest {
             }
         }
         assertTrue(lowest == 1);
+    }
+
+    /**
+     *Check whether the method returns true when you ask for a value that is higher than the high score and false when it's lower.
+     */
+    @Test
+    public void isHighScoreTest() {
+        ScoreContainer.addScore(10);
+        ScoreContainer.addScore(15);
+        assertTrue(ScoreContainer.isHighScore(16));
+        assertFalse(ScoreContainer.isHighScore(11));
+        assertFalse(ScoreContainer.isHighScore(9));
     }
 
 }
