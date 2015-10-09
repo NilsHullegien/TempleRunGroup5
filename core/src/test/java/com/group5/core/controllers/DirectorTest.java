@@ -32,13 +32,9 @@ public class DirectorTest {
     
     @Before
     public void setUp() {
-        //putting cameraposition in half of a 400x400x screen
         camerapos = new Vector2(200,200);
         pos = new Vector2(0, 0);
         world = new World(pos, true);
-        //world = Mockito.mock(World.class);
-        //player = new Player(world, v2, v2);
-        //director = new Director(5, v2, world, v2);
     }
     @Test
     public void testConstructor() {
@@ -94,23 +90,12 @@ public class DirectorTest {
         director = new Director(2, playerpos, world, camerapos);
         assertEquals(director.getQueue().full(), true);
         director.update(playerpos);
-        //GameSliceQueue q = director.getQueue();
         assertEquals(director.getQueue().length(),2);
         assertEquals(director.getQueue().startPointslice(0).x,0,10);
         Iterator<GameSlice> q = director.getQueue().getSliceIterator();
         assertEquals(q.next().getStartPoint().x,0,10);
         assertEquals(q.next().getStartPoint().x,currC,10);
-        //assertEquals(director.getQueue().startPointslice(1).x,currC,10);
         assertEquals(director.getQueue().getPlayerinQueue(),1);
-    }
-    
-    @Test
-    public void testhasPlayer3() throws Exception {
-        Vector2 playerpos = new Vector2 (60,00);
-        director = new Director(5, playerpos, world, camerapos);
-        director.update(playerpos);
-        GameSliceQueue q = director.getQueue();
-        assertEquals(director.getQueue().getPlayerinQueue(),2);
     }
     
     public void testdirectQueue() {
@@ -123,13 +108,12 @@ public class DirectorTest {
 
     @Test
     public void testhasPlayerBIGQUEUE() throws Exception {
-        Vector2 playerpos = new Vector2 (currC*2,currC*2);
+        Vector2 playerpos = new Vector2 (currC*2+1,currC*2+1);
         director = new Director(150, playerpos, world, camerapos);
         director.update(playerpos);
         GameSliceQueue q = director.getQueue();
-        assertEquals(director.getQueue().getPlayerinQueue(),98);
+        assertEquals(director.getQueue().getPlayerinQueue(),99);
     }
-    
     @Test
     public void testTransitionhasPlayer() throws Exception {
         Vector2 playerpos = new Vector2 (0,0);
@@ -155,23 +139,4 @@ public class DirectorTest {
             count++;
         }
     }
-    
-    @Test
-    public void testStartpoints2 () {
-        currC = 1025;
-        director = new Director(2, pos, world, camerapos);
-        int count = 0;
-        Iterator<GameSlice> it = director.getQueue().getSliceIterator();
-        while(it.hasNext()){
-            GameSlice curr = it.next();
-            System.out.println(curr.getStartPoint().x);
-            assertEquals((int) curr.getStartPoint().x, currC*count);
-            assertEquals((int) director.getQueue().startPointslice(count).x, currC*count);
-            count++;
-        }
-        assertEquals(count, 2);
-    }
-    
-    
-
 }

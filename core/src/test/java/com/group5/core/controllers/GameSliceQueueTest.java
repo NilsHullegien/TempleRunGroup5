@@ -35,7 +35,6 @@ public class GameSliceQueueTest {
         camerapos = new Vector2(200,200);
         pos = new Vector2(0, 0);
         world = new World(pos, true);
-        //director = new Director(5, pos, world, camerapos);
     }
     
     public void testConstructor() {
