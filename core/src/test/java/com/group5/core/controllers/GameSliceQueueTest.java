@@ -14,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.GdxTestRunner;
 import com.group5.core.world.Player;
 
-@RunWith(GdxTestRunner.class)
 public class GameSliceQueueTest {
     
     private Player player;

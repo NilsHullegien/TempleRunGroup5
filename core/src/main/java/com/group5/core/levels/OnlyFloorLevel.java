@@ -17,7 +17,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     public OnlyFloorLevel(final World world) {
         super(new Vector2(0, 0), new Vector2(1025, 2000));
-        createElems(world);
+        //createElems(world);
     }
     /**
      * constructor with prevrious GameSlice.
@@ -26,7 +26,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     public OnlyFloorLevel(final GameSlice before, final World world) {
         super(before, new Vector2(0, 0), new Vector2(1025, 2000));
-        createElems(world);
+        //createElems(world);
     }
     /**
      * Create elements of this levelelement.
