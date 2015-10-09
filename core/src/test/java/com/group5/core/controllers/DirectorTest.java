@@ -38,6 +38,7 @@ public class DirectorTest {
     }
     @Test
     public void testConstructor() {
+        System.out.println(1);
         director = new Director(5, pos, world, camerapos);
         assertEquals(director.getQueue().full(), true);
         assertEquals(director.getQueue().length(), 5);
@@ -45,6 +46,7 @@ public class DirectorTest {
     
     @Test
     public void testConstructor2() {
+        System.out.println(2);
         director = new Director(2, pos, world, camerapos);
         assertEquals(director.getQueue().full(), true);
         assertEquals(director.getQueue().length(), 2);
@@ -52,12 +54,14 @@ public class DirectorTest {
     
     @Test
     public void testnoSlices() {
+        System.out.println(3);
         director = new Director(0, pos, world, camerapos);
         assertEquals(director.getQueue().isEmpty(), true);
     }
     
     @Test 
     public void create2Slices() throws Exception {
+        System.out.println(4);
         Vector2 playerpos = new Vector2 (30,30);
         director = new Director(2, playerpos, world, camerapos);
         assertEquals(director.getQueue().length(),2);
@@ -67,6 +71,7 @@ public class DirectorTest {
 
     @Test
     public void testhasPlayer() throws Exception {
+        System.out.println(5);
         Vector2 playerpos = new Vector2 (1,1);
         director = new Director(5, playerpos, world, camerapos);
         director.update(playerpos);
@@ -76,6 +81,7 @@ public class DirectorTest {
     
     @Test
     public void testhasPlayer1() throws Exception {
+        System.out.println(6);
         Vector2 playerpos = new Vector2 (1,1);
         director = new Director(1,0, playerpos, world, camerapos);
         GameSliceQueue q = director.getQueue();
@@ -85,6 +91,7 @@ public class DirectorTest {
     }
     @Test
     public void testhasPlayer2() throws Exception {
+        System.out.println(7);
         Vector2 playerpos = new Vector2 (30,0);
         director = new Director(2, playerpos, world, camerapos);
         assertEquals(director.getQueue().full(), true);
@@ -94,24 +101,26 @@ public class DirectorTest {
     }
     
     public void testdirectQueue() {
+        System.out.println(8);
         Vector2 playerpos = new Vector2 (0,0);
         director = new Director(3, 1, playerpos, world, camerapos);
         director.update(new Vector2(90,0));
         // shifted one slice up, the first0 slice must be popped
         assertEquals(director.getQueue().startPointslice(0).x, currC, 10);
     }
-    /*
     @Test
     public void testhasPlayerBIGQUEUE() throws Exception {
+        System.out.println(9);
         Vector2 playerpos = new Vector2 (currC*2+1,currC*2+1);
         director = new Director(150, playerpos, world, camerapos);
         director.update(playerpos);
         GameSliceQueue q = director.getQueue();
         assertEquals(director.getQueue().getPlayerinQueue(),99);
     }
-    */
+
     @Test
     public void testTransitionhasPlayer() throws Exception {
+        System.out.println(10);
         Vector2 playerpos = new Vector2 (0,0);
         director = new Director(5, playerpos, world, camerapos);
         director.update(playerpos);
@@ -123,6 +132,7 @@ public class DirectorTest {
     
     @Test
     public void testStartpoints () {
+        System.out.println(11);
         currC = 1025;
         director = new Director(3, pos, world, camerapos);
         int count = 0;
