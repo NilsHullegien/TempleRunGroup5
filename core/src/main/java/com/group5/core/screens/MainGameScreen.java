@@ -108,7 +108,7 @@ public class MainGameScreen implements Screen {
     private TextField highScoreField;
 
     /**
-     * String used in the describtion of the score.
+     * String used in the description of the score.
      */
     private String name = "";
 
@@ -116,6 +116,12 @@ public class MainGameScreen implements Screen {
      * The date formatter used for printing log timestamps.
      */
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
+
+
+    /**
+     * This variable contains the final score, to ensure it doesn't get changed.
+     */
+    private int finalScore;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -185,6 +191,8 @@ public class MainGameScreen implements Screen {
             if (ScoreContainer.isHighScore(Math.round(score))) {
                 highScoreLabel.setVisible(true);
             }
+            finalScore = Math.round(score);
+            System.out.println(finalScore);
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();
@@ -223,7 +231,8 @@ public class MainGameScreen implements Screen {
             @Override
             public void clicked(final InputEvent event, final float x,
                     final float y) {
-                ScoreContainer.addScore(Math.round(score), name, dateFormat.format(new Date()));
+                ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
+                System.out.println(finalScore);
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainGameScreen(batch));
             }
@@ -235,7 +244,7 @@ public class MainGameScreen implements Screen {
             @Override
             public void clicked(final InputEvent event, final float x,
                     final float y) {
-                ScoreContainer.addScore(Math.round(score), name, dateFormat.format(new Date()));
+                ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
                 EndlessRunner.get().create();
             }
         });
