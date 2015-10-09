@@ -124,14 +124,11 @@ public class DirectorTest {
     @Test
     public void testStartpoints () {
         currC = 1025;
-        director = new Director(5, pos, world, camerapos);
+        director = new Director(3, pos, world, camerapos);
         int count = 0;
         Iterator<GameSlice> it = director.getQueue().getSliceIterator();
-        while(it.hasNext() && count < 5){
-            GameSlice curr = it.next();
-            assertEquals((int) curr.getStartPoint().x, currC*count);
-            assertEquals((int) director.getQueue().startPointslice(count).x, currC*count);
-            count++;
-        }
+        it.next();
+        it.next();
+        assertEquals((int) it.next().getStartPoint().x, currC*2);
     }
 }
