@@ -74,10 +74,9 @@ public abstract class GameSlice {
     /**
      * Check if slice has the player.
      * @param playerpos Position of player.
-     * @param camerapos Position of camera.
      * @return if the player is on this slice.
      */
-    private boolean checkhasPlayer(final Vector2 playerpos, final Vector2 camerapos) {
+    private boolean checkhasPlayer(final Vector2 playerpos) {
         if (startPoint.x <= playerpos.x * 50 && endPoint.x >= playerpos.x * 50) {
             playerison = true;
         } else {
@@ -127,7 +126,7 @@ public abstract class GameSlice {
      */
     public void update(final Vector2 playerpos,  final Vector2 camerapos) {
         this.onscreen = checkonScreen(playerpos, camerapos);
-        this.playerison = checkhasPlayer(playerpos, camerapos);
+        this.playerison = checkhasPlayer(playerpos);
     }
     /**
      * Get the elements of this GameSlice.

@@ -95,17 +95,15 @@ public class GameSliceQueue {
      * Gives the leftbottom corner of the slice that adheres to the index.
      * @param slice input index
      * @return the Startpoint
+     * @throws IndexOutOfBoundsException if index given does not exist
      */
-    public Vector2 startPointslice(final int slice) {
+    public Vector2 startPointslice(final int slice) throws IndexOutOfBoundsException {
         if (slice > slices || slice < 0) {
-            new Exception("that slice does not exist");
+            throw new IndexOutOfBoundsException("that slice does not exist");
         }
         Iterator<GameSlice> it = getSliceIterator();
         GameSlice curr = it.next();
         int count = 0;
-        if (count == 0 && !it.hasNext() && length() == 2) {
-            System.out.println("NO WAY");
-        }
         while (!(count == slice)) {
                 curr = it.next();
                 count++;

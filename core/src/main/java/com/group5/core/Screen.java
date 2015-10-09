@@ -19,7 +19,7 @@ public abstract class Screen {
      * @param x horizontal screen size.
      * @param y vertical screen size.
      */
-    public void registerScreenSize(final int x, final int y) {
+    public static void registerScreenSize(final int x, final int y) {
         screenX = x;
         screenY = y;
 }
