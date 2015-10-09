@@ -33,7 +33,7 @@ public class OnlyFloorLevel extends GameSlice {
      * @param world physicsworld
      */
     private void createElems(final World world) {
-        elems.add(new FloorTile(world, new Vector2(this.startPoint.x / 50, 0)));
-        elems.add(new Obstacle(world, new Vector2((this.endPoint.x / 50), 1)));
+        getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
+        getElems().add(new Obstacle(world, new Vector2((this.getStartPoint().x / 50), 1)));
     }
 }

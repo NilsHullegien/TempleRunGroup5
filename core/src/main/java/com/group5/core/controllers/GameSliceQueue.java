@@ -20,10 +20,6 @@ public class GameSliceQueue {
      */
     private int slices;
     /**
-     * In which sliceindex in the queue the player is currently.
-     */
-    private int playerinqueue;
-    /**
      * Constructs a new GameSliceQueue.
      * @param num number of elements in the queue.
      */
@@ -46,11 +42,7 @@ public class GameSliceQueue {
     public int getPlayerinQueue() throws Exception {
     int count = 0;
     Iterator<GameSlice> it = slicequeue.iterator();
-    boolean b = true;
     while (it.hasNext()) {
-        if (!it.hasNext()) {
-            b = false;
-        }
         GameSlice curr = it.next();
         if (curr.hasPlayer()) {
             return count;
@@ -58,7 +50,7 @@ public class GameSliceQueue {
         count++;
     }
     // TODO: need to assign better behaviour when the player isn't in a queue
-    return 2000;
+    throw new Exception("Player is not in a slice");
     }
     /**
      * Handles adding a GameSlice to the queue.
@@ -118,13 +110,13 @@ public class GameSliceQueue {
                 curr = it.next();
                 count++;
             }
-        return curr.startPoint;
+        return curr.getStartPoint();
     }
     /**
      * Get the slices that are onscreen.
      * @return iterator of onscreen slices.
      */
-    public Iterator getOnScreenSlices() {
+    public Iterator<GameSlice> getOnScreenSlices() {
         LinkedList<GameSlice> ll = new LinkedList<GameSlice>();
         for (GameSlice g : slicequeue) {
             if (g.isonScreen()) {
@@ -137,7 +129,7 @@ public class GameSliceQueue {
      * Get the iterator of all slices in queue.
      * @return sliceiterator
      */
-    public Iterator getSliceIterator() {
+    public Iterator<GameSlice> getSliceIterator() {
         return slicequeue.iterator();
     }
     /**

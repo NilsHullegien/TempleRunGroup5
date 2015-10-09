@@ -63,17 +63,15 @@ public class DirectorTest {
     @Test 
     public void create2Slices() throws Exception {
         Vector2 playerpos = new Vector2 (30,30);
-        director = new Director(3, playerpos, world, camerapos);
-        //director.update(playerpos);
-        assertEquals(director.getQueue().length(),3);
+        director = new Director(2, playerpos, world, camerapos);
+        assertEquals(director.getQueue().length(),2);
         assertEquals(director.getQueue().startPointslice(0).x,0,10);
-        assertEquals(director.getQueue().startPointslice(2).x,currC*2,10);
-        //assertEquals(director.getQueue().getPlayerinQueue(),1);
+        assertEquals(director.getQueue().startPointslice(1).x,currC*1,10);
     }
 
     @Test
     public void testhasPlayer() throws Exception {
-        Vector2 playerpos = new Vector2 (0,0);
+        Vector2 playerpos = new Vector2 (1,1);
         director = new Director(5, playerpos, world, camerapos);
         director.update(playerpos);
         GameSliceQueue q = director.getQueue();
@@ -82,10 +80,11 @@ public class DirectorTest {
     
     @Test
     public void testhasPlayer1() throws Exception {
-        Vector2 playerpos = new Vector2 (0,0);
-        director = new Director(1, playerpos, world, camerapos);
-        director.update(playerpos);
+        Vector2 playerpos = new Vector2 (1,1);
+        director = new Director(1,0, playerpos, world, camerapos);
         GameSliceQueue q = director.getQueue();
+        Iterator<GameSlice> it = q.getSliceIterator();
+        assertEquals(it.next().getStartPoint().x, 0,10);
         assertEquals(director.getQueue().getPlayerinQueue(),0);
     }
 
@@ -99,8 +98,8 @@ public class DirectorTest {
         assertEquals(director.getQueue().length(),2);
         assertEquals(director.getQueue().startPointslice(0).x,0,10);
         Iterator<GameSlice> q = director.getQueue().getSliceIterator();
-        assertEquals(q.next().startPoint.x,0,10);
-        assertEquals(q.next().startPoint.x,currC,10);
+        assertEquals(q.next().getStartPoint().x,0,10);
+        assertEquals(q.next().getStartPoint().x,currC,10);
         //assertEquals(director.getQueue().startPointslice(1).x,currC,10);
         assertEquals(director.getQueue().getPlayerinQueue(),1);
     }
@@ -128,7 +127,7 @@ public class DirectorTest {
         director = new Director(150, playerpos, world, camerapos);
         director.update(playerpos);
         GameSliceQueue q = director.getQueue();
-        assertEquals(director.getQueue().getPlayerinQueue(),99);
+        assertEquals(director.getQueue().getPlayerinQueue(),98);
     }
     
     @Test
@@ -150,8 +149,8 @@ public class DirectorTest {
         Iterator<GameSlice> it = director.getQueue().getSliceIterator();
         while(it.hasNext()){
             GameSlice curr = it.next();
-            System.out.println(curr.startPoint.x);
-            assertEquals((int) curr.startPoint.x, currC*count);
+            System.out.println(curr.getStartPoint().x);
+            assertEquals((int) curr.getStartPoint().x, currC*count);
             assertEquals((int) director.getQueue().startPointslice(count).x, currC*count);
             count++;
         }
@@ -165,8 +164,8 @@ public class DirectorTest {
         Iterator<GameSlice> it = director.getQueue().getSliceIterator();
         while(it.hasNext()){
             GameSlice curr = it.next();
-            System.out.println(curr.startPoint.x);
-            assertEquals((int) curr.startPoint.x, currC*count);
+            System.out.println(curr.getStartPoint().x);
+            assertEquals((int) curr.getStartPoint().x, currC*count);
             assertEquals((int) director.getQueue().startPointslice(count).x, currC*count);
             count++;
         }

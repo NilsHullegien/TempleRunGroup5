@@ -15,15 +15,15 @@ public abstract class GameSlice {
     /**
      * Leftbottom corner of gs.
      */
-    protected Vector2 startPoint;
+    private Vector2 startPoint;
     /**
      * RightUp corner of gs.
      */
-    protected Vector2 endPoint;
+    private Vector2 endPoint;
     /**
      * Elements in the GameSlice.
      */
-    protected Collection<WorldObject> elems;
+    private Collection<WorldObject> elems;
     /**
      * status if onscreen.
      */
@@ -40,7 +40,7 @@ public abstract class GameSlice {
     public GameSlice(final Vector2 sP, final Vector2 eP) {
         this.startPoint = sP;
         this.endPoint = eP;
-        elems = new LinkedList<WorldObject>();
+        setElems(new LinkedList<WorldObject>());
     }
     /**
      * Constructor wit previous gameslice.
@@ -51,7 +51,7 @@ public abstract class GameSlice {
     public GameSlice(final GameSlice before, final Vector2 sP, final Vector2 eP) {
         this.startPoint = new Vector2(before.getendPoint().x + sP.x, sP.y);
         this.endPoint = new Vector2(before.getendPoint().x + eP.x, eP.y);
-        elems = new LinkedList<WorldObject>();
+        setElems(new LinkedList<WorldObject>());
     }
     /**
      * Gets status has Player.
@@ -79,12 +79,18 @@ public abstract class GameSlice {
      */
     private boolean checkhasPlayer(final Vector2 playerpos, final Vector2 camerapos) {
         if (startPoint.x <= playerpos.x * 50 && endPoint.x >= playerpos.x * 50) {
-            System.out.println(startPoint.x + " has the player");
             playerison = true;
         } else {
             playerison = false;
         }
         return playerison;
+    }
+    /**
+     * Return startPoint of this slice.
+     * @return Startpoint
+     */
+    public Vector2 getStartPoint() {
+        return startPoint;
     }
     /**
      * Give status is on screen.
@@ -112,7 +118,7 @@ public abstract class GameSlice {
      * @return Worldobjects iterator.
      */
     public Iterator<WorldObject> getAll() {
-        return elems.iterator();
+        return getElems().iterator();
     }
     /**
      * Update the Slice.
@@ -122,6 +128,20 @@ public abstract class GameSlice {
     public void update(final Vector2 playerpos,  final Vector2 camerapos) {
         this.onscreen = checkonScreen(playerpos, camerapos);
         this.playerison = checkhasPlayer(playerpos, camerapos);
+    }
+    /**
+     * Get the elements of this GameSlice.
+     * @return elements
+     */
+    public Collection<WorldObject> getElems() {
+        return elems;
+    }
+    /**
+     * Set the elements of this GameSlice.
+     * @param e elements
+     */
+    public void setElems(final Collection<WorldObject> e) {
+        this.elems = e;
     }
 
 }

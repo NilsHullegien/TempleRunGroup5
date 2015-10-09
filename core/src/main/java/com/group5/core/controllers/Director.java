@@ -94,9 +94,10 @@ public class Director {
             return gsq;
         }
         gsq.addGameSlice(GameSliceCasting.cast(w));
-        System.out.println(gsq.length());
+        gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+           gsq.getLast().update(playerPosition, cameraPosition);
         }
         return gsq;
     }
@@ -121,9 +122,7 @@ public class Director {
      */
     public void directQueue(final int minimal) {
         try {
-            System.out.println(queue.getPlayerinQueue());
             if (queue.getPlayerinQueue() > minimal) {
-                System.out.println(queue.getPlayerinQueue());
                 addGameSlice(world);
             }
         } catch (Exception e) {

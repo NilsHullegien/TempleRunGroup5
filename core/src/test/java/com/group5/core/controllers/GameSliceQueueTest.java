@@ -47,13 +47,12 @@ public class GameSliceQueueTest {
     public void testgetPlayerinQueue() throws Exception{
         director = new Director(1, new Vector2(0,0), world, camerapos);
         director.update( new Vector2(1,1));
-        GameSlice g = director.getQueue().getLast();
         assertEquals(director.getQueue().getPlayerinQueue(), 0);
     }
     
     @Test
     public void testgetPlayerinQueue2() throws Exception{
-        director = new Director(3, new Vector2(30,30), world, camerapos);
+        director = new Director(2, new Vector2(30,30), world, camerapos);
         director.update( new Vector2(30,30));
         assertEquals(director.getQueue().getPlayerinQueue(), 1);
     }
