@@ -17,7 +17,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     public OnlyFloorLevel(final World world) {
         super(new Vector2(0, 0), new Vector2(1025, 2000));
-        //createElems(world);
+        createElems(world);
     }
     /**
      * constructor with prevrious GameSlice.
@@ -26,7 +26,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     public OnlyFloorLevel(final GameSlice before, final World world) {
         super(before, new Vector2(0, 0), new Vector2(1025, 2000));
-        //createElems(world);
+        createElems(world);
     }
     /**
      * Create elements of this levelelement.
@@ -34,6 +34,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     private void createElems(final World world) {
         getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
-        getElems().add(new Obstacle(world, new Vector2((this.getStartPoint().x / 50), 1)));
+        float range = (this.getendPoint().x - this.getStartPoint().x) / 50;
+        getElems().add(new Obstacle(world, new Vector2((float) ((this.getStartPoint().x / 50) +  range * Math.random()), 1.2f)));
     }
 }
