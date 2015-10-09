@@ -45,7 +45,7 @@ public class Player extends AnimatedWorldObject {
         FixtureDef fixture = new FixtureDef();
         fixture.shape = bodyShape;
         fixture.density = 1.0f;
-        fixture.friction = 0.8f;
+        fixture.friction = 0.5f;
         fixture.restitution = 0.1f;
 
         Fixture f = body.createFixture(fixture);
@@ -76,8 +76,9 @@ public class Player extends AnimatedWorldObject {
         //update the animation
         super.update(delta, worldManager);
         Body b = getPhysicsBody();
-        if (b.getLinearVelocity().x < 10) {
-            b.applyLinearImpulse(2, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
+        double maxSpeed = 10;
+        if (b.getLinearVelocity().x < maxSpeed) {
+            b.applyLinearImpulse(4, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
         }
     }
 
@@ -106,8 +107,12 @@ public class Player extends AnimatedWorldObject {
      */
     public void jump(final float jumpIntensity) {
         Body b = getPhysicsBody();
-        if (Math.abs(b.getLinearVelocity().y) < 1e-3f) {
-            b.applyLinearImpulse(0, 20 + 20 + (20 * jumpIntensity), b.getWorldCenter().x, b.getWorldCenter().y, true);
+        if (b.getLinearVelocity().y > -0.6f && b.getLinearVelocity().y < 0.3f) {
+            b.applyLinearImpulse(0,
+                    -b.getWorld().getGravity().y + 20 + (10 * jumpIntensity),
+                    b.getWorldCenter().x,
+                    b.getWorldCenter().y,
+                    true);
         }
     }
 

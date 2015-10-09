@@ -64,7 +64,7 @@ public class SpawnerTest {
     @Test
     public void testGetLastFloor() {
         worldManager.add(new FloorTile(physicsWorld, new Vector2(1, 0)));
-        assertTrue(spawner.getLastFloor() == 1 + 1024.f / 50.f);
+        assertTrue(spawner.getLastFloor() == 1 + 1024.f * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -75,7 +75,7 @@ public class SpawnerTest {
         worldManager.add(new FloorTile(physicsWorld, new Vector2(0, 0)));
         worldManager.add(new FloorTile(physicsWorld, new Vector2(1, 0)));
         worldManager.add(new FloorTile(physicsWorld, new Vector2(2, 0)));
-        assertTrue(spawner.getLastFloor() == 2 + 1024 / 50.f);
+        assertTrue(spawner.getLastFloor() == 2 + 1024 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -86,7 +86,7 @@ public class SpawnerTest {
         worldManager.add(new FloorTile(physicsWorld, new Vector2(3, 0)));
         worldManager.add(new FloorTile(physicsWorld, new Vector2(0, 0)));
         worldManager.add(new FloorTile(physicsWorld, new Vector2(2, 0)));
-        assertTrue(spawner.getLastFloor() == 3 + 1024 / 50.f);
+        assertTrue(spawner.getLastFloor() == 3 + 1024 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -95,7 +95,7 @@ public class SpawnerTest {
     @Test
     public void testGetFloorSize() {
         worldManager.add(new FloorTile(physicsWorld, new Vector2(100, 200)));
-        assertTrue(spawner.getFloorSize() == 1024 / 50.f);
+        assertTrue(spawner.getFloorSize() == 1024 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -104,7 +104,7 @@ public class SpawnerTest {
     @Test
     public void testGetLastObstacle() {
         worldManager.add(new Obstacle(physicsWorld, new Vector2(0, 0)));
-        assertTrue(spawner.getLastObstacle() == 100 / 50.f);
+        assertTrue(spawner.getLastObstacle() == 100 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -115,7 +115,7 @@ public class SpawnerTest {
         worldManager.add(new Obstacle(physicsWorld, new Vector2(0, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(1, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(2, 0)));
-        assertTrue(spawner.getLastObstacle() == (2 + 100 / 50.f));
+        assertTrue(spawner.getLastObstacle() == (2 + 100 * WorldManager.PHYSICS_SCALE_FACTOR));
     }
 
     /**
@@ -126,7 +126,7 @@ public class SpawnerTest {
         worldManager.add(new Obstacle(physicsWorld, new Vector2(1, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(2, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(0, 0)));
-        assertTrue(spawner.getLastObstacle() == 2 + 100 / 50.f);
+        assertTrue(spawner.getLastObstacle() == 2 + 100 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -136,7 +136,7 @@ public class SpawnerTest {
     public void testGetMostRightPos() {
         worldManager.add(new FloorTile(physicsWorld, new Vector2(1, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(2, 0)));
-        assertTrue(spawner.getMostRightPos() == 1 + 1024 / 50.f);
+        assertTrue(spawner.getMostRightPos() == 1 + 1024 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -148,7 +148,7 @@ public class SpawnerTest {
         director.setState(1);
         worldManager.add(new FloorTile(physicsWorld, new Vector2(1, 0)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(2, 0)));
-        assertTrue(spawner.getMostRightPos() == 1 + 1024 / 50.f);
+        assertTrue(spawner.getMostRightPos() == 1 + 1024 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
     /**
@@ -160,7 +160,7 @@ public class SpawnerTest {
         director.setState(1);
         worldManager.add(new FloorTile(physicsWorld, new Vector2(1, 100)));
         worldManager.add(new Obstacle(physicsWorld, new Vector2(20, 200)));
-        assertTrue(spawner.getMostRightPos() == 20 + 100 / 50.f);
+        assertTrue(spawner.getMostRightPos() == 20 + 100 * WorldManager.PHYSICS_SCALE_FACTOR);
     }
 
 

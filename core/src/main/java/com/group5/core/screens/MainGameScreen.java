@@ -176,7 +176,10 @@ public class MainGameScreen implements Screen {
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
-        batch.setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(
+                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR,
+                        1 / WorldManager.PHYSICS_SCALE_FACTOR,
+                        1));
         batch.begin();
         for (WorldObject obj : worldManager.getObjects()) {
             obj.doRender(batch);

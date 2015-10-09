@@ -38,7 +38,10 @@ public abstract class WorldObject {
      * @param coord coordinate of object
      */
     public WorldObject(final Texture tex, final Vector2 coord) {
-        this(tex, new Vector2(tex.getWidth() / 50.f, tex.getHeight() / 50.f), coord);
+        this(tex,
+                new Vector2(tex.getWidth() * WorldManager.PHYSICS_SCALE_FACTOR,
+                        tex.getHeight() * WorldManager.PHYSICS_SCALE_FACTOR),
+                coord);
     }
 
     /**
@@ -146,13 +149,14 @@ public abstract class WorldObject {
     public void doRender(final SpriteBatch batch) {
         pos = getPhysicsBody().getPosition();
         batch.draw(getTexture(),
-                pos.x * 50.f, pos.y * 50.f,
+                pos.x, pos.y,
                 0, 0,
-                getWidth() * 50.f, getHeight() * 50.f,
+                getWidth(), getHeight(),
                 1, 1,
                 (float) Math.toDegrees(getPhysicsBody().getAngle()),
                 0, 0,
-                (int) getWidth() * 50, (int) getHeight() * 50,
+                (int) (getWidth() / WorldManager.PHYSICS_SCALE_FACTOR),
+                (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
                 false, false);
     }
 

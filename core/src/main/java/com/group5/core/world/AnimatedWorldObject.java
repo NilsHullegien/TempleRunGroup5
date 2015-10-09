@@ -83,9 +83,9 @@ public abstract class AnimatedWorldObject extends WorldObject {
         setX(pos.x);
         setY(pos.y);
         batch.draw(animation.getKeyFrame(currenttime, true),
-                this.getX() * 50.f, this.getY() * 50.f,
+                this.getX(), this.getY(),
                 0, 0,
-                getWidth() * 50.f, getHeight() * 50.f,
+                getWidth(), getHeight(),
                 1, 1,
                 (float) Math.toDegrees(getPhysicsBody().getAngle()));
     }
