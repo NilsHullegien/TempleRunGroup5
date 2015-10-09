@@ -257,7 +257,7 @@ public class MainGameScreen implements Screen {
 
             @Override
             public void keyTyped(final TextField textField, final char c) {
-                name = name + c;
+                name = textField.getText();
             }
         });
 
