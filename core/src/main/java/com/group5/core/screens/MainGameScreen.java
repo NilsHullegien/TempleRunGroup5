@@ -185,7 +185,7 @@ public class MainGameScreen implements Screen {
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             gameOverTable.setVisible(true);
-            gameOverScore.setText("Score:"
+            gameOverScore.setText(" Score:"
                     + Integer.toString(Math.round(score)));
             scoreLabel.setVisible(false);
             if (ScoreContainer.isHighScore(Math.round(score))) {
@@ -215,9 +215,9 @@ public class MainGameScreen implements Screen {
         // buttons.
         gameOverTable = new Table();
 
-        Label topText = new Label("Game over!", labelSkin);
+        Label topText = new Label(" Game over!", labelSkin);
         gameOverScore = new Label("", labelSkin);
-        highScoreLabel = new Label("New Highscore!", labelSkin);
+        highScoreLabel = new Label(" New Highscore!", labelSkin);
         highScoreLabel.setVisible(false);
         topText.setPosition(0, 0);
         TextButton restartButton = new TextButton("New game", buttonSkin); // Use
@@ -231,7 +231,6 @@ public class MainGameScreen implements Screen {
             public void clicked(final InputEvent event, final float x,
                     final float y) {
                 ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
-                System.out.println(finalScore);
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainGameScreen(batch));
             }
@@ -260,13 +259,15 @@ public class MainGameScreen implements Screen {
         txtStyle.fontColor = Color.BLACK;
         txtStyle.background = buttonSkin.getDrawable("background");
 
-        highScoreField = new TextField("", txtStyle);
+        highScoreField = new TextField(" ", txtStyle);
         highScoreField.setMessageText(" Enter name here");
         highScoreField.setTextFieldListener(new TextFieldListener() {
 
             @Override
             public void keyTyped(final TextField textField, final char c) {
-                name = textField.getText();
+                //Using the substring to remove the first space.
+                //This space is added for better visuals.
+                name = textField.getText().substring(1);
             }
         });
 
@@ -279,7 +280,7 @@ public class MainGameScreen implements Screen {
         gameOverTable.row();
         gameOverTable.add(gameOverScore).width(200.f);
         gameOverTable.row();
-        gameOverTable.add(highScoreField).width(200.f).height(30.f);
+        gameOverTable.add(highScoreField).width(200.f).height(30.f).expandX();
         gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
