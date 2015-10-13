@@ -262,15 +262,12 @@ public class MainGameScreen implements Screen {
         txtStyle.fontColor = Color.BLACK;
         txtStyle.background = buttonSkin.getDrawable("background");
 
-        highScoreField = new TextField(" ", txtStyle);
+        highScoreField = new TextField("", txtStyle);
         highScoreField.setMessageText(" Enter name here");
         highScoreField.setTextFieldListener(new TextFieldListener() {
-
             @Override
             public void keyTyped(final TextField textField, final char c) {
-                //Using the substring to remove the first space.
-                //This space is added for better visuals.
-                name = textField.getText().substring(1);
+                name = textField.getText();
             }
         });
 
@@ -283,7 +280,7 @@ public class MainGameScreen implements Screen {
         gameOverTable.row();
         gameOverTable.add(gameOverScore).width(200.f);
         gameOverTable.row();
-        gameOverTable.add(highScoreField).width(200.f).height(30.f).expandX();
+        gameOverTable.add(highScoreField).width(200.f).height(30.f);
         gameOverTable.row();
         Table t2 = new Table();
         t2.add(restartButton).width(100.f);
