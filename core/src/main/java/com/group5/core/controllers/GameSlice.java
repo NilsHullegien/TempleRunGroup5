@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.Screen;
 import com.group5.core.world.WorldObject;
 
 /**
@@ -67,9 +67,9 @@ public abstract class GameSlice {
      * @return boolean
      */
     private boolean checkonScreen(final Vector2 playerpos, final Vector2 camerapos) {
-        float leftscreenbound = playerpos.x - camerapos.x;
-        float rightscreenbound = playerpos.x + Screen.getscreenX() - camerapos.x;
-        return leftscreenbound < endPoint.x && rightscreenbound < startPoint.x;
+        float leftscreenbound = playerpos.x * 50 - camerapos.x;
+        float rightscreenbound = playerpos.x * 50 + 1.5f * Gdx.graphics.getWidth()  - camerapos.x;
+        return leftscreenbound <= endPoint.x && rightscreenbound >= startPoint.x;
     }
     /**
      * Check if slice has the player.

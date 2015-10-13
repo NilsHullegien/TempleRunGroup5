@@ -105,9 +105,7 @@ public class MainGameScreen implements Screen {
         Director director = new Director(7, 2, player.getPosition(), worldManager.getPhysicsWorld(), new Vector2(200, 0));
         this.worldManager.setPlayer(player);
         this.worldManager.setDirector(director);
-
         this.physicsRenderer = new Box2DDebugRenderer();
-
         worldManager.setPlayer(player);
         //worldManager.add(new FloorTile(worldManager.getPhysicsWorld(), new Vector2(0, 0)));
 
@@ -142,7 +140,7 @@ public class MainGameScreen implements Screen {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        Iterator<WorldObject> it = worldManager.getDirector().getObjects(false);
+        Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
         worldManager.getPlayer().doRender(batch);
         while (it.hasNext()) {
             it.next().doRender(batch);
