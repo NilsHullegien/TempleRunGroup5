@@ -93,8 +93,8 @@
                         <branchRate>60</branchRate>
                         <lineRate>50</lineRate>-->
                         <haltOnFailure>true</haltOnFailure>
-                        <totalLineRate>50</totalLineRate>
-                        <totalBranchRate>50</totalBranchRate>
+                        <totalLineRate>20</totalLineRate>
+                        <totalBranchRate>20</totalBranchRate>
                     </check>
                 </configuration>
             </plugin>
