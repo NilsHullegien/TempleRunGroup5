@@ -31,6 +31,7 @@ public class PlayerTest {
         player = new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20));
         worldManager.setPlayer(player);
         body = Mockito.mock(Body.class);
+        Mockito.when(body.getWorld()).thenReturn(this.physicsWorld);
         Mockito.when(body.getWorldCenter()).thenReturn(new Vector2(0, 0));
         Mockito.when(body.getLinearVelocity()).thenReturn(new Vector2(3, 0));
         player.setPhysicsBody(body);
@@ -66,7 +67,7 @@ public class PlayerTest {
     @Test
     public void jumpTest() {
         player.jump(1.0f);
-        Mockito.verify(body).applyLinearImpulse(0, 60, 0, 0, true);
+        Mockito.verify(body).applyLinearImpulse(0, 80, 0, 0, true);
     }
 
     @Test

@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.Director;
+import com.badlogic.gdx.physics.box2d.WorldManifold;
 
 import java.util.Iterator;
 
@@ -16,6 +17,12 @@ import java.util.Iterator;
  * Functions as a container for spawned items in the game.
  */
 public class WorldManager {
+
+    /**
+     * The scale with which pixel values have to be multiplied to get world-scale values.
+     */
+    public static final float PHYSICS_SCALE_FACTOR = 1 / 50.f;
+
     /**
      * The Box2D physics world.
      */
@@ -51,7 +58,8 @@ public class WorldManager {
      * Constructs a new, empty world with a default gravity.
      */
     public WorldManager() {
-        physicsWorld = new World(new Vector2(0, -20), true);
+        physicsWorld = new World(new Vector2(0, -50), true);
+
         ip = new InputProcessor() {
 
             /**
@@ -242,9 +250,17 @@ public class WorldManager {
 
         @Override
         public void beginContact(final Contact contact) {
-            if (contact.getFixtureA().getUserData() == player && contact.getFixtureB().getUserData() instanceof Obstacle
-                    || contact.getFixtureB().getUserData() == player && contact.getFixtureA().getUserData() instanceof Obstacle) {
-                player.kill();
+            if (contact.getFixtureA().getUserData() == player
+                    && contact.getFixtureB().getUserData() instanceof Obstacle
+                    || contact.getFixtureB().getUserData() == player
+                    && contact.getFixtureA().getUserData() instanceof Obstacle) {
+                WorldManifold w = contact.getWorldManifold();
+                float angle = w.getNormal().angle();
+                if (angle < 45
+                        || angle > 135 && angle < 225
+                        || angle > 315) {
+                    player.kill();
+                }
             }
         }
 
