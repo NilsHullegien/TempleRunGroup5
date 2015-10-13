@@ -91,10 +91,10 @@
                         <!--
                         Reenable this once coverage is fixed
                         <branchRate>60</branchRate>
-                        <lineRate>60</lineRate>-->
+                        <lineRate>50</lineRate>-->
                         <haltOnFailure>true</haltOnFailure>
                         <totalLineRate>50</totalLineRate>
-                        <totalBranchRate>60</totalBranchRate>
+                        <totalBranchRate>50</totalBranchRate>
                     </check>
                 </configuration>
             </plugin>
