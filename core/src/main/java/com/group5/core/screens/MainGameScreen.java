@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.group5.core.EndlessRunner;
 import com.group5.core.util.ScoreContainer;
 import com.group5.core.world.FloorTile;
@@ -130,6 +131,7 @@ public class MainGameScreen implements Screen {
      *            the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
+        this.stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         this.batch = b;
         this.score = 0;
         this.worldManager = new WorldManager();
@@ -172,7 +174,7 @@ public class MainGameScreen implements Screen {
         worldManager.update(delta);
 
         camera.position.set(camera.viewportWidth / 2.f
-                + worldManager.getPlayer().getX() * 50.f - 100.f,
+                        + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
 
@@ -366,7 +368,9 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void resize(final int width, final int height) {
-
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

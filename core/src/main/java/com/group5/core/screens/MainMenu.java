@@ -10,11 +10,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.group5.core.EndlessRunner;
 import com.group5.core.util.ScoreReader;
 
@@ -64,63 +71,58 @@ public class MainMenu implements Screen {
     /**
      * Sets up all the buttons for the Main Menu.
      */
-    private void buttonSetup() {
-        TextButton newGameButton = new TextButton("New game", skin); // Use the
-                                                                     // initialized
-                                                                     // skin
-        newGameButton.setPosition(Gdx.graphics.getWidth() / 5.f,
-                Gdx.graphics.getHeight() / 8.f);
+    private void setUp() {
+        Table table = new Table();
+        table.setFillParent(true);
 
-        newGameButton.addListener(new ClickListener() {
+        Table buttons = new Table();
+
+        TextButton btn = new TextButton("New game", skin);
+        btn.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainGameScreen(batch));
             }
         });
-        TextButton highscoreButton = new TextButton("Highscore", skin); // Use
-                                                                        // the
-                                                                        // initialized
-                                                                        // skin
-        highscoreButton.setPosition(Gdx.graphics.getWidth() / 5.f * 2,
-                Gdx.graphics.getHeight() / 8.f);
+        buttons.add(btn).height(50).expandX();
+        buttons.row().padTop(20);
 
-        highscoreButton.addListener(new ClickListener() {
+
+        btn = new TextButton("Highscores", skin);
+        btn.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new HighScoreScreen(batch));
             }
         });
+        buttons.add(btn).height(50).expandX();
+        buttons.row().padTop(20);
 
-        TextButton quitButton = new TextButton("Quit game", skin); // Use the
-                                                                   // initialized
-                                                                   // skin
-        quitButton.setPosition(Gdx.graphics.getWidth() / 5.f * 3,
-                Gdx.graphics.getHeight() / 8.f);
-
-        quitButton.addListener(new ClickListener() {
+        btn = new TextButton("Exit game", skin);
+        btn.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 Gdx.app.exit();
             }
         });
+        buttons.add(btn).height(50).expandX();
 
-        loadBackground();
+        table.add(buttons).expandY().width(100);
 
-        stage.addActor(newGameButton);
-        stage.addActor(highscoreButton);
-        stage.addActor(quitButton);
+        stage.addActor(table);
     }
 
     @Override
     public void show() {
+        stage.setViewport(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(stage);
         createDefaultSkin();
-        buttonSetup();
+        setUp();
         loadBackground();
         ScoreReader.read("scores.properties");
     }
@@ -166,7 +168,7 @@ public class MainMenu implements Screen {
 
     @Override
     public void resize(final int width, final int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

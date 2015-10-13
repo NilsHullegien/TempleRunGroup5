@@ -117,14 +117,17 @@ public class EndlessRunner extends Game {
 
     @Override
     public void resize(final int width, final int height) {
+        super.resize(width, height);
     }
 
     @Override
     public void pause() {
+        super.pause();
     }
 
     @Override
     public void resume() {
+        super.resume();
     }
 
     @Override
@@ -136,5 +139,6 @@ public class EndlessRunner extends Game {
         }
         batch.dispose();
         textureCache.dispose();
+        super.dispose();
     }
 }
