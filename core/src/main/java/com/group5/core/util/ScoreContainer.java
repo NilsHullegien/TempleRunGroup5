@@ -112,4 +112,17 @@ public abstract class ScoreContainer {
         }
         return null;
     }
+
+    /**
+     * Returns a sorted list.
+     * @return a sorted list containing ScoreItems.
+     */
+    public static ArrayList<ScoreItem> getSortedList() {
+        ArrayList<ScoreItem> returnList = new ArrayList<ScoreItem>();
+        for (int i = 1; i <= list.size(); i++) {
+            ScoreItem item = ScoreContainer.getRank(i);
+            returnList.add(item);
+        }
+        return returnList;
+    }
 }
