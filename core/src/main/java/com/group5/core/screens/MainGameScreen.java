@@ -157,14 +157,12 @@ public class MainGameScreen implements Screen {
         }
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
-       
             gameOverWidget.setScore(Math.round(score));
             gameOverWidget.show();
             finalScore = Math.round(score);
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();
-        
         if (gameOverMenuActive) {
             scoreLabel.setText(" " + Integer.toString(finalScore));
         } else {
