@@ -1,15 +1,14 @@
 package com.group5.core.util;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-
+import com.group5.core.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.group5.core.GdxTestRunner;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class ScoreContainerTest {
@@ -25,10 +24,10 @@ public class ScoreContainerTest {
      */
     @Test
     public void initializeEmptyListTest() {
-        ScoreContainer.initialize(new ArrayList<ScoreItem>());;
+        ScoreContainer.initialize(new ArrayList<ScoreItem>());
+        ;
         assertTrue(ScoreContainer.getList().isEmpty());
     }
-
 
 
     /**
@@ -121,7 +120,7 @@ public class ScoreContainerTest {
         ScoreContainer.addScore(10, "placeholder", "date");
 
         ScoreContainer.addScore(11, "placeholder", "date");
-        int lowest =11;
+        int lowest = 11;
         for (int i = 0; i < ScoreContainer.getList().size(); i++) {
             if (ScoreContainer.getList().get(i).getScore() < lowest) {
                 lowest = ScoreContainer.getList().get(i).getScore();
@@ -149,7 +148,7 @@ public class ScoreContainerTest {
         ScoreContainer.addScore(10, "placeholder", "date");
 
         ScoreContainer.addScore(0, "placeholder", "date");
-        int lowest =11;
+        int lowest = 11;
         for (int i = 0; i < ScoreContainer.getList().size(); i++) {
             if (ScoreContainer.getList().get(i).getScore() < lowest) {
                 lowest = ScoreContainer.getList().get(i).getScore();
@@ -159,7 +158,7 @@ public class ScoreContainerTest {
     }
 
     /**
-     *Check whether the method returns true when you ask for a value that is higher than the high score and false when it's lower.
+     * Check whether the method returns true when you ask for a value that is higher than the high score and false when it's lower.
      */
     @Test
     public void isHighScoreTest() {
