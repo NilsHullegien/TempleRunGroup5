@@ -168,7 +168,6 @@ public class MainGameScreen implements Screen {
         } else {
             scoreLabel.setText(" " + Integer.toString(Math.round(score)));
         }
-        
         batch.end();
         stage.act();
         stage.draw();
