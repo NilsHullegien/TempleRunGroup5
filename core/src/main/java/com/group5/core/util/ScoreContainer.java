@@ -57,7 +57,9 @@ public abstract class ScoreContainer {
 
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getRank() >= rank) {
-              list.get(i).setRank(list.get(i).getRank() + 1);
+                ScoreItem item = list.get(i);
+                ScoreItem newItem = new ScoreItem(item.getRank() +1, item.getScore(), item.getName(), item.getDate());
+              list.set(i, newItem);
             }
         }
         for (int i = 0; i < list.size(); i++) {
