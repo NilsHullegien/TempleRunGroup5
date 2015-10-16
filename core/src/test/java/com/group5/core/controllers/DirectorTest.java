@@ -103,7 +103,6 @@ public class DirectorTest {
         Iterator<GameSlice> it = director.getQueue().getSliceIterator();
         while(it.hasNext()){
             GameSlice curr = it.next();
-            System.out.println(curr.getStartPoint().x);
             assertEquals((int) curr.getStartPoint().x, currC*count);
             assertEquals((int) director.getQueue().startPointslice(count).x, currC*count);
             count++;

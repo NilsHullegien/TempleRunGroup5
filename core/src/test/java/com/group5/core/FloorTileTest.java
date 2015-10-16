@@ -91,7 +91,6 @@ public class FloorTileTest {
 
     @Test
     public void getPositionTest() {
-        System.out.println(f1.getPosition());
         assertEquals(f1.getPosition(), new Vector2(0.0f,0.0f));
     }
 }

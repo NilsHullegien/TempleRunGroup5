@@ -80,11 +80,6 @@ public class PlayerTest {
     }
 
     @Test
-    public void rndTest() {
-        System.out.println("hi");
-    }
-
-    @Test
     public void hashCodeTest() {
         player = new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20));
         Player p2 = new Player(physicsWorld, new Vector2(0, 0), new Vector2(10, 20));

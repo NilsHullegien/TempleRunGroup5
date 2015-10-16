@@ -97,7 +97,6 @@ public class Director {
         gsq.addGameSlice(GameSliceCasting.cast(w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
-            System.out.println(gsq.length());
            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
            gsq.getLast().update(playerPosition, cameraPosition);
         }
