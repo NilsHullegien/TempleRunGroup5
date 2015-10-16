@@ -1,12 +1,12 @@
 package com.group5.core.controllers;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.util.Logger;
 import com.group5.core.world.WorldObject;
-
-import java.util.Iterator;
-import java.util.LinkedList;
 
 
 /**
@@ -97,6 +97,7 @@ public class Director {
         gsq.addGameSlice(GameSliceCasting.cast(w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
+            System.out.println(gsq.length());
            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
            gsq.getLast().update(playerPosition, cameraPosition);
         }
