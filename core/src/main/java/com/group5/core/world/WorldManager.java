@@ -1,5 +1,7 @@
 package com.group5.core.world;
 
+import java.util.Iterator;
+
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -10,8 +12,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.WorldManifold;
 import com.group5.core.controllers.Director;
-
-import java.util.Iterator;
 
 /**
  * Functions as a container for spawned items in the game.
@@ -284,5 +284,22 @@ public class WorldManager {
         public void postSolve(final Contact contact, final ContactImpulse impulse) {
 
         }
+    }
+    /**
+     * Getter for the jumpTime.
+     * Testing only!
+     * @return the jumpTime.
+     */
+    public long getJumpTime() {
+        return jumpTime;
+    }
+
+    /**
+     * Getter for the timerStart.
+     * Testing only!
+     * @return the timerStart.
+     */
+    public long getTimerStart() {
+        return timerStart;
     }
 }

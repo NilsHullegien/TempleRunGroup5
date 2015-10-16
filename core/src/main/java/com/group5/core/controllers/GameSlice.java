@@ -53,8 +53,8 @@ public abstract class GameSlice {
      * @param eP     endpoint
      */
     public GameSlice(final GameSlice before, final Vector2 sP, final Vector2 eP) {
-        this.startPoint = new Vector2(before.getendPoint().x + sP.x, sP.y);
-        this.endPoint = new Vector2(before.getendPoint().x + eP.x, eP.y);
+        this.startPoint = new Vector2(before.getEndPoint().x + sP.x, sP.y);
+        this.endPoint = new Vector2(before.getEndPoint().x + eP.x, eP.y);
         setElems(new LinkedList<WorldObject>());
     }
 
@@ -114,6 +114,8 @@ public abstract class GameSlice {
     }
 
     /**
+<<<<<<< HEAD
+=======
      * Returns leftbottomcorner.
      *
      * @return startPoint gameslice.
@@ -123,11 +125,12 @@ public abstract class GameSlice {
     }
 
     /**
+>>>>>>> origin/master
      * Returns rightupcorner.
      *
      * @return endPoint GameSlice.
      */
-    public Vector2 getendPoint() {
+    public Vector2 getEndPoint() {
         return endPoint;
     }
 

@@ -1,10 +1,9 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.math.Vector2;
-import com.group5.core.util.Logger;
-
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * The Queue in which the GameSlices live.
@@ -74,7 +73,6 @@ public class GameSliceQueue {
             slicequeue.poll();
         }
         slicequeue.offer(g);
-        Logger.get().info("GameSliceQueue", "Creating");
     }
 
     /**
@@ -170,5 +168,13 @@ public class GameSliceQueue {
      */
     public GameSlice getLast() {
         return slicequeue.getLast();
+    }
+
+    /**
+     * Get the first GameSlice in the queue.
+     * @return GameSlice.
+     */
+    public GameSlice getFirst() {
+        return slicequeue.getFirst();
     }
 }
