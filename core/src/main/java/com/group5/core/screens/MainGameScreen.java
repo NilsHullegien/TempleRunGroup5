@@ -1,5 +1,8 @@
 package com.group5.core.screens;
 
+import java.util.Iterator;
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -7,19 +10,22 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.group5.core.EndlessRunner;
 import com.group5.core.controllers.Director;
+import com.group5.core.util.ScoreContainer;
+import com.group5.core.util.ScoreItem;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
-import java.util.Iterator;
 
 /**
  * Main game screen.
@@ -49,9 +55,10 @@ public class MainGameScreen implements Screen {
     private GameOverWidget gameOverWidget;
 
     /**
-     * Skin of the labels.
+     * Skin of the HUD.
      */
-    private Skin labelSkin;
+    private Skin hudSkin;
+
     /**
      * Box2D shape renderer for debugging.
      */
@@ -68,6 +75,16 @@ public class MainGameScreen implements Screen {
      * Label that indicates the score.
      */
     private Label scoreLabel;
+
+    /**
+     * Table that contains the hud of the screen.
+     */
+    private Table hud;
+
+    /**
+     * This variable contains the final score, to ensure it doesn't get changed.
+     */
+    private int finalScore;
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -87,10 +104,8 @@ public class MainGameScreen implements Screen {
         this.physicsRenderer = new Box2DDebugRenderer();
         worldManager.setPlayer(player);
 
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight());
-        camera.position.set(camera.viewportWidth / 2.f + player.getX(),
-                camera.viewportHeight / 2.f + player.getY(), 0);
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2.f + player.getX(), camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
         Gdx.input.setInputProcessor(worldManager.getInputProcessor());
     }
@@ -113,8 +128,8 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void show() {
-        createDefaultLabelSkin();
-        createScoreLabel();
+        createHUDSkin();
+        createHUD();
     }
 
     @Override
@@ -129,15 +144,11 @@ public class MainGameScreen implements Screen {
 
         worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f
-                        + worldManager.getPlayer().getX() * 50.f - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
-
         batch.setProjectionMatrix(
-                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR,
-                        1 / WorldManager.PHYSICS_SCALE_FACTOR,
-                        1));
+                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR, 1 / WorldManager.PHYSICS_SCALE_FACTOR, 1));
         batch.begin();
         Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
         worldManager.getPlayer().doRender(batch);
@@ -148,47 +159,91 @@ public class MainGameScreen implements Screen {
             gameOverMenuActive = true;
             gameOverWidget.setScore(Math.round(score));
             gameOverWidget.show();
-            scoreLabel.setVisible(false);
+            finalScore = Math.round(score);
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();
+        if (gameOverMenuActive) {
+            scoreLabel.setText(" " + Integer.toString(finalScore));
+        } else {
+            scoreLabel.setText(" " + Integer.toString(Math.round(score)));
+        }
 
-        scoreLabel.setText("Score: " + Math.round(score));
         batch.end();
         stage.act();
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(),
-                camera.combined.scale(50.f, 50.f, 1.f));
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
     }
 
     /**
-     * Create a label which will indicate the score.
-     */
-    private void createScoreLabel() {
-        scoreLabel = new Label("Score: " + score, labelSkin);
-        scoreLabel.setPosition(5, 0);
-        stage.addActor(scoreLabel);
     }
 
     /**
-     * Create the skin for a default label.
+     * Create skin for the HUD of the game.
      */
-    private void createDefaultLabelSkin() {
-        // create font
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("menufont.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        param.size = 16;
-        BitmapFont font = generator.generateFont(param);
-        generator.dispose();
-        labelSkin = new Skin();
-        labelSkin.add("default", font);
+    private void createHUDSkin() {
+        hudSkin = new Skin();
+        hudSkin.add("bar", ((EndlessRunner) Gdx.app.getApplicationListener()).getTextureCache().load("bar.png"));
+        BitmapFont font = new BitmapFont();
+        hudSkin.add("default", font);
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = labelSkin.getFont("default");
-        labelStyle.fontColor = Color.RED;
-        labelSkin.add("default", labelStyle);
+        Label.LabelStyle background = new Label.LabelStyle();
+        background.background = hudSkin.newDrawable("bar");
+        background.font = hudSkin.getFont("default");
+        hudSkin.add("background", background);
+
+        Label.LabelStyle text = new Label.LabelStyle();
+        text.font = hudSkin.getFont("default");
+        text.fontColor = Color.BLACK;
+        hudSkin.add("default", text);
+    }
+
+    /**
+     * Create the HUD for the screen.
+     */
+    private void createHUD() {
+        hud = new Table();
+        hud.setFillParent(true);
+        hud.add().expandY();
+
+        //Create highscore table
+        int highestScore = 0;
+        ArrayList<ScoreItem> scoreList = ScoreContainer.getList();
+        for (ScoreItem item : scoreList) {
+            if (item.getRank() == 1) {
+                highestScore = item.getScore();
+            }
+        }
+        Stack highStack = new Stack();
+        Label highscore = new Label(" Highscore", hudSkin);
+        Label numHighscore = new Label(" " + Integer.toString(highestScore), hudSkin);
+        Table hs = new Table();
+        hs.defaults().width(100f);
+        hs.add(highscore);
+        hs.row();
+        hs.add(numHighscore);
+        highStack.add(new Label("", hudSkin, "background"));
+        highStack.add(hs);
+        hud.add(highStack).top().expandX();
+
+        hud.add();
+
+        //Create score table
+        Stack scoreStack = new Stack();
+        Label scoreL = new Label(" Score", hudSkin);
+        scoreLabel = new Label(" " + Integer.toString(Math.round(score)), hudSkin);
+        Table scoreCell = new Table();
+        scoreCell.defaults().width(100f);
+        scoreCell.add(scoreL);
+        scoreCell.row();
+        scoreCell.add(scoreLabel);
+        scoreStack.add(new Label("", hudSkin, "background"));
+        scoreStack.add(scoreCell);
+        hud.add(scoreStack).top().expandX();
+
+        stage.addActor(hud);
     }
 
     @Override
