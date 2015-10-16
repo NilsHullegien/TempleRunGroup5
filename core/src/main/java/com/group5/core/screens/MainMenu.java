@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -126,7 +127,12 @@ public class MainMenu implements Screen {
      */
     private void createDefaultSkin() {
         // create font
-        BitmapFont font = new BitmapFont();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("menufont.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter param = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        param.size = 16;
+        BitmapFont font = generator.generateFont(param);
+        generator.dispose();
+
         skin = new Skin();
         skin.add("default", font);
 
