@@ -305,7 +305,7 @@ public class HighScoreScreen implements Screen {
         table.row();
         //This adds all the scores to the table.
         for (int i = 0; i < (scoreList.size()); i++) {
-            if (i % 2 == 1) {
+            if (i % 2 != 0) {
                 table.add(new Label("   " + Integer.toString(scoreList.get(i).getRank()), lightSkin)).expandX().width(75.f);
                 table.add(new Label("   " + Integer.toString(scoreList.get(i).getScore()), lightSkin)).expandX().width(100.f);
                 table.add(new Label("   " + scoreList.get(i).getName(), lightSkin)).expandX().width(325.f);
