@@ -1,106 +1,150 @@
 package com.group5.core.controllers;
 
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.world.FloorTile;
-import com.group5.core.world.Obstacle;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.util.Logger;
 import com.group5.core.world.WorldObject;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 
 /**
  * Director class which will direct what will appear in the world.
  */
 public class Director {
     /**
-     * The current GameSlice of the director.
+     * GameSliceQueue assigned to Director.
      */
-    private GameSlice state;
+    private GameSliceQueue queue;
     /**
-     * The list with all the available GameSlices.
+     * Position of the player, updated every iteration.
      */
-    private ArrayList<GameSlice> sliceList;
+    private Vector2 playerPosition;
     /**
-     * Random class for randomization of objects.
+     * Camera position, meaning the location of the camera
+     * relative to the screen.
      */
-    private Random random;
+    private Vector2 cameraPosition;
     /**
-     * The max interval between two floors as an integer.
+     * Physics world.
      */
-    private int floorInterval = 4;
+    private final World world;
     /**
-     * The max interval between two obstacles as an integer.
+     * Amount of slices that have to be in front.
      */
-    private int obstacleInterval = 5;
+    private int minfront = 2;
     /**
-     * The spawner for which the director will direct.
+     * Director commands the creation of levels.
+     * @param amount of slices in the queue
+     * @param playerpos current position of player
+     * @param w physicsworld
+     * @param camerapos position of camera relative to the screen
      */
-    private Spawner spawner;
-
-    /**
-     * Constructor of the Director class.
-     *
-     * @param spawn spawner which will spawn the objects for the director.
-     */
-    public Director(final Spawner spawn) {
-        sliceList = new ArrayList<GameSlice>();
-        sliceList.add(new GameSlice("Regular", 1, 0, 0.5f, 0, 64f / 50f, 0));
-        sliceList.add(new GameSlice("ObstacleCourse", 0, 0, 1, 0, 0, 0));
-        state = sliceList.get(0);
-        random = new Random();
-        this.spawner = spawn;
+    public Director(final int amount, final Vector2 playerpos, final World w, final Vector2 camerapos) {
+        this.playerPosition = playerpos;
+        this.cameraPosition = camerapos;
+        this.world = w;
+        this.queue = initiateQueue(amount, world);
     }
-
     /**
-     * Method to get the current GameSlice.
-     *
-     * @return the current GameSlice state.
+     * Director commands the creation of levels.
+     * @param amount of slices in the queue
+     * @param mf minimal slices in front of the player
+     * @param playerpos current position of player
+     * @param w physicsworld
+     * @param camerapos position of camera relative to the screen
      */
-    public GameSlice getState() {
-        return state;
+    public Director(final int amount, final int mf, final Vector2 playerpos, final World w, final Vector2 camerapos) {
+        this.playerPosition = playerpos;
+        this.cameraPosition = camerapos;
+        this.world = w;
+        this.minfront = mf;
+        this.queue = initiateQueue(amount, w);
     }
-
     /**
-     * Method to set the current GameSlice.
-     *
-     * @param index the new index of the GameSlice list.
+     * Gives an iterator with all objects in some/all gameslices.
+     * @param onlyonScreen get all slices or those that are only visible
+     * @return iterator with WorldObjects
      */
-    public void setState(final int index) {
-        if (index < sliceList.size()) {
-            state = sliceList.get(index);
+    public Iterator<WorldObject> getObjects(final boolean onlyonScreen) {
+        Iterator<GameSlice> ig;
+        if (onlyonScreen) {
+            ig = queue.getOnScreenSlices();
+        } else {
+            ig = queue.getSliceIterator();
         }
-    }
-
-    /**
-     * Method to direct which objects the spawner needs to spawn. Every direct
-     * List can only have one floor and one obstacle at most. There is no
-     * randomness yet for the number of obstacles or the place of the obstacles.
-     *
-     * @return an ArrayList<WorldObject> containing the objects the spawner needs to spawn.
-     */
-    public ArrayList<WorldObject> direct() {
-        ArrayList<WorldObject> nextFloorList = new ArrayList<WorldObject>();
-        float xFloor = 0;
-        int playerSize = Math.round(spawner.getPlayerSize());
-        if (random.nextFloat() < state.getFloorRNG()) {
-            if (random.nextFloat() > state.getNoGapFloorRNG()) {
-                xFloor = random.nextInt(floorInterval) + playerSize;
+        LinkedList<WorldObject> ll = new LinkedList<WorldObject>();
+        while (ig.hasNext()) {
+            Iterator<WorldObject> iw = ig.next().getAll();
+            while (iw.hasNext()) {
+                ll.add(iw.next());
             }
-            nextFloorList.add(new FloorTile(spawner.getWorldManager().getPhysicsWorld(),
-                    new Vector2(xFloor + spawner.getMostRightPos(), state.getYPosFloor())));
         }
-
-        float xObstacle = 0;
-        float gapObstacle = 0;
-        if (random.nextFloat() < state.getObstaclesRNG()) {
-            if (random.nextFloat() > state.getNoGapObstacleRNG()) {
-                gapObstacle = obstacleInterval;
-            }
-            xObstacle = spawner.getMostRightPos() + xFloor + gapObstacle;
-            nextFloorList.add(new Obstacle(spawner.getWorldManager().getPhysicsWorld(),
-                    new Vector2(xObstacle, state.getYPosObstacles())));
-        }
-        return nextFloorList;
+        return ll.iterator();
     }
-
+    /**
+     * Initiate the GameSliceQueue.
+     * @param amount of gameslices
+     * @param w physicsworld
+     * @return returns the queue
+     */
+    private GameSliceQueue initiateQueue(final int amount, final World w) {
+        GameSliceQueue gsq = new GameSliceQueue(amount);
+        if (amount <= 0) {
+            return gsq;
+        }
+        gsq.addGameSlice(GameSliceCasting.cast(w));
+        gsq.getLast().update(playerPosition, cameraPosition);
+        while (gsq.length() < amount) {
+           gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+           gsq.getLast().update(playerPosition, cameraPosition);
+        }
+        return gsq;
+    }
+    /**
+     * Commands GameSliceCast for appropriate levelslice and sends it to the queue.
+     * @param w physicsworld
+     */
+    private void addGameSlice(final World w) {
+        Logger.get().info("Director", "Adding GameSlice");
+        GameSlice g;
+        if (queue.isEmpty()) {
+            g = GameSliceCasting.cast(w);
+        } else {
+            g = GameSliceCasting.cast(queue.getLast(), w);
+        }
+        queue.addGameSlice(g);
+    }
+    /**
+     * This function handles adding new GameSlice if there
+     * are to little slices in front of the player.
+     * @param minimal minfront
+     */
+    public void directQueue(final int minimal) {
+        try {
+            if (queue.getPlayerinQueue() > minimal) {
+                addGameSlice(world);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            addGameSlice(world);
+        }
+    }
+    /**
+     * Get the queue.
+     * @return queue
+     */
+    public GameSliceQueue getQueue() {
+        return queue;
+    }
+    /**
+     * updates Director which commands the queue to update.
+     * @param playerpos position of player.
+     */
+    public void update(final Vector2 playerpos) {
+        this.playerPosition = playerpos;
+        directQueue(minfront);
+        queue.update(playerpos, cameraPosition);
+    }
 }
