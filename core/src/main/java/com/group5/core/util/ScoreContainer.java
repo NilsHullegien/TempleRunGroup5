@@ -105,4 +105,30 @@ public abstract class ScoreContainer {
         return true;
     }
 
+    /**
+     * Returns a ScoreItem that is at a spot in the top 10.
+     * @param rank the rank the ScoreItem is at.
+     * @return the ScoreItem at the given rank.
+     */
+    public static ScoreItem getRank(final int rank) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getRank() == rank) {
+                return list.get(i);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns a sorted list.
+     * @return a sorted list containing ScoreItems.
+     */
+    public static ArrayList<ScoreItem> getSortedList() {
+        ArrayList<ScoreItem> returnList = new ArrayList<ScoreItem>();
+        for (int i = 1; i <= list.size(); i++) {
+            ScoreItem item = ScoreContainer.getRank(i);
+            returnList.add(item);
+        }
+        return returnList;
+    }
 }

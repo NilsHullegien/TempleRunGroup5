@@ -281,7 +281,7 @@ public class HighScoreScreen implements Screen {
      * Creates the table in which the high scores are shown.
      */
     private void tableSetup() {
-        scoreList = ScoreContainer.getList();
+        scoreList = ScoreContainer.getSortedList();
         // the screen consists of one table containing one label and two
         // buttons.
         table = new Table();
@@ -304,24 +304,20 @@ public class HighScoreScreen implements Screen {
         table.add(name).expandX().width(325.f);
         table.add(date).expandX().width(150.f);
         table.row();
-        //This should add all the scores to the table.
-        for (int i = 1; i <= (scoreList.size()); i++) {
-            for (int j = 0; j <= (scoreList.size() - 1); j++) {
-                if (scoreList.get(j).getRank() == i) {
-                    if (i % 2 == 0) {
-                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getRank()), lightSkin)).expandX().width(75.f);
-                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getScore()), lightSkin)).expandX().width(100.f);
-                        table.add(new Label("   " + scoreList.get(j).getName(), lightSkin)).expandX().width(325.f);
-                        table.add(new Label("   " + scoreList.get(j).getDate(), lightSkin)).expandX().width(150.f);
-                        table.row();
-                    } else {
-                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getRank()), darkSkin)).expandX().width(75.f);
-                        table.add(new Label("   " + Integer.toString(scoreList.get(j).getScore()), darkSkin)).expandX().width(100.f);
-                        table.add(new Label("   " + scoreList.get(j).getName(), darkSkin)).expandX().width(325.f);
-                        table.add(new Label("   " + scoreList.get(j).getDate(), darkSkin)).expandX().width(150.f);
-                        table.row();
-                    }
-                }
+        //This adds all the scores to the table.
+        for (int i = 0; i < (scoreList.size()); i++) {
+            if (i % 2 != 0) {
+                table.add(new Label("   " + Integer.toString(scoreList.get(i).getRank()), lightSkin)).expandX().width(75.f);
+                table.add(new Label("   " + Integer.toString(scoreList.get(i).getScore()), lightSkin)).expandX().width(100.f);
+                table.add(new Label("   " + scoreList.get(i).getName(), lightSkin)).expandX().width(325.f);
+                table.add(new Label("   " + scoreList.get(i).getDate(), lightSkin)).expandX().width(150.f);
+                table.row();
+            } else {
+                table.add(new Label("   " + Integer.toString(scoreList.get(i).getRank()), darkSkin)).expandX().width(75.f);
+                table.add(new Label("   " + Integer.toString(scoreList.get(i).getScore()), darkSkin)).expandX().width(100.f);
+                table.add(new Label("   " + scoreList.get(i).getName(), darkSkin)).expandX().width(325.f);
+                table.add(new Label("   " + scoreList.get(i).getDate(), darkSkin)).expandX().width(150.f);
+                table.row();
             }
         }
         table.row();
