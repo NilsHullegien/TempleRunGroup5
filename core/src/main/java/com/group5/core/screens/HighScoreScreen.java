@@ -1,7 +1,5 @@
 package com.group5.core.screens;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -23,10 +21,12 @@ import com.group5.core.EndlessRunner;
 import com.group5.core.util.ScoreContainer;
 import com.group5.core.util.ScoreItem;
 
+import java.util.ArrayList;
+
 /**
  * Creates a High Score screen.
- * @author Nils
  *
+ * @author Nils
  */
 public class HighScoreScreen implements Screen {
 
@@ -78,6 +78,7 @@ public class HighScoreScreen implements Screen {
 
     /**
      * Constructor.
+     *
      * @param b spriteBatch
      */
     public HighScoreScreen(final SpriteBatch b) {
@@ -197,7 +198,7 @@ public class HighScoreScreen implements Screen {
         returnButton.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainMenu(batch));
             }
@@ -234,7 +235,7 @@ public class HighScoreScreen implements Screen {
      * Create dark skin used in the table.
      */
     private void createDarkSkin() {
-     // create font
+        // create font
         BitmapFont font = new BitmapFont();
         darkSkin = new Skin();
         darkSkin.add("default", font);
@@ -257,7 +258,7 @@ public class HighScoreScreen implements Screen {
      * Create dark skin used in the table.
      */
     private void createTopSkin() {
-     // create font
+        // create font
         BitmapFont font = new BitmapFont();
         topSkin = new Skin();
         topSkin.add("default", font);

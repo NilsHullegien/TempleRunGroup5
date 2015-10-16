@@ -2,8 +2,8 @@ package com.group5.core.util;
 
 /**
  * This class creates a score item, that consists of a rank, a score and a name.
- * @author Marcel
  *
+ * @author Marcel
  */
 public class ScoreItem {
 
@@ -29,10 +29,11 @@ public class ScoreItem {
 
     /**
      * Create a score item that consists of a rank, a score and a name.
-     * @param rankValue the rank
+     *
+     * @param rankValue  the rank
      * @param scoreValue the score
-     * @param nameValue the name
-     * @param dateValue the date.
+     * @param nameValue  the name
+     * @param dateValue  the date.
      */
     public ScoreItem(final int rankValue, final int scoreValue, final String nameValue, final String dateValue) {
         rank = rankValue;
@@ -43,6 +44,7 @@ public class ScoreItem {
 
     /**
      * Return the rank.
+     *
      * @return the rank
      */
     public int getRank() {
@@ -50,7 +52,17 @@ public class ScoreItem {
     }
 
     /**
+     * Set a new rank value for this score item.
+     *
+     * @param rankValue the new rank value
+     */
+    public void setRank(final int rankValue) {
+        rank = rankValue;
+    }
+
+    /**
      * Return the score.
+     *
      * @return the score
      */
     public int getScore() {
@@ -59,6 +71,7 @@ public class ScoreItem {
 
     /**
      * Return the name.
+     *
      * @return the name
      */
     public String getName() {
@@ -67,6 +80,7 @@ public class ScoreItem {
 
     /**
      * Return the date.
+     *
      * @return the date.
      */
     public String getDate() {
