@@ -1,9 +1,5 @@
 package com.group5.core.screens;
 
-import java.util.Iterator;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -34,92 +30,79 @@ import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+
 /**
  * Main game screen.
  */
 public class MainGameScreen implements Screen {
 
     /**
+     * The date formatter used for printing log timestamps.
+     */
+    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
+    /**
      * A spritebatch to draw things with.
      */
     private SpriteBatch batch;
-
     /**
      * The worldManager that contains all game objects.
      */
     private WorldManager worldManager;
-
     /**
      * The camera the worldManager is viewed with.
      */
     private OrthographicCamera camera;
-
     /**
      * Stage of this screen.
      */
     private Stage stage = new Stage();
-
     /**
      * Skin of the buttons.
      */
     private Skin buttonSkin;
-
     /**
      * Skin of the labels.
      */
     private Skin labelSkin;
-
     /**
      * Box2D shape renderer for debugging.
      */
     private Box2DDebugRenderer physicsRenderer;
-
     /**
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
-
     /**
      * Score of the game.
      */
     private float score;
-
     /**
      * Label that indicates the score.
      */
     private Label scoreLabel;
-
     /**
      * Table that contains the game over screen.
      */
     private Table gameOverTable;
-
     /**
      * Label that indicates the final score.
      */
     private Label gameOverScore;
-
     /**
      * This label is only visible when the user gets a new high score in this session.
      */
     private Label highScoreLabel;
-
     /**
      * Textfield that gives a name that is added to the score in the high score screen.
      */
     private TextField highScoreField;
-
     /**
      * String used in the description of the score.
      */
     private String name = "";
-
-    /**
-     * The date formatter used for printing log timestamps.
-     */
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
-
-
     /**
      * This variable contains the final score, to ensure it doesn't get changed.
      */
@@ -128,8 +111,7 @@ public class MainGameScreen implements Screen {
     /**
      * Constructs a new main game screen that plays the actual game.
      *
-     * @param b
-     *            the SpriteBatch to draw textures with
+     * @param b the SpriteBatch to draw textures with
      */
     public MainGameScreen(final SpriteBatch b) {
         this.stage = new Stage(new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -163,6 +145,7 @@ public class MainGameScreen implements Screen {
     public void resume() {
 
     }
+
     @Override
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -224,15 +207,15 @@ public class MainGameScreen implements Screen {
         highScoreLabel.setVisible(false);
         topText.setPosition(0, 0);
         TextButton restartButton = new TextButton("New game", buttonSkin); // Use
-                                                                           // the
-                                                                           // initialized
-                                                                           // buttonSkin
+        // the
+        // initialized
+        // buttonSkin
 
         restartButton.setPosition(0, 0);
         restartButton.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
                 ((Game) Gdx.app.getApplicationListener())
                         .setScreen(new MainGameScreen(batch));
@@ -244,7 +227,7 @@ public class MainGameScreen implements Screen {
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(final InputEvent event, final float x,
-                    final float y) {
+                                final float y) {
                 ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
                 EndlessRunner.get().create();
             }
