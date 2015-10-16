@@ -1,6 +1,8 @@
 package com.group5.core.screens;
 
+import java.util.Iterator;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import com.badlogic.gdx.Game;
@@ -19,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -26,8 +29,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldListener;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.group5.core.EndlessRunner;
+import com.group5.core.controllers.Director;
 import com.group5.core.util.ScoreContainer;
-import com.group5.core.world.FloorTile;
+import com.group5.core.util.ScoreItem;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
@@ -68,6 +72,11 @@ public class MainGameScreen implements Screen {
     private Skin labelSkin;
 
     /**
+     * Skin of the HUD.
+     */
+    private Skin hudSkin;
+
+    /**
      * Box2D shape renderer for debugging.
      */
     private Box2DDebugRenderer physicsRenderer;
@@ -93,17 +102,24 @@ public class MainGameScreen implements Screen {
     private Table gameOverTable;
 
     /**
+     * Table that contains the hud of the screen.
+     */
+    private Table hud;
+
+    /**
      * Label that indicates the final score.
      */
     private Label gameOverScore;
 
     /**
-     * This label is only visible when the user gets a new high score in this session.
+     * This label is only visible when the user gets a new high score in this
+     * session.
      */
     private Label highScoreLabel;
 
     /**
-     * Textfield that gives a name that is added to the score in the high score screen.
+     * Textfield that gives a name that is added to the score in the high score
+     * screen.
      */
     private TextField highScoreField;
 
@@ -116,7 +132,6 @@ public class MainGameScreen implements Screen {
      * The date formatter used for printing log timestamps.
      */
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm:ss");
-
 
     /**
      * This variable contains the final score, to ensure it doesn't get changed.
@@ -133,20 +148,15 @@ public class MainGameScreen implements Screen {
         this.batch = b;
         this.score = 0;
         this.worldManager = new WorldManager();
-        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(
-                2, 10), new Vector2(2, 2));
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 7), new Vector2(2, 2));
+        Director director = new Director(7, 2, player.getPosition(), worldManager.getPhysicsWorld(), new Vector2(200, 0));
         this.worldManager.setPlayer(player);
-
+        this.worldManager.setDirector(director);
         this.physicsRenderer = new Box2DDebugRenderer();
-
         worldManager.setPlayer(player);
-        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(),
-                new Vector2(0, 0)));
 
-        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
-                Gdx.graphics.getHeight());
-        camera.position.set(camera.viewportWidth / 2.f + player.getX(),
-                camera.viewportHeight / 2.f + player.getY(), 0);
+        this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.position.set(camera.viewportWidth / 2.f + player.getX(), camera.viewportHeight / 2.f + player.getY(), 0);
         camera.update();
         Gdx.input.setInputProcessor(worldManager.getInputProcessor());
     }
@@ -155,15 +165,15 @@ public class MainGameScreen implements Screen {
     public void show() {
         createDefaultButtonSkin();
         createDefaultLabelSkin();
-        createScoreLabel();
+        createHUDSkin();
         gameOverScreenSetup();
+        createHUD();
     }
 
     @Override
     public void resume() {
 
     }
-
     @Override
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -171,26 +181,21 @@ public class MainGameScreen implements Screen {
 
         worldManager.update(delta);
 
-        camera.position.set(camera.viewportWidth / 2.f
-                + worldManager.getPlayer().getX() * 50.f - 100.f,
+        camera.position.set(camera.viewportWidth / 2.f + worldManager.getPlayer().getX() * 50.f - 100.f,
                 camera.viewportHeight / 2.f, 0);
         camera.update();
-
         batch.setProjectionMatrix(
-                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR,
-                        1 / WorldManager.PHYSICS_SCALE_FACTOR,
-                        1));
+                camera.combined.scale(1 / WorldManager.PHYSICS_SCALE_FACTOR, 1 / WorldManager.PHYSICS_SCALE_FACTOR, 1));
         batch.begin();
-        for (WorldObject obj : worldManager.getObjects()) {
-            obj.doRender(batch);
+        Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
+        worldManager.getPlayer().doRender(batch);
+        while (it.hasNext()) {
+            it.next().doRender(batch);
         }
-
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             gameOverTable.setVisible(true);
-            gameOverScore.setText(" Score:"
-                    + Integer.toString(Math.round(score)));
-            scoreLabel.setVisible(false);
+            gameOverScore.setText(" Score:" + Integer.toString(Math.round(score)));
             if (ScoreContainer.isHighScore(Math.round(score))) {
                 highScoreLabel.setVisible(true);
             }
@@ -198,15 +203,17 @@ public class MainGameScreen implements Screen {
             Gdx.input.setInputProcessor(stage);
         }
         score = score + delta * worldManager.getPlayer().getSpeed().len();
-
-        scoreLabel.setText(Integer.toString(Math.round(score)));
+        if (gameOverMenuActive) {
+            scoreLabel.setText(" " + Integer.toString(finalScore));
+        } else {
+            scoreLabel.setText(" " + Integer.toString(Math.round(score)));
+        }
         batch.end();
         stage.act();
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(),
-                camera.combined.scale(50.f, 50.f, 1.f));
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
     }
 
     /**
@@ -231,11 +238,9 @@ public class MainGameScreen implements Screen {
         restartButton.setPosition(0, 0);
         restartButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x,
-                    final float y) {
+            public void clicked(final InputEvent event, final float x, final float y) {
                 ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
-                ((Game) Gdx.app.getApplicationListener())
-                        .setScreen(new MainGameScreen(batch));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainGameScreen(batch));
             }
         });
 
@@ -243,20 +248,20 @@ public class MainGameScreen implements Screen {
         menuButton.setPosition(0, 0);
         menuButton.addListener(new ClickListener() {
             @Override
-            public void clicked(final InputEvent event, final float x,
-                    final float y) {
+            public void clicked(final InputEvent event, final float x, final float y) {
                 ScoreContainer.addScore(finalScore, name, dateFormat.format(new Date()));
                 EndlessRunner.get().create();
             }
         });
 
-        //Create white texture
+        // Create white texture
         Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGB565);
         pixmap.setColor(Color.WHITE);
         pixmap.fill();
         buttonSkin.add("background", new Texture(pixmap));
 
-        //Text field that gets the input for the name shown in the highScoreScreen.
+        // Text field that gets the input for the name shown in the
+        // highScoreScreen.
         TextFieldStyle txtStyle = new TextFieldStyle();
         txtStyle.font = new BitmapFont();
         txtStyle.fontColor = Color.BLACK;
@@ -268,8 +273,8 @@ public class MainGameScreen implements Screen {
 
             @Override
             public void keyTyped(final TextField textField, final char c) {
-                //Using the substring to remove the first space.
-                //This space is added for better visuals.
+                // Using the substring to remove the first space.
+                // This space is added for better visuals.
                 name = textField.getText().substring(1);
             }
         });
@@ -289,17 +294,8 @@ public class MainGameScreen implements Screen {
         t2.add(restartButton).width(100.f);
         t2.add(menuButton).width(100.f);
         gameOverTable.add(t2);
-        //t.setVisible(false);
+        // t.setVisible(false);
         stage.addActor(gameOverTable);
-    }
-
-    /**
-     * Create a label which will indicate the score.
-     */
-    private void createScoreLabel() {
-        scoreLabel = new Label(Float.toString(score), labelSkin);
-        stage.addActor(scoreLabel);
-
     }
 
     /**
@@ -313,8 +309,7 @@ public class MainGameScreen implements Screen {
         labelSkin.add("default", font);
 
         // create texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
-                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         labelSkin.add("background", new Texture(pixmap));
@@ -336,8 +331,7 @@ public class MainGameScreen implements Screen {
         buttonSkin.add("default", font);
 
         // create texture
-        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5,
-                Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
+        Pixmap pixmap = new Pixmap(Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 8, Pixmap.Format.RGB888);
         pixmap.setColor(Color.GRAY);
         pixmap.fill();
         buttonSkin.add("background", new Texture(pixmap));
@@ -345,13 +339,77 @@ public class MainGameScreen implements Screen {
         // create button style
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up = buttonSkin.newDrawable("background", Color.GRAY);
-        textButtonStyle.down = buttonSkin.newDrawable("background",
-                Color.DARK_GRAY);
+        textButtonStyle.down = buttonSkin.newDrawable("background", Color.DARK_GRAY);
 
-        textButtonStyle.over = buttonSkin.newDrawable("background",
-                Color.LIGHT_GRAY);
+        textButtonStyle.over = buttonSkin.newDrawable("background", Color.LIGHT_GRAY);
         textButtonStyle.font = buttonSkin.getFont("default");
         buttonSkin.add("default", textButtonStyle);
+    }
+
+    /**
+     * Create skin for the HUD of the game.
+     */
+    private void createHUDSkin() {
+        hudSkin = new Skin();
+        hudSkin.add("bar", new Texture("bar.png"));
+        BitmapFont font = new BitmapFont();
+        hudSkin.add("default", font);
+
+        Label.LabelStyle background = new Label.LabelStyle();
+        background.background = hudSkin.newDrawable("bar");
+        background.font = hudSkin.getFont("default");
+        hudSkin.add("background", background);
+
+        Label.LabelStyle text = new Label.LabelStyle();
+        text.font = hudSkin.getFont("default");
+        text.fontColor = Color.BLACK;
+        hudSkin.add("default", text);
+    }
+
+    /**
+     * Create the HUD for the screen.
+     */
+    private void createHUD() {
+        hud = new Table();
+        hud.setFillParent(true);
+        hud.add().expandY();
+
+        //Create highscore table
+        int highestScore = 0;
+        ArrayList<ScoreItem> scoreList = ScoreContainer.getList();
+        for (ScoreItem item : scoreList) {
+            if (item.getRank() == 1) {
+                highestScore = item.getScore();
+            }
+        }
+        Stack highStack = new Stack();
+        Label highscore = new Label(" Highscore", hudSkin);
+        Label numHighscore = new Label(" " + Integer.toString(highestScore), hudSkin);
+        Table hs = new Table();
+        hs.defaults().width(100f);
+        hs.add(highscore);
+        hs.row();
+        hs.add(numHighscore);
+        highStack.add(new Label("", hudSkin, "background"));
+        highStack.add(hs);
+        hud.add(highStack).top().expandX();
+
+        hud.add();
+
+        //Create score table
+        Stack scoreStack = new Stack();
+        Label scoreL = new Label(" Score", hudSkin);
+        scoreLabel = new Label(" " + Integer.toString(Math.round(score)), hudSkin);
+        Table scoreCell = new Table();
+        scoreCell.defaults().width(100f);
+        scoreCell.add(scoreL);
+        scoreCell.row();
+        scoreCell.add(scoreLabel);
+        scoreStack.add(new Label("", hudSkin, "background"));
+        scoreStack.add(scoreCell);
+        hud.add(scoreStack).top().expandX();
+
+        stage.addActor(hud);
     }
 
     @Override
