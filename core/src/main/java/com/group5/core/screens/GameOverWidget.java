@@ -236,11 +236,11 @@ public class GameOverWidget {
         menuTable.row();
 
         Table t2 = new Table();
-        t2.add(restartButton).width(100.f);
-        t2.add(menuButton).width(100.f);
-        menuTable.add(t2);
+        t2.add(restartButton).width(100.f).maxHeight(50);
+        t2.add(menuButton).width(100.f).maxHeight(50);
+        menuTable.add(t2).maxHeight(50);
 
-        wrapTable.add(menuTable).center().width(200).height(180);
+        wrapTable.add(menuTable).center().width(200);
     }
 
 }
