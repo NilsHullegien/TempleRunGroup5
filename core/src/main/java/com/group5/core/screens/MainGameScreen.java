@@ -8,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -18,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.group5.core.EndlessRunner;
 import com.group5.core.controllers.Director;
 import com.group5.core.util.ScoreContainer;
 import com.group5.core.util.ScoreItem;
@@ -168,6 +168,7 @@ public class MainGameScreen implements Screen {
         } else {
             scoreLabel.setText(" " + Integer.toString(Math.round(score)));
         }
+
         batch.end();
         stage.act();
         stage.draw();
@@ -184,7 +185,7 @@ public class MainGameScreen implements Screen {
      */
     private void createHUDSkin() {
         hudSkin = new Skin();
-        hudSkin.add("bar", new Texture("bar.png"));
+        hudSkin.add("bar", ((EndlessRunner) Gdx.app.getApplicationListener()).getTextureCache().load("bar.png"));
         BitmapFont font = new BitmapFont();
         hudSkin.add("default", font);
 
