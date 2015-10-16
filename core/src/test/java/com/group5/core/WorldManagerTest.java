@@ -44,9 +44,9 @@ public class WorldManagerTest {
     @Test
     public void setPlayerTest() {
         worldManager.setPlayer(p1);
-        assertTrue(worldManager.getPlayer().equals(new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20))));
+        assertEquals(worldManager.getPlayer(), new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20)));
         worldManager.setPlayer(new Player(physicsWorld, new Vector2(1, 0), new Vector2(20, 20)));
-        assertTrue(worldManager.getPlayer().equals(new Player(physicsWorld, new Vector2(1, 0), new Vector2(20, 20))));
+        assertEquals(worldManager.getPlayer(), new Player(physicsWorld, new Vector2(1, 0), new Vector2(20, 20)));
     }
 
     /**
