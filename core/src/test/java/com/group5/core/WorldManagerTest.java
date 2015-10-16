@@ -1,5 +1,6 @@
 package com.group5.core;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -11,6 +12,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.controllers.Director;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 
@@ -33,6 +35,7 @@ public class WorldManagerTest {
         this.physicsWorld = worldManager.getPhysicsWorld();
         inputpr = worldManager.getInputProcessor();
         p1 = new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20));
+        worldManager.setPlayer(p1);
     }
 
     /**
@@ -96,7 +99,27 @@ public class WorldManagerTest {
     }
 
     @Test
-    public void inputProcessorkeyUpTest() {
+    public void inputProcessorkeyDownTest() {
+        assertEquals(worldManager.getTimerStart(), 0);
+        inputpr.keyDown(Keys.W);
+        assertFalse(worldManager.getTimerStart() == 0);
+    }
 
+    @Test
+    public void inputProcessorkeyUpTest() {
+        assertEquals(worldManager.getJumpTime(), 0);
+        inputpr.keyUp(Keys.W);
+        assertFalse(worldManager.getJumpTime() == 0);
+    }
+
+    @Test
+    public void updateTest() {
+        worldManager.setDirector(new Director(5, new Vector2(5, 5), physicsWorld, new Vector2(200, 200)));
+        Vector2 oldPos = worldManager.getPlayer().getPosition();
+        assertTrue(worldManager.getDirector().getQueue().getFirst().hasPlayer());
+        worldManager.update(5);
+        assertTrue(worldManager.getDirector().getQueue().getFirst().hasPlayer());
+        //Since the game hasn't started yet, the player should still be in the same position.
+        assertTrue(oldPos.equals(worldManager.getPlayer().getPosition()));
     }
 }
