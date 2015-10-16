@@ -1,5 +1,6 @@
 package com.group5.core.screens;
 
+import java.util.Iterator;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -27,8 +28,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField.TextFieldStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.group5.core.EndlessRunner;
+import com.group5.core.controllers.Director;
 import com.group5.core.util.ScoreContainer;
-import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
@@ -135,15 +136,12 @@ public class MainGameScreen implements Screen {
         this.batch = b;
         this.score = 0;
         this.worldManager = new WorldManager();
-        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(
-                2, 10), new Vector2(2, 2));
+        Player player = new Player(worldManager.getPhysicsWorld(), new Vector2(2, 7), new Vector2(2, 2));
+        Director director = new Director(7, 2, player.getPosition(), worldManager.getPhysicsWorld(), new Vector2(200, 0));
         this.worldManager.setPlayer(player);
-
+        this.worldManager.setDirector(director);
         this.physicsRenderer = new Box2DDebugRenderer();
-
         worldManager.setPlayer(player);
-        worldManager.add(new FloorTile(worldManager.getPhysicsWorld(),
-                new Vector2(0, 0)));
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(),
                 Gdx.graphics.getHeight());
@@ -165,7 +163,6 @@ public class MainGameScreen implements Screen {
     public void resume() {
 
     }
-
     @Override
     public void render(final float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -183,10 +180,11 @@ public class MainGameScreen implements Screen {
                         1 / WorldManager.PHYSICS_SCALE_FACTOR,
                         1));
         batch.begin();
-        for (WorldObject obj : worldManager.getObjects()) {
-            obj.doRender(batch);
+        Iterator<WorldObject> it = worldManager.getDirector().getObjects(true);
+        worldManager.getPlayer().doRender(batch);
+        while (it.hasNext()) {
+            it.next().doRender(batch);
         }
-
         if (!gameOverMenuActive && !(worldManager.getGameStatus())) {
             gameOverMenuActive = true;
             gameOverTable.setVisible(true);

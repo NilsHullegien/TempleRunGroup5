@@ -1,128 +1,146 @@
 package com.group5.core.controllers;
 
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.group5.core.world.WorldObject;
+
 /**
- * GameSlice Class, here all the RNG and all needed variables for the director
- * for different gameslices.
+ * GameSlice is a 2Dimensional rectangle in which objects are placed.
  */
-public class GameSlice {
-
+public abstract class GameSlice {
     /**
-     * The name of the GameSlice.
+     * Leftbottom corner of gs.
      */
-    private String state;
-
+    private Vector2 startPoint;
     /**
-     * The probability that there will spawn a floor.
+     * RightUp corner of gs.
      */
-    private float floorRNG;
-
+    private Vector2 endPoint;
     /**
-     * The probability that there will be no gap between floors.
+     * Elements in the GameSlice.
      */
-    private float noGapFloorRNG;
-
+    private Collection<WorldObject> elems;
     /**
-     * The probability that there will spawn an obstacle.
+     * status if onscreen.
      */
-    private float obstaclesRNG;
-
+    private boolean onscreen;
     /**
-     * The probability that there will be a gap between obstacles.
+     * status if player is on GameSlice.
      */
-    private float noGapObstacleRNG;
-
+    private boolean playerison;
     /**
-     * The y Position of the obstacles.
+     * Constructor without previous gameslice.
+     * @param sP startpoint
+     * @param eP endpoint
      */
-    private float yPosObstacle;
-
+    public GameSlice(final Vector2 sP, final Vector2 eP) {
+        this.startPoint = sP;
+        this.endPoint = eP;
+        setElems(new LinkedList<WorldObject>());
+    }
     /**
-     * The y Position of the floors.
+     * Constructor wit previous gameslice.
+     * @param before Gameslice before this one.
+     * @param sP startpoint
+     * @param eP endpoint
      */
-    private float yPosFloor;
-
+    public GameSlice(final GameSlice before, final Vector2 sP, final Vector2 eP) {
+        this.startPoint = new Vector2(before.getendPoint().x + sP.x, sP.y);
+        this.endPoint = new Vector2(before.getendPoint().x + eP.x, eP.y);
+        setElems(new LinkedList<WorldObject>());
+    }
     /**
-     * Constructor of the GameSlice class.
-     *
-     * @param slice               String of the kind of slice.
-     * @param floorNumber         float that gives chance for if a floor spawns.
-     * @param noGapFloorNumber    float that gives chance for if there is a gap between floors.
-     * @param obstaclesNumber     float that gives chance for if an obstacle spawns.
-     * @param noGapObstacleNumber float that gives chance for if there is a space between obstacles or floors.
-     * @param yPositionObstacle   float that gives the y Position of the Obstacle.
-     * @param yPositionFloor      float that gives the y Position of the Floor.
+     * Gets status has Player.
+     * @return hasplayer.
      */
-    public GameSlice(final String slice, final float floorNumber, final float noGapFloorNumber, final float obstaclesNumber,
-                     final float noGapObstacleNumber, final float yPositionObstacle, final float yPositionFloor) {
-        this.state = slice;
-        this.floorRNG = floorNumber;
-        this.noGapFloorRNG = noGapFloorNumber;
-        this.obstaclesRNG = obstaclesNumber;
-        this.noGapObstacleRNG = noGapObstacleNumber;
-        this.yPosObstacle = yPositionObstacle;
-        this.yPosFloor = yPositionFloor;
+    public boolean hasPlayer() {
+        return playerison;
+    }
+    /**
+     * Check if the slice is on(also partially) the screen.
+     * @param playerpos Playerposition
+     * @param camerapos Cameraposition
+     * @return boolean
+     */
+    private boolean checkonScreen(final Vector2 playerpos, final Vector2 camerapos) {
+        float leftscreenbound = playerpos.x * 50 - camerapos.x;
+        float rightscreenbound = playerpos.x * 50 + 1.5f * Gdx.graphics.getWidth()  - camerapos.x;
+        return leftscreenbound <= endPoint.x && rightscreenbound >= startPoint.x;
+    }
+    /**
+     * Check if slice has the player.
+     * @param playerpos Position of player.
+     * @return if the player is on this slice.
+     */
+    private boolean checkhasPlayer(final Vector2 playerpos) {
+        if (startPoint.x <= playerpos.x * 50 && endPoint.x >= playerpos.x * 50) {
+            playerison = true;
+        } else {
+            playerison = false;
+        }
+        return playerison;
+    }
+    /**
+     * Return startPoint of this slice.
+     * @return Startpoint
+     */
+    public Vector2 getStartPoint() {
+        return startPoint;
+    }
+    /**
+     * Give status is on screen.
+     * @return is on screen.
+     */
+    public boolean isonScreen() {
+        return onscreen;
+    }
+    /**
+     * Returns leftbottomcorner.
+     * @return startPoint gameslice.
+     */
+    public Vector2 getstartPoint() {
+        return startPoint;
+    }
+    /**
+     * Returns rightupcorner.
+     * @return endPoint GameSlice.
+     */
+    public Vector2 getendPoint() {
+        return endPoint;
+    }
+    /**
+     * Return all elements the GameSlice has.
+     * @return Worldobjects iterator.
+     */
+    public Iterator<WorldObject> getAll() {
+        return getElems().iterator();
+    }
+    /**
+     * Update the Slice.
+     * @param playerpos PlayerPostion
+     * @param camerapos cameraPostition
+     */
+    public void update(final Vector2 playerpos,  final Vector2 camerapos) {
+        this.onscreen = checkonScreen(playerpos, camerapos);
+        this.playerison = checkhasPlayer(playerpos);
+    }
+    /**
+     * Get the elements of this GameSlice.
+     * @return elements
+     */
+    public Collection<WorldObject> getElems() {
+        return elems;
+    }
+    /**
+     * Set the elements of this GameSlice.
+     * @param e elements
+     */
+    public void setElems(final Collection<WorldObject> e) {
+        this.elems = e;
     }
 
-    /**
-     * Method to get the slice.
-     *
-     * @return the String of the slice.
-     */
-    public String getSlice() {
-        return state;
-    }
-
-    /**
-     * Method to get the floorRNG.
-     *
-     * @return the floorRNG as a float.
-     */
-    public float getFloorRNG() {
-        return floorRNG;
-    }
-
-    /**
-     * Method to get the noGapfloorRNG.
-     *
-     * @return the noGapFloorRNG as a float.
-     */
-    public float getNoGapFloorRNG() {
-        return noGapFloorRNG;
-    }
-
-    /**
-     * Method to get the obstaclesRNG.
-     *
-     * @return the obstaclesRNG as a float.
-     */
-    public float getObstaclesRNG() {
-        return obstaclesRNG;
-    }
-
-    /**
-     * Method to get the noGapobstacleRNG.
-     *
-     * @return the noGapObstacleRNG as a float.
-     */
-    public float getNoGapObstacleRNG() {
-        return noGapObstacleRNG;
-    }
-
-    /**
-     * Method to get the y position of the obstacle.
-     *
-     * @return the y position of the obstacle as a float.
-     */
-    public float getYPosObstacles() {
-        return yPosObstacle;
-    }
-
-    /**
-     * Method to get the y position of the floor.
-     *
-     * @return the y position of the floor as a float.
-     */
-    public float getYPosFloor() {
-        return yPosFloor;
-    }
 }
