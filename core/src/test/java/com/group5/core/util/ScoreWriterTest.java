@@ -1,15 +1,15 @@
 package com.group5.core.util;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.File;
-import java.util.ArrayList;
-
+import com.group5.core.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.group5.core.GdxTestRunner;
+import java.io.File;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertTrue;
+
 @RunWith(GdxTestRunner.class)
 public class ScoreWriterTest {
 

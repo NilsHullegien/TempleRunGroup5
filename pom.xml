@@ -23,6 +23,11 @@
                 <artifactId>gdx-box2d</artifactId>
                 <version>1.7.0</version>
             </dependency>
+            <dependency>
+                <groupId>com.badlogicgames.gdx</groupId>
+                <artifactId>gdx-freetype</artifactId>
+                <version>1.7.0</version>
+            </dependency>
 
             <!-- desktop-specific dependencies -->
             <dependency>
@@ -40,6 +45,11 @@
                 <artifactId>gdx-backend-headless</artifactId>
                 <version>1.7.0</version>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.badlogicgames.gdx</groupId>
+                <artifactId>gdx-freetype-platform</artifactId>
+                <version>1.7.0</version>
             </dependency>
 
             <dependency>

@@ -8,14 +8,15 @@ import java.util.Properties;
 
 /**
  * This class writes a list of score to a properties.
- * @author Marcel
  *
+ * @author Marcel
  */
 public abstract class ScoreWriter {
 
     /**
      * Write a set of scores to a file.
-     * @param list List of score items to write to a file
+     *
+     * @param list   List of score items to write to a file
      * @param infile file to write to
      */
     public static void writeScore(final ArrayList<ScoreItem> list, final String infile) {
@@ -29,15 +30,12 @@ public abstract class ScoreWriter {
             output = new FileOutputStream(infile);
 
 
-
             for (int i = 0; i < list.size(); i++) {
                 prop.setProperty("rank" + Integer.toString(i), Integer.toString(list.get(i).getRank()));
                 prop.setProperty("score" + Integer.toString(i), Integer.toString(list.get(i).getScore()));
                 prop.setProperty("name" + Integer.toString(i), list.get(i).getName());
                 prop.setProperty("date" + Integer.toString(i), list.get(i).getDate());
             }
-
-
 
 
             prop.store(output, null);

@@ -1,59 +1,68 @@
 package com.group5.core.controllers;
 
+import com.badlogic.gdx.math.Vector2;
+import com.group5.core.util.Logger;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 
-import com.badlogic.gdx.math.Vector2;
-import com.group5.core.util.Logger;
 /**
  * The Queue in which the GameSlices live.
- * @author Levi
  *
+ * @author Levi
  */
 public class GameSliceQueue {
     /**
-    ** Implementation of the actual queue where the GameSlices are stored.
-    */
+     * * Implementation of the actual queue where the GameSlices are stored.
+     */
     private LinkedList<GameSlice> slicequeue;
     /**
      * Number of slices in the queue.
      */
     private int slices;
+
     /**
      * Constructs a new GameSliceQueue.
+     *
      * @param num number of elements in the queue.
      */
     public GameSliceQueue(final int num) {
         this.slicequeue = new LinkedList<GameSlice>();
         this.slices = num;
     }
+
     /**
      * Checks if queue is Empty.
+     *
      * @return true if empty
      */
     public boolean isEmpty() {
         return slicequeue.isEmpty();
     }
+
     /**
      * Checks where the player is in the queue.
+     *
      * @return the index of slices the player is in
      * @throws Exception when player isn't in a queueslice.
      */
     public int getPlayerinQueue() throws Exception {
-    int count = 0;
-    Iterator<GameSlice> it = slicequeue.iterator();
-    while (it.hasNext()) {
-        GameSlice curr = it.next();
-        if (curr.hasPlayer()) {
-            return count;
+        int count = 0;
+        Iterator<GameSlice> it = slicequeue.iterator();
+        while (it.hasNext()) {
+            GameSlice curr = it.next();
+            if (curr.hasPlayer()) {
+                return count;
+            }
+            count++;
+        }
+        // TODO: need to assign better behaviour when the player isn't in a queue
+        throw new Exception("Player is not in a slice");
     }
-        count++;
-    }
-    // TODO: need to assign better behaviour when the player isn't in a queue
-    throw new Exception("Player is not in a slice");
-    }
+
     /**
      * Handles adding a GameSlice to the queue.
+     *
      * @param g GameSlice to add
      * @throws IllegalStateException when a slice needs to be removed that can't be removed.
      */
@@ -67,8 +76,10 @@ public class GameSliceQueue {
         slicequeue.offer(g);
         Logger.get().info("GameSliceQueue", "Creating");
     }
+
     /**
      * Return current amount of slices in queue.
+     *
      * @return slices in queue.
      */
     public int length() {
@@ -84,15 +95,19 @@ public class GameSliceQueue {
         }
         return i;
     }
+
     /**
      * True if queue is full.
+     *
      * @return true if full.
      */
     public boolean full() {
         return length() >= slices;
     }
+
     /**
      * Gives the leftbottom corner of the slice that adheres to the index.
+     *
      * @param slice input index
      * @return the Startpoint
      * @throws IndexOutOfBoundsException if index given does not exist
@@ -105,13 +120,15 @@ public class GameSliceQueue {
         GameSlice curr = it.next();
         int count = 0;
         while (!(count == slice)) {
-                curr = it.next();
-                count++;
-            }
+            curr = it.next();
+            count++;
+        }
         return curr.getStartPoint();
     }
+
     /**
      * Get the slices that are onscreen.
+     *
      * @return iterator of onscreen slices.
      */
     public Iterator<GameSlice> getOnScreenSlices() {
@@ -123,15 +140,19 @@ public class GameSliceQueue {
         }
         return ll.iterator();
     }
+
     /**
      * Get the iterator of all slices in queue.
+     *
      * @return sliceiterator
      */
     public Iterator<GameSlice> getSliceIterator() {
         return slicequeue.iterator();
     }
+
     /**
      * Updates the queue and all the slices in it.
+     *
      * @param playerpos Playerposition
      * @param camerapos Cameraposition
      */
@@ -141,8 +162,10 @@ public class GameSliceQueue {
             it.next().update(playerpos, camerapos);
         }
     }
+
     /**
      * Get the last GameSlice in the queue.
+     *
      * @return GameSlice
      */
     public GameSlice getLast() {
