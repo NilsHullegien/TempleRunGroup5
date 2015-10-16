@@ -57,6 +57,7 @@ public class Player extends AnimatedWorldObject {
 
     /**
      * Checks whether the player is dead.
+     *
      * @return whether the player is dead
      */
     public boolean isDead() {
@@ -118,6 +119,7 @@ public class Player extends AnimatedWorldObject {
 
     /**
      * Return the speed of the player.
+     *
      * @return speed of the player.
      */
     public Vector2 getSpeed() {

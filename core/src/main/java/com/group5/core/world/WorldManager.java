@@ -161,6 +161,7 @@ public class WorldManager {
     public World getPhysicsWorld() {
         return physicsWorld;
     }
+
     /**
      * Return the current player.
      *
@@ -205,15 +206,19 @@ public class WorldManager {
     public boolean getGameStatus() {
         return !player.isDead();
     }
+
     /**
      * get the Director.
+     *
      * @return the director.
      */
     public Director getDirector() {
         return director;
     }
+
     /**
      * Set the director.
+     *
      * @param d the director.
      */
     public void setDirector(final Director d) {
@@ -242,6 +247,7 @@ public class WorldManager {
 
         /**
          * Constructs a new collision listener that influences the given player.
+         *
          * @param p the player to influence
          */
         public PlayerCollisionListener(final Player p) {

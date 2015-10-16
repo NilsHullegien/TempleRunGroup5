@@ -14,6 +14,10 @@ import com.group5.core.world.WorldObject;
  */
 public class Director {
     /**
+     * Physics world.
+     */
+    private final World world;
+    /**
      * GameSliceQueue assigned to Director.
      */
     private GameSliceQueue queue;
@@ -27,18 +31,16 @@ public class Director {
      */
     private Vector2 cameraPosition;
     /**
-     * Physics world.
-     */
-    private final World world;
-    /**
      * Amount of slices that have to be in front.
      */
     private int minfront = 2;
+
     /**
      * Director commands the creation of levels.
-     * @param amount of slices in the queue
+     *
+     * @param amount    of slices in the queue
      * @param playerpos current position of player
-     * @param w physicsworld
+     * @param w         physicsworld
      * @param camerapos position of camera relative to the screen
      */
     public Director(final int amount, final Vector2 playerpos, final World w, final Vector2 camerapos) {
@@ -47,12 +49,14 @@ public class Director {
         this.world = w;
         this.queue = initiateQueue(amount, world);
     }
+
     /**
      * Director commands the creation of levels.
-     * @param amount of slices in the queue
-     * @param mf minimal slices in front of the player
+     *
+     * @param amount    of slices in the queue
+     * @param mf        minimal slices in front of the player
      * @param playerpos current position of player
-     * @param w physicsworld
+     * @param w         physicsworld
      * @param camerapos position of camera relative to the screen
      */
     public Director(final int amount, final int mf, final Vector2 playerpos, final World w, final Vector2 camerapos) {
@@ -62,8 +66,10 @@ public class Director {
         this.minfront = mf;
         this.queue = initiateQueue(amount, w);
     }
+
     /**
      * Gives an iterator with all objects in some/all gameslices.
+     *
      * @param onlyonScreen get all slices or those that are only visible
      * @return iterator with WorldObjects
      */
@@ -83,10 +89,12 @@ public class Director {
         }
         return ll.iterator();
     }
+
     /**
      * Initiate the GameSliceQueue.
+     *
      * @param amount of gameslices
-     * @param w physicsworld
+     * @param w      physicsworld
      * @return returns the queue
      */
     private GameSliceQueue initiateQueue(final int amount, final World w) {
@@ -97,13 +105,15 @@ public class Director {
         gsq.addGameSlice(GameSliceCasting.cast(w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
-           gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
-           gsq.getLast().update(playerPosition, cameraPosition);
+            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+            gsq.getLast().update(playerPosition, cameraPosition);
         }
         return gsq;
     }
+
     /**
      * Commands GameSliceCast for appropriate levelslice and sends it to the queue.
+     *
      * @param w physicsworld
      */
     private void addGameSlice(final World w) {
@@ -116,9 +126,11 @@ public class Director {
         }
         queue.addGameSlice(g);
     }
+
     /**
      * This function handles adding new GameSlice if there
      * are to little slices in front of the player.
+     *
      * @param minimal minfront
      */
     public void directQueue(final int minimal) {
@@ -131,15 +143,19 @@ public class Director {
             addGameSlice(world);
         }
     }
+
     /**
      * Get the queue.
+     *
      * @return queue
      */
     public GameSliceQueue getQueue() {
         return queue;
     }
+
     /**
      * updates Director which commands the queue to update.
+     *
      * @param playerpos position of player.
      */
     public void update(final Vector2 playerpos) {

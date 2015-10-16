@@ -64,10 +64,12 @@ public abstract class WorldObject {
         this.size = siz;
         this.texture = tex;
     }
+
     /**
      * Create physical implementation object.
+     *
      * @param physicsWorld world
-     * @param coord position
+     * @param coord        position
      */
     protected void createPhysicsObject(final World physicsWorld, final Vector2 coord) {
         BodyDef def = new BodyDef();
@@ -87,6 +89,7 @@ public abstract class WorldObject {
         bodyShape.dispose();
         setPhysicsBody(body);
     }
+
     /**
      * Returns the object's physics body.
      *
@@ -167,13 +170,16 @@ public abstract class WorldObject {
     public Texture getTexture() {
         return this.texture;
     }
+
     /**
      * Return position of player.
+     *
      * @return pos of Player
      */
     public Vector2 getPosition() {
         return pos;
     }
+
     /**
      * Call function to render a WorldManager Object.
      *
