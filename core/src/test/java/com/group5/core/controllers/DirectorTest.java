@@ -158,4 +158,10 @@ public class DirectorTest {
         director.directQueue(55);
         assertTrue(last.equals(director.getQueue().getLast()));
     }
+
+    @Test
+    public void directQueueAddGameSliceTest() {
+        director = new Director(5, new Vector2(100, 100), world, camerapos);
+        director.directQueue(1);
+    }
 }

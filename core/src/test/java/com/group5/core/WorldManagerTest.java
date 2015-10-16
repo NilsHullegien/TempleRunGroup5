@@ -122,4 +122,12 @@ public class WorldManagerTest {
         //Since the game hasn't started yet, the player should still be in the same position.
         assertTrue(oldPos.equals(worldManager.getPlayer().getPosition()));
     }
+
+    @Test
+    public void getGameStatusTest() {
+        //True by default.
+        assertTrue(worldManager.getGameStatus());
+        worldManager.getPlayer().kill();
+        assertFalse(worldManager.getGameStatus());
+    }
 }
