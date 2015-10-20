@@ -1,8 +1,5 @@
 package com.group5.core.screens;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -25,6 +22,9 @@ import com.group5.core.util.ScoreItem;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 /**
@@ -112,6 +112,7 @@ public class MainGameScreen implements Screen {
 
     /**
      * Returns the screen's SpriteBatch.
+     *
      * @return the screen's SpriteBatch
      */
     public SpriteBatch getSpriteBatch() {
@@ -120,6 +121,7 @@ public class MainGameScreen implements Screen {
 
     /**
      * Returns the screen's Stage.
+     *
      * @return the screen's Stage
      */
     public Stage getStage() {
@@ -162,7 +164,7 @@ public class MainGameScreen implements Screen {
             finalScore = Math.round(score);
             Gdx.input.setInputProcessor(stage);
         }
-        score = score + delta * worldManager.getPlayer().getSpeed().len();
+        score = score + delta * worldManager.getPlayer().getPhysicsStrategy().getBody().getLinearVelocity().len();
         if (gameOverMenuActive) {
             scoreLabel.setText(" " + Integer.toString(finalScore));
         } else {
@@ -174,7 +176,7 @@ public class MainGameScreen implements Screen {
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
+        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined);
     }
 
     /**

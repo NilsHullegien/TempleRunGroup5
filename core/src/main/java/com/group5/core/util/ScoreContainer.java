@@ -107,6 +107,7 @@ public abstract class ScoreContainer {
 
     /**
      * Returns a ScoreItem that is at a spot in the top 10.
+     *
      * @param rank the rank the ScoreItem is at.
      * @return the ScoreItem at the given rank.
      */
@@ -121,6 +122,7 @@ public abstract class ScoreContainer {
 
     /**
      * Returns a sorted list.
+     *
      * @return a sorted list containing ScoreItems.
      */
     public static ArrayList<ScoreItem> getSortedList() {

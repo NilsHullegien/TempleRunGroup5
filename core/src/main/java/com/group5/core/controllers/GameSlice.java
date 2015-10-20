@@ -114,8 +114,8 @@ public abstract class GameSlice {
     }
 
     /**
-<<<<<<< HEAD
-=======
+     * <<<<<<< HEAD
+     * =======
      * Returns leftbottomcorner.
      *
      * @return startPoint gameslice.
@@ -125,7 +125,7 @@ public abstract class GameSlice {
     }
 
     /**
->>>>>>> origin/master
+     * >>>>>>> origin/master
      * Returns rightupcorner.
      *
      * @return endPoint GameSlice.

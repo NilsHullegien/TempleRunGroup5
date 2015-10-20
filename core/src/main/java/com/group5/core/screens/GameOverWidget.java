@@ -94,6 +94,7 @@ public class GameOverWidget {
 
     /**
      * Updates the score that is displayed by the widget.
+     *
      * @param s the current score
      */
     public void setScore(final int s) {

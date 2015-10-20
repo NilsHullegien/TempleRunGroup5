@@ -1,13 +1,5 @@
 package com.group5.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -15,6 +7,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.Director;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests for the worldManager object.
@@ -34,7 +31,7 @@ public class WorldManagerTest {
         this.worldManager = new WorldManager();
         this.physicsWorld = worldManager.getPhysicsWorld();
         inputpr = worldManager.getInputProcessor();
-        p1 = new Player(physicsWorld, new Vector2(0,0), new Vector2(20,20));
+        p1 = new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20));
         worldManager.setPlayer(p1);
     }
 
@@ -71,7 +68,7 @@ public class WorldManagerTest {
      */
     @Test
     public void inputProcessorTouchDraggedTest() {
-        assertFalse(inputpr.touchDragged(0,  0,  0));
+        assertFalse(inputpr.touchDragged(0, 0, 0));
     }
 
     /**
@@ -79,7 +76,7 @@ public class WorldManagerTest {
      */
     @Test
     public void inputProcessorTouchDownTest() {
-        assertFalse(inputpr.touchDown(0, 0,  0,  0));
+        assertFalse(inputpr.touchDown(0, 0, 0, 0));
     }
 
     /**
