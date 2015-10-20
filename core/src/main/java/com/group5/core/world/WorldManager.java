@@ -262,9 +262,10 @@ public class WorldManager {
                     && contact.getFixtureA().getUserData() instanceof Obstacle) {
                 WorldManifold w = contact.getWorldManifold();
                 float angle = w.getNormal().angle();
-                if (angle < 45
+                if ((angle < 45
                         || angle > 135 && angle < 225
-                        || angle > 315) {
+                        || angle > 315)
+                        && !player.isDead()) {
                     player.kill();
                 }
             }
