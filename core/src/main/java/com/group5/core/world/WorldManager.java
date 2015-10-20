@@ -185,15 +185,16 @@ public class WorldManager {
      * Updates all objects present in the world.
      *
      * @param delta the time that has passed since the previous frame.
+     * @param score the current score.
      */
-    public void update(final float delta) {
+    public void update(final float delta, final float score) {
         WorldObject w;
         Iterator<WorldObject> wIter = director.getObjects(false);
         while (wIter.hasNext()) {
             w = wIter.next();
             w.update(delta, this);
             player.update(delta, this);
-            director.update(player.getPosition());
+            director.update(player.getPosition(), score);
         }
         physicsWorld.step(1 / 60f, 6, 2);
     }
