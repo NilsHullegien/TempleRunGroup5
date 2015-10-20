@@ -19,18 +19,18 @@ public class OnlyFloorLevel extends GameSlice {
      * @author Levi
      */
     public OnlyFloorLevel(final World world) {
-        super(new Vector2(0, 0), new Vector2(1025, 2000));
+        super(new Vector2(0, 0), new Vector2(1225, 2000));
         createElems(world);
     }
 
     /**
-     * constructor with prevrious GameSlice.
+     * constructor with previous GameSlice.
      *
      * @param before GameSlice
      * @param world  physicsworld
      */
     public OnlyFloorLevel(final GameSlice before, final World world) {
-        super(before, new Vector2(0, 0), new Vector2(1025, 2000));
+        super(before, new Vector2(0, 0), new Vector2(1225, 2000));
         createElems(world);
     }
 
@@ -41,7 +41,7 @@ public class OnlyFloorLevel extends GameSlice {
      */
     private void createElems(final World world) {
         getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
-        float range = (this.getEndPoint().x - this.getStartPoint().x) / 50;
-        getElems().add(new Obstacle(world, new Vector2((float) (this.getStartPoint().x / 50 + range * Math.random()), 1.2f)));
+        float range = (this.getEndPoint().x - 200 - this.getStartPoint().x) / 50;
+        getElems().add(new Obstacle(world, new Vector2((float) ((this.getStartPoint().x) / 50 + range * Math.random()), 1.2f)));
     }
 }
