@@ -109,6 +109,7 @@ public class DirectorTest {
         }
     }
 
+    //TODO: Value might need to be tweaked again.
     @Test
     public void getObjectsNotOnScreenTest() {
         director = new Director(5, pos, world, camerapos);
@@ -119,7 +120,7 @@ public class DirectorTest {
             iteratorSize++;
             iterator.next();
         }
-        assertEquals(iteratorSize, 10);
+        assertEquals(iteratorSize, 15);
     }
 
     @Test
@@ -146,7 +147,7 @@ public class DirectorTest {
             iteratorSize++;
             iterator.next();
         }
-        assertEquals(iteratorSize, 2);
+        assertEquals(iteratorSize, 3);
     }
 
     @Test
