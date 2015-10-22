@@ -72,7 +72,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
         }
         return new Animation(animationduration / amountframes, frames);
     }
-    
+
     /**
      * Method to set the animation of the AnimatedWorldObject.
      * @param tex new texture for the animation
@@ -80,7 +80,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param framerows number of vertical slices of texture
      * @param duration duration of the animation in frames per second
      */
-    public void setAnimation(Texture tex, int framecols, int framerows, int duration) {
+    public void setAnimation(final Texture tex, final int framecols, final int framerows, final int duration) {
         super.setTexture(tex);
         this.amountframes = framecols * framerows;
         this.animationduration = duration;
