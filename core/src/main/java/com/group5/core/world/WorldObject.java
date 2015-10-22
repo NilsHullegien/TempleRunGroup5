@@ -172,6 +172,14 @@ public abstract class WorldObject {
     }
 
     /**
+     * Sets the object's texture.
+     * @param tex the new texture of the object
+     */
+    public void setTexture(Texture tex) {
+        texture = tex;
+    }
+    
+    /**
      * Return position of player.
      *
      * @return pos of Player
