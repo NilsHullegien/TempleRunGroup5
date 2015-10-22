@@ -110,3 +110,6 @@ local.properties
 
 # TeXlipse plugin
 .texlipse
+
+score.properties
+test.properties

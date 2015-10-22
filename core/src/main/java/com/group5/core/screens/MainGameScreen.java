@@ -1,7 +1,7 @@
 package com.group5.core.screens;
 
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,11 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.group5.core.EndlessRunner;
 import com.group5.core.controllers.Director;
 import com.group5.core.util.ScoreContainer;
 import com.group5.core.util.ScoreItem;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
@@ -175,9 +175,6 @@ public class MainGameScreen implements Screen {
 
         // Enable if you want to see physics outlined
         physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
-    }
-
-    /**
     }
 
     /**

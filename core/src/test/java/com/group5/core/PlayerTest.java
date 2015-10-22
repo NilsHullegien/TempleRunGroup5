@@ -1,18 +1,20 @@
 package com.group5.core;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class PlayerTest {
@@ -75,6 +77,26 @@ public class PlayerTest {
         assertFalse(player.isDead());
         player.kill();
         assertTrue(player.isDead());
+    }
+
+    @Test
+    public void hashCodeTest() {
+        player = new Player(physicsWorld, new Vector2(0, 0), new Vector2(20, 20));
+        Player p2 = new Player(physicsWorld, new Vector2(0, 0), new Vector2(10, 20));
+        assertFalse(player.equals(p2));
+        assertTrue(player.hashCode() == p2.hashCode());
+    }
+
+    @Test
+    public void getSpeedTest() {
+        //The default speed of a player.
+        assertEquals(player.getSpeed(), new Vector2(5, 0));
+    }
+
+    @Test
+    public void updateTest() {
+        player.update(5, worldManager);
+        Mockito.verify(body).getLinearVelocity();
     }
 
 }

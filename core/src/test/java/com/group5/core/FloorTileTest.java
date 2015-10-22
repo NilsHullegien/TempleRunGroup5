@@ -1,23 +1,35 @@
 package com.group5.core;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.world.FloorTile;
-import com.group5.core.world.Player;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.world.FloorTile;
+import com.group5.core.world.Player;
 
 @RunWith(GdxTestRunner.class)
 public class FloorTileTest {
     private World physicsWorld;
 
+    private FloorTile f1;
+
     @Before
     public void setUp() {
         physicsWorld = new World(new Vector2(0.f, 0.f), true);
+        f1 = new FloorTile(physicsWorld, new Vector2(0, 0));
+    }
+
+    @After
+    public void tearDown() {
+        f1 = null;
     }
 
     /**
@@ -27,7 +39,6 @@ public class FloorTileTest {
     public void equalsTest() {
 
         //a floortile is the same as itself
-        FloorTile f1 = new FloorTile(physicsWorld, new Vector2(0, 0));
         assertTrue(f1.equals(f1));
 
         //a floortile is the same as another floortile with the same properties
@@ -43,7 +54,43 @@ public class FloorTileTest {
         //a floortile is never the same this as an object of a different type
         Player p = new Player(physicsWorld, new Vector2(20, 20), new Vector2(20, 20));
         assertFalse(f1.equals(p));
-
     }
 
+    @Test
+    public void hashCodeTest() {
+        f1 = new FloorTile(physicsWorld, new Vector2(0, 0));
+        FloorTile f2 = new FloorTile(physicsWorld, new Vector2(99, 99));
+        assertFalse(f1.equals(f2));
+        assertFalse(f1.hashCode() == f2.hashCode());
+        assertTrue(f1.hashCode() == f1.hashCode()); //Obvious.
+    }
+
+    @Test
+    public void setXTest() {
+        float oldX = f1.getX();
+        float newX = 500;
+        f1.setX(newX);
+        assertFalse(oldX == newX);
+        assertTrue(f1.getX() == 500);
+    }
+
+    @Test
+    public void setYTest() {
+        float oldY = f1.getY();
+        float newY = 500;
+        f1.setY(newY);
+        assertFalse(oldY == newY);
+        assertTrue(f1.getY() == 500);
+    }
+
+    @Test
+    public void getTextureTest() {
+        Texture t1 = f1.getTexture();
+        assertFalse(t1 == null);
+    }
+
+    @Test
+    public void getPositionTest() {
+        assertEquals(f1.getPosition(), new Vector2(0.0f,0.0f));
+    }
 }
