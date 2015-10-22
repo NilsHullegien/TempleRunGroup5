@@ -30,7 +30,7 @@ public class Bullet extends Obstacle {
 
         Body body = physicsWorld.createBody(def);
         PolygonShape bodyShape = new PolygonShape();
-        bodyShape.setAsBox(getWidth() / 10f, (getHeight() / 10f) + 0.5f, new Vector2(getWidth() / 10f, getHeight() / 10f), 0);
+        bodyShape.setAsBox(getWidth() / 10f, getHeight() / 10f + 0.5f, new Vector2(getWidth() / 10f, getHeight() / 10f), 0);
 
         FixtureDef fixture = new FixtureDef();
         fixture.shape = bodyShape;
