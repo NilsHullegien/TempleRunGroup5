@@ -45,6 +45,6 @@ public class OnlyFloorLevel extends GameSlice {
         float range = (this.getEndPoint().x - this.getStartPoint().x) / 50;
         float xPosObstacle = (float) (this.getStartPoint().x / 50 + range * Math.random());
         getElems().add(new ShootingObstacle(world, new Vector2(xPosObstacle, 1.2f)));
-        getElems().add(new Bullet(world, new Vector2(xPosObstacle, 1.5f)));
+        getElems().add(new Bullet(world, new Vector2(xPosObstacle, 2.f)));
     }
 }

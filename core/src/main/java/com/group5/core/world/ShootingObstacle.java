@@ -9,7 +9,7 @@ import com.group5.core.EndlessRunner;
  * @author Nils.
  *
  */
-public class ShootingObstacle extends Obstacle {
+public class ShootingObstacle extends StaticObstacle {
 
     /**
      * A bullet that is shot by this obstacle.

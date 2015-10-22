@@ -139,6 +139,7 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void render(final float delta) {
+        System.out.println("Size GSQ: " + worldManager.getDirector().getQueue().length());
         Gdx.gl.glClearColor(0, 0, 0, 0);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 

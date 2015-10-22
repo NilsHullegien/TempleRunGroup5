@@ -34,7 +34,7 @@ public class Bullet extends Obstacle {
 
         FixtureDef fixture = new FixtureDef();
         fixture.shape = bodyShape;
-        fixture.density = 20.f;
+        fixture.density = 0.f;
         fixture.friction = 0.f;
         fixture.restitution = 0.f;
 
@@ -46,16 +46,6 @@ public class Bullet extends Obstacle {
     }
 
     /**
-     * Updates the location of the bullet in the screen.
-     */
-    @Override
-    public void update(final float delta, final WorldManager manager) {
-        super.update(delta, manager);
-        Body b = getPhysicsBody();
-            b.applyLinearImpulse(-1, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
-    }
-
-    /**
      * Call function to render a WorldManager Object.
      *
      * @param batch The batch the object should draw in
@@ -63,6 +53,7 @@ public class Bullet extends Obstacle {
     @Override
     public void doRender(final SpriteBatch batch) {
         Vector2 pos = getPhysicsBody().getPosition();
+        System.out.println("Position x and y: " + pos);
         batch.draw(getTexture(),
                 pos.x, pos.y,
                 0, 0,
@@ -70,11 +61,11 @@ public class Bullet extends Obstacle {
                 1, 1,
                 0,
                 0, 0,
-                (int) (getWidth() / 5 * WorldManager.PHYSICS_SCALE_FACTOR),
-                (int) (getHeight() / 5 * WorldManager.PHYSICS_SCALE_FACTOR),
+                (int) (getWidth() / WorldManager.PHYSICS_SCALE_FACTOR),
+                (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
                 true, false);
         Body b = getPhysicsBody();
-        b.applyLinearImpulse(-20, 0,
+        b.applyLinearImpulse(-0.1f, 0,
                 b.getWorldCenter().x,
                 b.getWorldCenter().y,
                 true);
