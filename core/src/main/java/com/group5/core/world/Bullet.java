@@ -22,7 +22,7 @@ public class Bullet extends Obstacle {
      * @param coord the coordinates of the bullet.
      */
     public Bullet(final World physicsWorld, final Vector2 coord) {
-        super(physicsWorld, coord, EndlessRunner.get().getTextureCache().load("Spaceship1.png"));
+        super(physicsWorld, coord, EndlessRunner.get().getTextureCache().load("Zeppelin.png"));
 
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
@@ -30,7 +30,7 @@ public class Bullet extends Obstacle {
 
         Body body = physicsWorld.createBody(def);
         PolygonShape bodyShape = new PolygonShape();
-        bodyShape.setAsBox(getWidth() / 10f, getHeight() / 10f, new Vector2(getWidth() / 10f, getHeight() / 10f), 0);
+        bodyShape.setAsBox(getWidth() / 10f, (getHeight() / 10f) + 0.5f, new Vector2(getWidth() / 10f, getHeight() / 10f), 0);
 
         FixtureDef fixture = new FixtureDef();
         fixture.shape = bodyShape;
@@ -53,7 +53,6 @@ public class Bullet extends Obstacle {
     @Override
     public void doRender(final SpriteBatch batch) {
         Vector2 pos = getPhysicsBody().getPosition();
-        System.out.println("Position x and y: " + pos);
         batch.draw(getTexture(),
                 pos.x, pos.y,
                 0, 0,
@@ -65,7 +64,7 @@ public class Bullet extends Obstacle {
                 (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
                 true, false);
         Body b = getPhysicsBody();
-        b.applyLinearImpulse(-0.1f, 0,
+        b.applyLinearImpulse(-0.2f, 0,
                 b.getWorldCenter().x,
                 b.getWorldCenter().y,
                 true);
