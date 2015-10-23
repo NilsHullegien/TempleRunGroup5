@@ -34,6 +34,7 @@ public class PlayerTest {
         strategy = Mockito.mock(PlayerPhysicsStrategy.class);
         Body b = Mockito.mock(Body.class);
         Mockito.when(b.getPosition()).thenReturn(new Vector2(0, 0));
+        Mockito.when(b.getLinearVelocity()).thenReturn(new Vector2(0, 0));
         Mockito.when(strategy.getBody()).thenReturn(b);
 
         player.setPhysicsStrategy(strategy);

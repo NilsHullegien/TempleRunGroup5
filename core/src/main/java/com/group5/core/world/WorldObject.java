@@ -29,21 +29,20 @@ public abstract class WorldObject {
     /**
      * Constructs a new world object with the given coordinates, size and texture.
      *
-     * @param tex  location of the texture of the object
-     * @param sz   size of object
-     * @param strategy the physics strategy
+     * @param tex location of the texture of the object
+     * @param sz  size of object
      */
     public WorldObject(
             final Texture tex,
-            final Vector2 sz,
-            final PhysicsStrategy strategy) {
+            final Vector2 sz) {
         this.size = sz;
         this.texture = tex;
-        this.physicsStrategy = strategy;
+        this.physicsStrategy = null;
     }
 
     /**
      * Returns the object's physics strategy.
+     *
      * @return the object's physics strategy
      */
     public PhysicsStrategy getPhysicsStrategy() {
@@ -52,6 +51,7 @@ public abstract class WorldObject {
 
     /**
      * Updates the object's physics strategy.
+     *
      * @param strategy the new physics strategy.
      */
     public void setPhysicsStrategy(final PhysicsStrategy strategy) {
@@ -105,6 +105,7 @@ public abstract class WorldObject {
 
     /**
      * Sets the object's texture.
+     *
      * @param tex the new texture of the object
      */
     public void setTexture(final Texture tex) {

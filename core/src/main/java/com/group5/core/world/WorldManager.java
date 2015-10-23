@@ -290,6 +290,12 @@ public class WorldManager {
                     player.kill();
                 }
             }
+            if (contact.getFixtureA().getUserData() == player
+                    && contact.getFixtureB().getUserData() instanceof Bullet
+                    || contact.getFixtureB().getUserData() == player
+                    && contact.getFixtureA().getUserData() instanceof Bullet) {
+                player.kill();
+            }
         }
 
         @Override

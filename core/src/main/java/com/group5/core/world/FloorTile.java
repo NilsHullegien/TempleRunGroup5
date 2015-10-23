@@ -19,8 +19,7 @@ public class FloorTile extends WorldObject {
     public FloorTile(final World physicsWorld, final Vector2 coord) {
         super(EndlessRunner.get().getTextureCache().load("floorTile.png"),
                 new Vector2(EndlessRunner.get().getTextureCache().load("floorTile.png").getWidth() * WorldManager.PHYSICS_SCALE_FACTOR,
-                        EndlessRunner.get().getTextureCache().load("floorTile.png").getHeight() * WorldManager.PHYSICS_SCALE_FACTOR),
-                null
+                        EndlessRunner.get().getTextureCache().load("floorTile.png").getHeight() * WorldManager.PHYSICS_SCALE_FACTOR)
         );
         setPhysicsStrategy(new StaticPhysicsStrategy(physicsWorld,
                 this,

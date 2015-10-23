@@ -1,8 +1,5 @@
 package com.group5.core.screens;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -24,6 +21,10 @@ import com.group5.core.util.ScoreItem;
 import com.group5.core.world.Player;
 import com.group5.core.world.WorldManager;
 import com.group5.core.world.WorldObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Main game screen.

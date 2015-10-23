@@ -145,7 +145,7 @@ public class Director {
     /**
      * updates Director which commands the queue to update.
      *
-     * @param playerpos position of player.
+     * @param playerpos    position of player.
      * @param currentscore the current score
      */
     public void update(final Vector2 playerpos, final float currentscore) {

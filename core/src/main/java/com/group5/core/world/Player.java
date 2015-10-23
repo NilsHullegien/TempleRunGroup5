@@ -19,20 +19,16 @@ public class Player extends AnimatedWorldObject {
     /**
      * Constructs a new Player positioned at the given coordinates.
      *
-     * @param physicsWorld
-     *            the physics world to create the player's body in
-     * @param coord
-     *            coordinate
-     * @param size
-     *            size of player in pixels
+     * @param physicsWorld the physics world to create the player's body in
+     * @param coord        coordinate
+     * @param size         size of player in pixels
      */
     public Player(final World physicsWorld, final Vector2 coord, final Vector2 size) {
         super(EndlessRunner.get().getTextureCache().load("chickentime.png"),
                 size,
                 6,
                 5,
-                2,
-                null);
+                2);
         setPhysicsStrategy(new PlayerPhysicsStrategy(physicsWorld, this, size, coord, 10));
     }
 
@@ -71,8 +67,7 @@ public class Player extends AnimatedWorldObject {
      * gravity). NOTE: the actual movement of the player is done in the
      * updateJumpPosition(float) method.
      *
-     * @param jumpIntensity
-     *            How hard the player jumps.
+     * @param jumpIntensity How hard the player jumps.
      */
     public void jump(final float jumpIntensity) {
         ((PlayerPhysicsStrategy) getPhysicsStrategy()).jump(jumpIntensity);

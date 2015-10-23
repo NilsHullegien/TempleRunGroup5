@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.group5.core.physics.PhysicsStrategy;
 
 /**
  * Represents an object that has a presence in a WorldManager.
@@ -36,15 +35,13 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
      * @param duration  Total duration of animation
-     * @param strategy  Physics strategy
      */
     public AnimatedWorldObject(final Texture tex,
                                final Vector2 size,
                                final int framecols,
                                final int framerows,
-                               final float duration,
-                               final PhysicsStrategy strategy) {
-        super(tex, size, strategy);
+                               final float duration) {
+        super(tex, size);
         this.amountframes = framecols * framerows;
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
@@ -76,10 +73,11 @@ public abstract class AnimatedWorldObject extends WorldObject {
 
     /**
      * Method to set the animation of the AnimatedWorldObject.
-     * @param tex new texture for the animation
+     *
+     * @param tex       new texture for the animation
      * @param framecols number of horizontal slices of texture
      * @param framerows number of vertical slices of texture
-     * @param duration duration of the animation in frames per second
+     * @param duration  duration of the animation in frames per second
      */
     public void setAnimation(final Texture tex, final int framecols, final int framerows, final int duration) {
         super.setTexture(tex);

@@ -19,6 +19,7 @@ public abstract class PhysicsStrategy {
 
     /**
      * Creates a new physics strategy for the given world.
+     *
      * @param w the world to act in.
      */
     public PhysicsStrategy(final World w) {
@@ -27,6 +28,7 @@ public abstract class PhysicsStrategy {
 
     /**
      * Returns the strategy's world.
+     *
      * @return the strategy's world
      */
     public World getWorld() {
@@ -35,6 +37,7 @@ public abstract class PhysicsStrategy {
 
     /**
      * Returns the strategy's body.
+     *
      * @return the strategy's body
      */
     public Body getBody() {
@@ -43,6 +46,7 @@ public abstract class PhysicsStrategy {
 
     /**
      * Sets a new physics body for the strategy.
+     *
      * @param b the new physics body
      */
     protected void setBody(final Body b) {
@@ -51,6 +55,7 @@ public abstract class PhysicsStrategy {
 
     /**
      * Updates the physics forces.
+     *
      * @param delta the amount of time passed since the last update.
      */
     public abstract void update(final float delta);

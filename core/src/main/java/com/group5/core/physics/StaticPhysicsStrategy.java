@@ -15,9 +15,10 @@ public class StaticPhysicsStrategy extends PhysicsStrategy {
 
     /**
      * Creates a new static object physics strategy.
-     * @param world the world to act in
+     *
+     * @param world    the world to act in
      * @param userData the data that should be stored in the fixture
-     * @param size the physical size of the object
+     * @param size     the physical size of the object
      * @param position the position in the world
      */
     public StaticPhysicsStrategy(final World world,

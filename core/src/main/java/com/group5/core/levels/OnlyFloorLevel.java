@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.GameSlice;
 import com.group5.core.world.FloorTile;
-import com.group5.core.world.Obstacle;
+import com.group5.core.world.ShootingObstacle;
 
 /**
  * This is just a temporary class to check if the
@@ -42,6 +42,9 @@ public class OnlyFloorLevel extends GameSlice {
     private void createElems(final World world) {
         getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
         float range = (this.getEndPoint().x - this.getStartPoint().x) / 50;
-        getElems().add(new Obstacle(world, new Vector2((float) (this.getStartPoint().x / 50 + range * Math.random()), 1.2f)));
+        float xPosObstacle = (float) (this.getStartPoint().x / 50 + range * Math.random());
+        ShootingObstacle obstacle = new ShootingObstacle(world, new Vector2(xPosObstacle, 1.2f));
+        getElems().add(obstacle);
+        getElems().add(obstacle.getBullet());
     }
 }
