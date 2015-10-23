@@ -26,12 +26,15 @@ public class Player extends AnimatedWorldObject {
     /**
      * Constructs a new Player positioned at the given coordinates.
      *
-     * @param physicsWorld the physics world to create the player's body in
-     * @param coord        coordinate
-     * @param size         size of player in pixels
+     * @param physicsWorld
+     *            the physics world to create the player's body in
+     * @param coord
+     *            coordinate
+     * @param size
+     *            size of player in pixels
      */
     public Player(final World physicsWorld, final Vector2 coord, final Vector2 size) {
-        super(EndlessRunner.get().getTextureCache().load("chickentime.png"), size, coord, 6, 5, 2);
+        super(EndlessRunner.get().getTextureCache().load("player_running.png"), size, coord, 6, 1, 5);
         speed = new Vector2(5, 0);
 
         BodyDef def = new BodyDef();
@@ -77,10 +80,15 @@ public class Player extends AnimatedWorldObject {
 
     @Override
     public void update(final float delta, final WorldManager worldManager) {
-        //update the animation
+        // update the animation
         super.update(delta, worldManager);
         Body b = getPhysicsBody();
         double maxSpeed = 10;
+        if (b.getLinearVelocity().y > 0.1f || b.getLinearVelocity().y < -0.1f) {
+            this.setAnimation(EndlessRunner.get().getTextureCache().load("player_jumping.png"), 3, 1, 30);
+        } else {
+            this.setAnimation(EndlessRunner.get().getTextureCache().load("player_running.png"), 6, 1, 5);
+        }
         if (dead || b.getLinearVelocity().x < maxSpeed) {
             b.applyLinearImpulse(speed.x, speed.y, b.getWorldCenter().x, b.getWorldCenter().y, true);
         }
@@ -107,13 +115,14 @@ public class Player extends AnimatedWorldObject {
      * gravity). NOTE: the actual movement of the player is done in the
      * updateJumpPosition(float) method.
      *
-     * @param jumpIntensity How hard the player jumps.
+     * @param jumpIntensity
+     *            How hard the player jumps.
      */
     public void jump(final float jumpIntensity) {
         Body b = getPhysicsBody();
         if (b.getLinearVelocity().y > -0.6f && b.getLinearVelocity().y < 0.3f) {
             b.applyLinearImpulse(0,
-                    -b.getWorld().getGravity().y + 10 + (20 * jumpIntensity),
+                    -b.getWorld().getGravity().y + 20 + (10 * jumpIntensity),
                     b.getWorldCenter().x,
                     b.getWorldCenter().y,
                     true);
