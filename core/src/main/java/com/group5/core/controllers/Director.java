@@ -37,7 +37,7 @@ public class Director {
     /**
      * The current score.
      */
-    private float score = 1;
+    private float score = 0;
 
     /**
      * Director commands the creation of levels.

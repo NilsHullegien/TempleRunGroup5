@@ -1,6 +1,8 @@
 package com.group5.core.controllers;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.levels.HoleBlockLevel;
+import com.group5.core.levels.HoleLevel;
 import com.group5.core.levels.OnlyFloorLevel;
 import com.group5.core.levels.BlockLevel;
 import com.group5.core.levels.BlockChanceLevel;
@@ -36,13 +38,14 @@ public abstract class GameSliceCasting {
      * @return GameSlice
      */
     public static GameSlice cast(final float score, final GameSlice before, final World world) {
-        int withRndscore = (int) Math.round(score / 100 + Math.random() * 2);
+        int withRndscore = (int) Math.round(score / 100 + Math.random() * 4);
         switch (withRndscore) {
-        case 1: return new RiseUpLevel(before, world);
-        case 2: return new BlockChanceLevel(before, world);
-        case 3: return new BlockLevel(before, world);
+        case 1: return new BlockChanceLevel(before, world);
+        case 2: return new BlockLevel(before, world);
+        case 3: return new HoleLevel(before, world);
         case 4: return new RiseUpLevel(before, world);
-        default: return new OnlyFloorLevel(before, world);
+        case 5: return new HoleBlockLevel(before, world);
+        default: return new HoleBlockLevel(before, world);
         }
     }
 }
