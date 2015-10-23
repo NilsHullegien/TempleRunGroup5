@@ -33,6 +33,11 @@ public class EndlessRunner extends Game {
     private TextureCache textureCache;
 
     /**
+     * Whether flashy death should be enabled in the game.
+     */
+    private boolean flashAtDeath = false;
+
+    /**
      * Sets the current game instance.
      *
      * @param g the new current game instance
@@ -60,6 +65,14 @@ public class EndlessRunner extends Game {
     }
 
     /**
+     * Returns whether flashy death mode should be enabled in the game.
+     * @return whether flashy death mode should be enabled in the game
+     */
+    public boolean shouldFlashAtDeath() {
+        return flashAtDeath;
+    }
+
+    /**
      * Loads a configuration file and sets relevant configuration in the game.
      */
     public void loadConfiguration() {
@@ -77,7 +90,7 @@ public class EndlessRunner extends Game {
                     FileOutputStream f = new FileOutputStream(logFile, true);
                     Logger.set(new Logger(f));
                 } catch (Exception ex) {
-                    Logger.get().error("Settings", "Invalid settings file: " + logFile);
+                    Logger.get().error("Settings", "Invalid logging file: " + logFile);
                 }
             }
 
@@ -88,6 +101,13 @@ public class EndlessRunner extends Game {
                 Logger.get().setThreshold(t);
             } catch (IllegalArgumentException ex) {
                 Logger.get().error("Invalid logging level set as threshold: " + threshold);
+            }
+
+            String flashAtDeathSetting = config.getProperty("flash_at_death", "false");
+            if (flashAtDeathSetting.equals("true")) {
+                flashAtDeath = true;
+            } else if (!flashAtDeathSetting.equals("false")) {
+                Logger.get().error("Settings", "flash_at_death should have a valid boolean as its value");
             }
         } catch (FileNotFoundException ex) {
             Logger.get().warning("Game", "Config file could not be found");

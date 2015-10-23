@@ -134,7 +134,7 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void render(final float delta) {
-        if (worldManager.getPlayer().isDead()) {
+        if (worldManager.getPlayer().isDead() && EndlessRunner.get().shouldFlashAtDeath()) {
             Gdx.gl.glClearColor(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1);
         } else {
             Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -181,7 +181,7 @@ public class MainGameScreen implements Screen {
      */
     private void createHUDSkin() {
         hudSkin = new Skin();
-        hudSkin.add("bar", ((EndlessRunner) Gdx.app.getApplicationListener()).getTextureCache().load("bar.png"));
+        hudSkin.add("bar", EndlessRunner.get().getTextureCache().load("bar.png"));
         BitmapFont font = new BitmapFont();
         hudSkin.add("default", font);
 
