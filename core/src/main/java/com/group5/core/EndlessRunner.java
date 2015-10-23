@@ -66,6 +66,7 @@ public class EndlessRunner extends Game {
 
     /**
      * Returns whether flashy death mode should be enabled in the game.
+     *
      * @return whether flashy death mode should be enabled in the game
      */
     public boolean shouldFlashAtDeath() {

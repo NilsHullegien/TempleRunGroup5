@@ -39,9 +39,9 @@ public class RiseUpLevel extends GameSlice {
      * @param world physicsworld
      */
     private void createElems(final World world) {
-        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 , 1.2f)));
-        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 2f , 1.2f)));
-        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 10f , 1.2f)));
-        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 12f , 1.2f)));
+        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50, 1.2f)));
+        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 2f, 1.2f)));
+        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 10f, 1.2f)));
+        getElems().add(new BlockObstacle(world, new Vector2((this.getStartPoint().x) / 50 + 12f, 1.2f)));
     }
 }

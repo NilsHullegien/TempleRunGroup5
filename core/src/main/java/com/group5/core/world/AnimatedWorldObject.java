@@ -32,18 +32,16 @@ public abstract class AnimatedWorldObject extends WorldObject {
      *
      * @param tex       Texture
      * @param size      Screen size of the object
-     * @param coord     Initial position
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
      * @param duration  Total duration of animation
      */
     public AnimatedWorldObject(final Texture tex,
                                final Vector2 size,
-                               final Vector2 coord,
                                final int framecols,
                                final int framerows,
                                final float duration) {
-        super(tex, size, coord);
+        super(tex, size);
         this.amountframes = framecols * framerows;
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
@@ -75,10 +73,11 @@ public abstract class AnimatedWorldObject extends WorldObject {
 
     /**
      * Method to set the animation of the AnimatedWorldObject.
-     * @param tex new texture for the animation
+     *
+     * @param tex       new texture for the animation
      * @param framecols number of horizontal slices of texture
      * @param framerows number of vertical slices of texture
-     * @param duration duration of the animation in frames per second
+     * @param duration  duration of the animation in frames per second
      */
     public void setAnimation(final Texture tex, final int framecols, final int framerows, final int duration) {
         super.setTexture(tex);
@@ -93,15 +92,12 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param batch The batch in which the animatedsprite should be rendered.
      */
     public void doRender(final SpriteBatch batch) {
-        Vector2 pos = getPhysicsBody().getPosition();
-        setX(pos.x);
-        setY(pos.y);
         batch.draw(animation.getKeyFrame(currenttime, true),
                 this.getX(), this.getY(),
                 0, 0,
                 getWidth(), getHeight(),
                 1, 1,
-                (float) Math.toDegrees(getPhysicsBody().getAngle()));
+                (float) Math.toDegrees(getPhysicsStrategy().getBody().getAngle()));
     }
 
     /**
@@ -111,6 +107,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param worldManager The worldManager the object is in
      */
     public void update(final float delta, final WorldManager worldManager) {
+        super.update(delta, worldManager);
         currenttime += delta;
     }
 }

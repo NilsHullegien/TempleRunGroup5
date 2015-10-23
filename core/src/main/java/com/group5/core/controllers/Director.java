@@ -1,12 +1,12 @@
 package com.group5.core.controllers;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.util.Logger;
 import com.group5.core.world.WorldObject;
+
+import java.util.Iterator;
+import java.util.LinkedList;
 
 
 /**
@@ -145,7 +145,7 @@ public class Director {
     /**
      * updates Director which commands the queue to update.
      *
-     * @param playerpos position of player.
+     * @param playerpos    position of player.
      * @param currentscore the current score
      */
     public void update(final Vector2 playerpos, final float currentscore) {

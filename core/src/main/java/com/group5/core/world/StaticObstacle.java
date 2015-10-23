@@ -14,7 +14,7 @@ public class StaticObstacle extends Obstacle {
      *
      * @param physicsWorld the physics world to create the obstacle's body in
      * @param coord        Initial position
-     * @param tex Texture of the StaticObstacle.
+     * @param tex          Texture of the StaticObstacle.
      */
     public StaticObstacle(final World physicsWorld, final Vector2 coord, final Texture tex) {
         super(physicsWorld, coord, tex);

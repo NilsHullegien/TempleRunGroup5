@@ -6,25 +6,33 @@ import com.group5.core.EndlessRunner;
 
 /**
  * Class for a shooting Obstacle.
- * @author Nils.
  *
+ * @author Nils.
  */
 public class ShootingObstacle extends StaticObstacle {
 
     /**
      * A bullet that is shot by this obstacle.
      */
-    private Bullet b;
+    private Bullet bullet;
 
     /**
      * Constructor for a shooting obstacle.
+     *
      * @param physicsWorld the world the shooting obstacle is in.
-     * @param coord the coords of the shooting obstacle.
+     * @param coord        the coords of the shooting obstacle.
      */
     public ShootingObstacle(final World physicsWorld, final Vector2 coord) {
         super(physicsWorld, coord, EndlessRunner.get().getTextureCache().load("Obstacle1.png"));
-        this.b = new Bullet(physicsWorld, coord);
-        b.createPhysicsObject(physicsWorld, coord);
+        this.bullet = new Bullet(physicsWorld, new Vector2(coord.x, coord.y + 0.8f));
+    }
 
+    /**
+     * Returns the obstacle's bullet.
+     *
+     * @return the obstacle's bullet
+     */
+    public Bullet getBullet() {
+        return bullet;
     }
 }
