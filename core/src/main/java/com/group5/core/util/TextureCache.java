@@ -1,9 +1,9 @@
 package com.group5.core.util;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-
-import java.util.HashMap;
 
 /**
  * A cache that lazily fetches textures when first loaded.

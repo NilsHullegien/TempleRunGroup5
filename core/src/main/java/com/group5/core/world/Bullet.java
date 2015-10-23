@@ -1,6 +1,5 @@
 package com.group5.core.world;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,8 +21,7 @@ public class Bullet extends Obstacle {
      * @param coord the coordinates of the bullet.
      */
     public Bullet(final World physicsWorld, final Vector2 coord) {
-        super(physicsWorld, coord, EndlessRunner.get().getTextureCache().load("Zeppelin.png"));
-
+        super(physicsWorld, coord, EndlessRunner.get().getTextureCache().load("shots.png"));
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(new Vector2(getX(), getY()));
@@ -51,20 +49,9 @@ public class Bullet extends Obstacle {
      * @param batch The batch the object should draw in
      */
     @Override
-    public void doRender(final SpriteBatch batch) {
-        Vector2 pos = getPhysicsBody().getPosition();
-        batch.draw(getTexture(),
-                pos.x, pos.y,
-                0, 0,
-                getWidth(), getHeight(),
-                1, 1,
-                0,
-                0, 0,
-                (int) (getWidth() / WorldManager.PHYSICS_SCALE_FACTOR),
-                (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
-                true, false);
+    public void update(final float delta, final WorldManager manager) {
         Body b = getPhysicsBody();
-        b.applyLinearImpulse(-0.2f, 0,
+        b.applyLinearImpulse(-0.15f, 0,
                 b.getWorldCenter().x,
                 b.getWorldCenter().y,
                 true);
