@@ -94,7 +94,7 @@ public class Director {
         gsq.addGameSlice(GameSliceCasting.cast(score, w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
-            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+            gsq.addGameSlice(GameSliceCasting.cast(score, gsq.getLast(), w));
             gsq.getLast().update(playerPosition, cameraPosition);
         }
         return gsq;
@@ -111,7 +111,7 @@ public class Director {
         if (queue.isEmpty()) {
             g = GameSliceCasting.cast(score, w);
         } else {
-            g = GameSliceCasting.cast(queue.getLast(), w);
+            g = GameSliceCasting.cast(score, queue.getLast(), w);
         }
         queue.addGameSlice(g);
     }
