@@ -2,6 +2,7 @@ package com.group5.core.screens;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,7 +12,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -60,10 +60,6 @@ public class MainGameScreen implements Screen {
     private Skin hudSkin;
 
     /**
-     * Box2D shape renderer for debugging.
-     */
-    private Box2DDebugRenderer physicsRenderer;
-    /**
      * Boolean to check if the game over menu is active.
      */
     private boolean gameOverMenuActive = false;
@@ -77,14 +73,14 @@ public class MainGameScreen implements Screen {
     private Label scoreLabel;
 
     /**
-     * Table that contains the hud of the screen.
-     */
-    private Table hud;
-
-    /**
      * This variable contains the final score, to ensure it doesn't get changed.
      */
     private int finalScore;
+
+    /**
+     * Random number generator.
+     */
+    private Random random = new Random();
 
     /**
      * Constructs a new main game screen that plays the actual game.
@@ -101,7 +97,6 @@ public class MainGameScreen implements Screen {
         Director director = new Director(7, 2, player.getPosition(), worldManager.getPhysicsWorld(), new Vector2(200, 0));
         this.worldManager.setPlayer(player);
         this.worldManager.setDirector(director);
-        this.physicsRenderer = new Box2DDebugRenderer();
         worldManager.setPlayer(player);
 
         this.camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -139,7 +134,11 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void render(final float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 0);
+        if (worldManager.getPlayer().isDead()) {
+            Gdx.gl.glClearColor(random.nextFloat(), random.nextFloat(), random.nextFloat(), 1);
+        } else {
+            Gdx.gl.glClearColor(0, 0, 0, 0);
+        }
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         worldManager.update(delta);
@@ -174,7 +173,7 @@ public class MainGameScreen implements Screen {
         stage.draw();
 
         // Enable if you want to see physics outlined
-        physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(50.f, 50.f, 1.f));
+        //physicsRenderer.render(this.worldManager.getPhysicsWorld(), camera.combined.scale(1.f, 1.f, 1.f));
     }
 
     /**
@@ -201,7 +200,7 @@ public class MainGameScreen implements Screen {
      * Create the HUD for the screen.
      */
     private void createHUD() {
-        hud = new Table();
+        Table hud = new Table();
         hud.setFillParent(true);
         hud.add().expandY();
 

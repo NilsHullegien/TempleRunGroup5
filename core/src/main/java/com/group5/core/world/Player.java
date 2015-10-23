@@ -72,6 +72,9 @@ public class Player extends AnimatedWorldObject {
      * Kills the player instantly.
      */
     public void kill() {
+        Body b = getPhysicsBody();
+        World.setVelocityThreshold(100000000);
+        b.applyLinearImpulse(50, 400, b.getWorldCenter().x, b.getWorldCenter().y, true);
         dead = true;
     }
 
@@ -86,8 +89,8 @@ public class Player extends AnimatedWorldObject {
         } else {
             this.setAnimation(EndlessRunner.get().getTextureCache().load("player_running.png"), 6, 1, 5);
         }
-        if (b.getLinearVelocity().x < maxSpeed) {
-            b.applyLinearImpulse(4, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
+        if (dead || b.getLinearVelocity().x < maxSpeed) {
+            b.applyLinearImpulse(speed.x, speed.y, b.getWorldCenter().x, b.getWorldCenter().y, true);
         }
     }
 
@@ -118,8 +121,11 @@ public class Player extends AnimatedWorldObject {
     public void jump(final float jumpIntensity) {
         Body b = getPhysicsBody();
         if (b.getLinearVelocity().y > -0.6f && b.getLinearVelocity().y < 0.3f) {
-            b.applyLinearImpulse(0, -b.getWorld().getGravity().y + 20 + (10 * jumpIntensity), b.getWorldCenter().x,
-                    b.getWorldCenter().y, true);
+            b.applyLinearImpulse(0,
+                    -b.getWorld().getGravity().y + 20 + (10 * jumpIntensity),
+                    b.getWorldCenter().x,
+                    b.getWorldCenter().y,
+                    true);
         }
     }
 
