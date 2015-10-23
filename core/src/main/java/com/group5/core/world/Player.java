@@ -46,6 +46,7 @@ public class Player extends AnimatedWorldObject {
      * Kills the player instantly.
      */
     public void kill() {
+        ((PlayerPhysicsStrategy) getPhysicsStrategy()).kill();
         dead = true;
     }
 

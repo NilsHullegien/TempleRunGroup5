@@ -76,4 +76,14 @@ public class PlayerPhysicsStrategy extends PhysicsStrategy {
                     true);
         }
     }
+
+    /**
+     * Exerts a large amount of force on the physics body to make the player tumble heavily.
+     */
+    public void kill() {
+        Body b = getBody();
+        World.setVelocityThreshold(100000000);
+        b.applyLinearImpulse(50, 400, b.getWorldCenter().x, b.getWorldCenter().y, true);
+        maximumSpeed = Integer.MAX_VALUE;
+    }
 }
