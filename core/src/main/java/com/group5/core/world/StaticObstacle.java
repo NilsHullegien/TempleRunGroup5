@@ -7,18 +7,17 @@ import com.badlogic.gdx.physics.box2d.World;
 /**
  * Represents an obstacle for the player to avoid.
  */
-public class Obstacle extends WorldObject {
+public class StaticObstacle extends Obstacle {
 
     /**
      * Constructor of the obstacle.
      *
-     * @param physicsWorld the physics world to create the obstacle's body in.
-     * @param coord        Initial position.
-     * @param tex Texture of the Obstacle.
+     * @param physicsWorld the physics world to create the obstacle's body in
+     * @param coord        Initial position
+     * @param tex Texture of the StaticObstacle.
      */
-    public Obstacle(final World physicsWorld, final Vector2 coord, final Texture tex) {
-        super(tex, coord);
-        createPhysicsObject(physicsWorld, coord);
+    public StaticObstacle(final World physicsWorld, final Vector2 coord, final Texture tex) {
+        super(physicsWorld, coord, tex);
     }
 
     /**

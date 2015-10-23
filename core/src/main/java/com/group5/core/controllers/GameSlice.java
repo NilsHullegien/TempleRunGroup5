@@ -1,12 +1,12 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.group5.core.world.WorldObject;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
+import com.group5.core.world.WorldObject;
 
 /**
  * GameSlice is a 2Dimensional rectangle in which objects are placed.
@@ -114,8 +114,6 @@ public abstract class GameSlice {
     }
 
     /**
-<<<<<<< HEAD
-=======
      * Returns leftbottomcorner.
      *
      * @return startPoint gameslice.
@@ -125,7 +123,6 @@ public abstract class GameSlice {
     }
 
     /**
->>>>>>> origin/master
      * Returns rightupcorner.
      *
      * @return endPoint GameSlice.
