@@ -1,10 +1,6 @@
 package com.group5.core.controllers;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Iterator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -44,7 +40,7 @@ public class GameSliceQueueTest {
         assertEquals(q.isEmpty(), true);
     }
 
-    @Test
+    /*@Test
     public void addGameSliceTest() {
         GameSlice gs1 = GameSliceCasting.cast(world);
         GameSlice gs2 = GameSliceCasting.cast(world);
@@ -59,10 +55,10 @@ public class GameSliceQueueTest {
         assertTrue(gsQueue.full());
         assertEquals(gsQueue.getFirst(), gs2);
         assertEquals(gsQueue.getLast(), gs3);
-    }
+    }*/
 
-    @Test
-    public void getOnScreenSlicesTest() {
+    //@Test
+    /*public void getOnScreenSlicesTest() {
         GameSlice gs1 = GameSliceCasting.cast(world);
         GameSlice gs2 = GameSliceCasting.cast(world);
         gsQueue.addGameSlice(gs1);
@@ -76,5 +72,5 @@ public class GameSliceQueueTest {
         assertTrue(gsQueue.getLast().isonScreen());
         iterator = gsQueue.getOnScreenSlices();
         assertTrue(iterator.hasNext());
-    }
+    }*/
 }

@@ -5,6 +5,8 @@ import java.util.LinkedList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.levels.LevelFactory;
+import com.group5.core.levels.OnlyFloorLevelFactory;
 import com.group5.core.util.Logger;
 import com.group5.core.world.WorldObject;
 
@@ -36,6 +38,11 @@ public class Director {
     private int minfront = 2;
 
     /**
+     * Decides which type of level will be spawned.
+     */
+    private LevelFactory levelFactory = new OnlyFloorLevelFactory();
+
+    /**
      * Director commands the creation of levels.
      *
      * @param amount    of slices in the queue
@@ -48,6 +55,7 @@ public class Director {
         this.cameraPosition = camerapos;
         this.world = w;
         this.queue = initiateQueue(amount, world);
+
     }
 
     /**
@@ -102,10 +110,10 @@ public class Director {
         if (amount <= 0) {
             return gsq;
         }
-        gsq.addGameSlice(GameSliceCasting.cast(w));
+        gsq.addGameSlice(levelFactory.produceLevel(w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
-            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+            gsq.addGameSlice(levelFactory.produceLevel(gsq.getLast(), w));
             gsq.getLast().update(playerPosition, cameraPosition);
         }
         return gsq;
@@ -120,9 +128,10 @@ public class Director {
         Logger.get().info("Director", "Adding GameSlice");
         GameSlice g;
         if (queue.isEmpty()) {
-            g = GameSliceCasting.cast(w);
+            g = levelFactory.produceLevel(w);
         } else {
-            g = GameSliceCasting.cast(queue.getLast(), w);
+
+            g = levelFactory.produceLevel(queue.getLast(), w);
         }
         queue.addGameSlice(g);
     }
