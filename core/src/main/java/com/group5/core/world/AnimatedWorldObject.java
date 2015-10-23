@@ -75,6 +75,20 @@ public abstract class AnimatedWorldObject extends WorldObject {
     }
 
     /**
+     * Method to set the animation of the AnimatedWorldObject.
+     * @param tex new texture for the animation
+     * @param framecols number of horizontal slices of texture
+     * @param framerows number of vertical slices of texture
+     * @param duration duration of the animation in frames per second
+     */
+    public void setAnimation(final Texture tex, final int framecols, final int framerows, final int duration) {
+        super.setTexture(tex);
+        this.amountframes = framecols * framerows;
+        this.animationduration = duration;
+        this.animation = createFrames(tex, framecols, framerows);
+    }
+
+    /**
      * Render the animation.
      *
      * @param batch The batch in which the animatedsprite should be rendered.
