@@ -34,21 +34,10 @@ public class Director {
      * Amount of slices that have to be in front.
      */
     private int minfront = 2;
-
     /**
-     * Director commands the creation of levels.
-     *
-     * @param amount    of slices in the queue
-     * @param playerpos current position of player
-     * @param w         physicsworld
-     * @param camerapos position of camera relative to the screen
+     * The current score.
      */
-    public Director(final int amount, final Vector2 playerpos, final World w, final Vector2 camerapos) {
-        this.playerPosition = playerpos;
-        this.cameraPosition = camerapos;
-        this.world = w;
-        this.queue = initiateQueue(amount, world);
-    }
+    private float score = 0;
 
     /**
      * Director commands the creation of levels.
@@ -102,10 +91,10 @@ public class Director {
         if (amount <= 0) {
             return gsq;
         }
-        gsq.addGameSlice(GameSliceCasting.cast(w));
+        gsq.addGameSlice(GameSliceCasting.cast(score, w));
         gsq.getLast().update(playerPosition, cameraPosition);
         while (gsq.length() < amount) {
-            gsq.addGameSlice(GameSliceCasting.cast(gsq.getLast(), w));
+            gsq.addGameSlice(GameSliceCasting.cast(score, gsq.getLast(), w));
             gsq.getLast().update(playerPosition, cameraPosition);
         }
         return gsq;
@@ -120,9 +109,9 @@ public class Director {
         Logger.get().info("Director", "Adding GameSlice");
         GameSlice g;
         if (queue.isEmpty()) {
-            g = GameSliceCasting.cast(w);
+            g = GameSliceCasting.cast(score, w);
         } else {
-            g = GameSliceCasting.cast(queue.getLast(), w);
+            g = GameSliceCasting.cast(score, queue.getLast(), w);
         }
         queue.addGameSlice(g);
     }
@@ -157,9 +146,11 @@ public class Director {
      * updates Director which commands the queue to update.
      *
      * @param playerpos position of player.
+     * @param currentscore the current score
      */
-    public void update(final Vector2 playerpos) {
+    public void update(final Vector2 playerpos, final float currentscore) {
         this.playerPosition = playerpos;
+        this.score = currentscore;
         directQueue(minfront);
         queue.update(playerpos, cameraPosition);
     }
