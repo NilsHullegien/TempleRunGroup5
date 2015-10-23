@@ -49,6 +49,6 @@ public class HoleBlockLevel extends GameSlice {
          } else {
              getElems().add(new ShootingObstacle(
                      world, new Vector2((float) ((this.getStartPoint().x) / 50 + (range + 1025) * Math.random()), 1.2f)));
-         }
+        }
     }
 }
