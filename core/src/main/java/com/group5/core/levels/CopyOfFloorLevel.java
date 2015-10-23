@@ -10,14 +10,14 @@ import com.group5.core.world.FloorTile;
  * implementation works, we'll use decorators to
  * make the procedural levels much easier to create.
  */
-public class FloorLevel extends GameSlice {
+public class CopyOfFloorLevel extends GameSlice {
     /**
      * constructor.
      *
      * @param world physicsworld
      * @author Levi
      */
-    public FloorLevel(final World world) {
+    public CopyOfFloorLevel(final World world) {
         super(new Vector2(0, 0), new Vector2(2250, 2000));
         createElems(world);
     }
@@ -28,7 +28,7 @@ public class FloorLevel extends GameSlice {
      * @param before GameSlice
      * @param world  physicsworld
      */
-    public FloorLevel(final GameSlice before, final World world) {
+    public CopyOfFloorLevel(final GameSlice before, final World world) {
         super(before, new Vector2(0, 0), new Vector2(2250, 2000));
         createElems(world);
     }
@@ -41,9 +41,5 @@ public class FloorLevel extends GameSlice {
     private void createElems(final World world) {
         getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
         getElems().add(new FloorTile(world, new Vector2((this.getStartPoint().x + 1225) / 50, 0)));
-        //float range = (this.getEndPoint().x - 200 - this.getStartPoint().x) / 50;
-        //if (Math.random() > 0.5) {
-        //    getElems().add(new Obstacle(world, new Vector2((float) ((this.getStartPoint().x) / 50 + range * Math.random()), 1.2f)));
-        //}
     }
 }
