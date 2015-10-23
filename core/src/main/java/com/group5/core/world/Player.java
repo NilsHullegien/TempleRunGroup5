@@ -69,6 +69,9 @@ public class Player extends AnimatedWorldObject {
      * Kills the player instantly.
      */
     public void kill() {
+        Body b = getPhysicsBody();
+        World.setVelocityThreshold(100000000);
+        b.applyLinearImpulse(50, 400, b.getWorldCenter().x, b.getWorldCenter().y, true);
         dead = true;
     }
 
@@ -78,8 +81,8 @@ public class Player extends AnimatedWorldObject {
         super.update(delta, worldManager);
         Body b = getPhysicsBody();
         double maxSpeed = 10;
-        if (b.getLinearVelocity().x < maxSpeed) {
-            b.applyLinearImpulse(4, 0, b.getWorldCenter().x, b.getWorldCenter().y, true);
+        if (dead || b.getLinearVelocity().x < maxSpeed) {
+            b.applyLinearImpulse(speed.x, speed.y, b.getWorldCenter().x, b.getWorldCenter().y, true);
         }
     }
 
@@ -110,7 +113,7 @@ public class Player extends AnimatedWorldObject {
         Body b = getPhysicsBody();
         if (b.getLinearVelocity().y > -0.6f && b.getLinearVelocity().y < 0.3f) {
             b.applyLinearImpulse(0,
-                    -b.getWorld().getGravity().y + 20 + (10 * jumpIntensity),
+                    -b.getWorld().getGravity().y + 10 + (20 * jumpIntensity),
                     b.getWorldCenter().x,
                     b.getWorldCenter().y,
                     true);
