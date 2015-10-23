@@ -1,28 +1,22 @@
 package com.group5.core.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Iterator;
-
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.GdxTestRunner;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.GdxTestRunner;
+import java.util.Iterator;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class GameSliceQueueTest {
 
-    private World world;
-
-    private Vector2 playerPos;
-
     int currC = 1025;
-
+    private World world;
+    private Vector2 playerPos;
     private Vector2 camerapos;
 
 
@@ -31,7 +25,7 @@ public class GameSliceQueueTest {
     @Before
     public void setUp() {
         //putting cameraposition in half of a 400x400x screen
-        camerapos = new Vector2(200,200);
+        camerapos = new Vector2(200, 200);
         playerPos = new Vector2(0, 0);
         world = new World(playerPos, true);
         //Setting the default to 2, can be changed if needed.

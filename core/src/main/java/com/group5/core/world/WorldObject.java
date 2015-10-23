@@ -3,23 +3,13 @@ package com.group5.core.world;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.physics.PhysicsStrategy;
 
 
 /**
  * Represents an object that has a presence in a WorldManager.
  */
 public abstract class WorldObject {
-
-    /**
-     * Position of object.
-     */
-    private Vector2 pos;
 
     /**
      * Size of object.
@@ -34,78 +24,38 @@ public abstract class WorldObject {
     /**
      * The object's physics body.
      */
-    private Body physicsBody;
-
-    /**
-     * Constructs a world object with the given coordinates and texture, and the texture size as size.
-     *
-     * @param tex   location of the texture of the object
-     * @param coord coordinate of object
-     */
-    public WorldObject(final Texture tex, final Vector2 coord) {
-        this(tex,
-                new Vector2(tex.getWidth() * WorldManager.PHYSICS_SCALE_FACTOR,
-                        tex.getHeight() * WorldManager.PHYSICS_SCALE_FACTOR),
-                coord);
-    }
+    private PhysicsStrategy physicsStrategy;
 
     /**
      * Constructs a new world object with the given coordinates, size and texture.
      *
-     * @param tex   location of the texture of the object
-     * @param siz   size of the object
-     * @param coord coordinate of object
+     * @param tex  location of the texture of the object
+     * @param sz   size of object
+     * @param strategy the physics strategy
      */
     public WorldObject(
             final Texture tex,
-            final Vector2 siz,
-            final Vector2 coord) {
-        this.pos = coord;
-        this.size = siz;
+            final Vector2 sz,
+            final PhysicsStrategy strategy) {
+        this.size = sz;
         this.texture = tex;
+        this.physicsStrategy = strategy;
     }
 
     /**
-     * Create physical implementation object.
-     *
-     * @param physicsWorld world
-     * @param coord        position
+     * Returns the object's physics strategy.
+     * @return the object's physics strategy
      */
-    protected void createPhysicsObject(final World physicsWorld, final Vector2 coord) {
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        def.position.set(coord);
-
-        Body body = physicsWorld.createBody(def);
-
-        PolygonShape bodyShape = new PolygonShape();
-        bodyShape.setAsBox(getWidth() / 2f, getHeight() / 2f, new Vector2(getWidth() / 2f, getHeight() / 2f), 0);
-
-        FixtureDef fixDef = new FixtureDef();
-        fixDef.shape = bodyShape;
-        Fixture f = body.createFixture(fixDef);
-        f.setUserData(this);
-
-        bodyShape.dispose();
-        setPhysicsBody(body);
+    public PhysicsStrategy getPhysicsStrategy() {
+        return physicsStrategy;
     }
 
     /**
-     * Returns the object's physics body.
-     *
-     * @return the object's physics body
+     * Updates the object's physics strategy.
+     * @param strategy the new physics strategy.
      */
-    public Body getPhysicsBody() {
-        return physicsBody;
-    }
-
-    /**
-     * Sets the object's physics body.
-     *
-     * @param body the object's physics body
-     */
-    public void setPhysicsBody(final Body body) {
-        this.physicsBody = body;
+    public void setPhysicsStrategy(final PhysicsStrategy strategy) {
+        this.physicsStrategy = strategy;
     }
 
     /**
@@ -114,16 +64,7 @@ public abstract class WorldObject {
      * @return the object's x coordinate
      */
     public float getX() {
-        return pos.x;
-    }
-
-    /**
-     * Sets the object's x coordinate.
-     *
-     * @param newX the new x coordinate
-     */
-    public void setX(final float newX) {
-        this.pos.set(newX, this.pos.y);
+        return getPhysicsStrategy().getBody().getPosition().x;
     }
 
     /**
@@ -141,16 +82,7 @@ public abstract class WorldObject {
      * @return the object's y coordinate
      */
     public float getY() {
-        return pos.y;
-    }
-
-    /**
-     * Sets the object's y coordinate.
-     *
-     * @param newY the new y coordinate
-     */
-    public void setY(final float newY) {
-        this.pos.set(this.pos.x, newY);
+        return getPhysicsStrategy().getBody().getPosition().y;
     }
 
     /**
@@ -185,7 +117,7 @@ public abstract class WorldObject {
      * @return pos of Player
      */
     public Vector2 getPosition() {
-        return pos;
+        return getPhysicsStrategy().getBody().getPosition();
     }
 
     /**
@@ -194,13 +126,12 @@ public abstract class WorldObject {
      * @param batch The batch the object should draw in
      */
     public void doRender(final SpriteBatch batch) {
-        pos = getPhysicsBody().getPosition();
         batch.draw(getTexture(),
-                pos.x, pos.y,
+                getX(), getY(),
                 0, 0,
                 getWidth(), getHeight(),
                 1, 1,
-                (float) Math.toDegrees(getPhysicsBody().getAngle()),
+                (float) Math.toDegrees(getPhysicsStrategy().getBody().getAngle()),
                 0, 0,
                 (int) (getWidth() / WorldManager.PHYSICS_SCALE_FACTOR),
                 (int) (getHeight() / WorldManager.PHYSICS_SCALE_FACTOR),
@@ -210,8 +141,8 @@ public abstract class WorldObject {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 89 * hash + Float.floatToIntBits(pos.x);
-        hash = 89 * hash + Float.floatToIntBits(pos.y);
+        hash = 89 * hash + Float.floatToIntBits(getX());
+        hash = 89 * hash + Float.floatToIntBits(getY());
         hash = 89 * hash + texture.hashCode();
         return hash;
     }
@@ -224,7 +155,7 @@ public abstract class WorldObject {
         WorldObject that = (WorldObject) obj;
         return texture == that.texture
                 && this.size.equals(that.size)
-                && this.pos.equals(that.pos);
+                && getPosition().equals(that.getPosition());
     }
 
     /**
@@ -233,5 +164,7 @@ public abstract class WorldObject {
      * @param delta        the time that has passed since the previous frame.
      * @param worldManager the worldManager that the object is currently situated in.
      */
-    public abstract void update(final float delta, final WorldManager worldManager);
+    public void update(final float delta, final WorldManager worldManager) {
+        physicsStrategy.update(delta);
+    }
 }

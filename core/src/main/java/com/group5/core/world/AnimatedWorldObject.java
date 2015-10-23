@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.group5.core.physics.PhysicsStrategy;
 
 /**
  * Represents an object that has a presence in a WorldManager.
@@ -32,18 +33,18 @@ public abstract class AnimatedWorldObject extends WorldObject {
      *
      * @param tex       Texture
      * @param size      Screen size of the object
-     * @param coord     Initial position
      * @param framecols Amount of horizontal slices of texture
      * @param framerows Amount of vertical slices of texture
      * @param duration  Total duration of animation
+     * @param strategy  Physics strategy
      */
     public AnimatedWorldObject(final Texture tex,
                                final Vector2 size,
-                               final Vector2 coord,
                                final int framecols,
                                final int framerows,
-                               final float duration) {
-        super(tex, size, coord);
+                               final float duration,
+                               final PhysicsStrategy strategy) {
+        super(tex, size, strategy);
         this.amountframes = framecols * framerows;
         this.animationduration = duration;
         this.animation = createFrames(tex, framecols, framerows);
@@ -93,15 +94,12 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param batch The batch in which the animatedsprite should be rendered.
      */
     public void doRender(final SpriteBatch batch) {
-        Vector2 pos = getPhysicsBody().getPosition();
-        setX(pos.x);
-        setY(pos.y);
         batch.draw(animation.getKeyFrame(currenttime, true),
                 this.getX(), this.getY(),
                 0, 0,
                 getWidth(), getHeight(),
                 1, 1,
-                (float) Math.toDegrees(getPhysicsBody().getAngle()));
+                (float) Math.toDegrees(getPhysicsStrategy().getBody().getAngle()));
     }
 
     /**
@@ -111,6 +109,7 @@ public abstract class AnimatedWorldObject extends WorldObject {
      * @param worldManager The worldManager the object is in
      */
     public void update(final float delta, final WorldManager worldManager) {
+        super.update(delta, worldManager);
         currenttime += delta;
     }
 }

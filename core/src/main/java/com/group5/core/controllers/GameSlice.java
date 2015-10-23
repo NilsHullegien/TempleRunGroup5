@@ -114,18 +114,6 @@ public abstract class GameSlice {
     }
 
     /**
-<<<<<<< HEAD
-=======
-     * Returns leftbottomcorner.
-     *
-     * @return startPoint gameslice.
-     */
-    public Vector2 getstartPoint() {
-        return startPoint;
-    }
-
-    /**
->>>>>>> origin/master
      * Returns rightupcorner.
      *
      * @return endPoint GameSlice.

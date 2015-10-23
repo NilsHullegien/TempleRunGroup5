@@ -1,19 +1,16 @@
 package com.group5.core;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.Player;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import static org.junit.Assert.*;
 
 @RunWith(GdxTestRunner.class)
 public class FloorTileTest {
@@ -66,24 +63,6 @@ public class FloorTileTest {
     }
 
     @Test
-    public void setXTest() {
-        float oldX = f1.getX();
-        float newX = 500;
-        f1.setX(newX);
-        assertFalse(oldX == newX);
-        assertTrue(f1.getX() == 500);
-    }
-
-    @Test
-    public void setYTest() {
-        float oldY = f1.getY();
-        float newY = 500;
-        f1.setY(newY);
-        assertFalse(oldY == newY);
-        assertTrue(f1.getY() == 500);
-    }
-
-    @Test
     public void getTextureTest() {
         Texture t1 = f1.getTexture();
         assertFalse(t1 == null);
@@ -91,6 +70,6 @@ public class FloorTileTest {
 
     @Test
     public void getPositionTest() {
-        assertEquals(f1.getPosition(), new Vector2(0.0f,0.0f));
+        assertEquals(f1.getPosition(), new Vector2(0.0f, 0.0f));
     }
 }

@@ -1,27 +1,24 @@
 package com.group5.core.controllers;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.Iterator;
-
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.GdxTestRunner;
+import com.group5.core.world.WorldObject;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.GdxTestRunner;
-import com.group5.core.world.WorldObject;
+import java.util.Iterator;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class DirectorTest {
 
-    private World world;
-
     int currC = 1025;
-
+    private World world;
     private Vector2 pos;
 
     private Vector2 camerapos;
@@ -30,7 +27,7 @@ public class DirectorTest {
 
     @Before
     public void setUp() {
-        camerapos = new Vector2(200,200);
+        camerapos = new Vector2(200, 200);
         pos = new Vector2(0, 0);
         world = new World(pos, true);
     }
@@ -71,8 +68,8 @@ public class DirectorTest {
 
     @Test
     public void testhasPlayer1() throws Exception {
-        Vector2 playerpos = new Vector2 (1,1);
-        director = new Director(1,0, playerpos, world, camerapos);
+        Vector2 playerpos = new Vector2(1, 1);
+        director = new Director(1, 0, playerpos, world, camerapos);
         GameSliceQueue q = director.getQueue();
         Iterator<GameSlice> it = q.getSliceIterator();
         assertEquals(director.getQueue().getPlayerinQueue(),0);
@@ -89,7 +86,7 @@ public class DirectorTest {
     }
 
     @Test
-    public void testStartpoints () {
+    public void testStartpoints() {
         currC = 1025;
         director = new Director(5, 0, pos, world, camerapos);
         int count = 0;
@@ -104,7 +101,7 @@ public class DirectorTest {
         Iterator<WorldObject> iterator = director.getObjects(false);
         //TODO: Might be able to do this without while loop?
         int iteratorSize = 0;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iteratorSize++;
             iterator.next();
         }
@@ -117,7 +114,7 @@ public class DirectorTest {
         Iterator<WorldObject> iterator = director.getObjects(true);
         //TODO: Might be able to do this without while loop?
         int iteratorSize = 0;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iteratorSize++;
             iterator.next();
         }
@@ -131,7 +128,7 @@ public class DirectorTest {
         Iterator<WorldObject> iterator = director.getObjects(true);
         //TODO: Might be able to do this without while loop?
         int iteratorSize = 0;
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iteratorSize++;
             iterator.next();
         }
