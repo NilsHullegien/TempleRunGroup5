@@ -114,10 +114,10 @@ public class WorldManagerTest {
 
     @Test
     public void updateTest() {
-        worldManager.setDirector(new Director(5, new Vector2(5, 5), physicsWorld, new Vector2(200, 200)));
+        worldManager.setDirector(new Director(5, 0, new Vector2(5, 5), physicsWorld, new Vector2(200, 200)));
         Vector2 oldPos = worldManager.getPlayer().getPosition();
         assertTrue(worldManager.getDirector().getQueue().getFirst().hasPlayer());
-        worldManager.update(5);
+        worldManager.update(5, 0);
         assertTrue(worldManager.getDirector().getQueue().getFirst().hasPlayer());
         //Since the game hasn't started yet, the player should still be in the same position.
         assertTrue(oldPos.equals(worldManager.getPlayer().getPosition()));
