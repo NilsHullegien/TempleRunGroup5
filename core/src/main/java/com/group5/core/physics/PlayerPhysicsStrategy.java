@@ -86,7 +86,8 @@ public class PlayerPhysicsStrategy extends PhysicsStrategy {
      */
     public void kill() {
         Body b = getBody();
-        World.setVelocityThreshold(100000000);
+        b.setFixedRotation(false);
+        World.setVelocityThreshold(Integer.MAX_VALUE);
         b.applyLinearImpulse(50, 400, b.getWorldCenter().x, b.getWorldCenter().y, true);
         maximumSpeed = Integer.MAX_VALUE;
     }
