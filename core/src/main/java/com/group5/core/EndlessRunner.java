@@ -1,6 +1,8 @@
 package com.group5.core;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.group5.core.screens.MainMenu;
 import com.group5.core.util.Logger;
@@ -41,6 +43,11 @@ public class EndlessRunner extends Game {
      * Whether player tumbling should be enabled in the game.
      */
     private boolean tumble = false;
+
+    /**
+     * Background music for the game.
+     */
+    private Music backgroundMusic;
 
     /**
      * Sets the current game instance.
@@ -155,6 +162,11 @@ public class EndlessRunner extends Game {
         batch = new SpriteBatch();
         textureCache = new TextureCache();
         setScreen(new MainMenu(batch));
+
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("spinnin.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(100.f);
+        backgroundMusic.play();
     }
 
     @Override
@@ -166,6 +178,10 @@ public class EndlessRunner extends Game {
         }
         batch.dispose();
         textureCache.dispose();
+
+        backgroundMusic.stop();
+        backgroundMusic.dispose();
+
         super.dispose();
     }
 }
