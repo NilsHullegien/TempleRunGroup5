@@ -1,9 +1,9 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.math.Vector2;
-
 import java.util.Iterator;
 import java.util.LinkedList;
+
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * The Queue in which the GameSlices live.

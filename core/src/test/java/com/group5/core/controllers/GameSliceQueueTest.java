@@ -1,15 +1,18 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.GdxTestRunner;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Iterator;
-
-import static org.junit.Assert.*;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.GdxTestRunner;
 
 @RunWith(GdxTestRunner.class)
 public class GameSliceQueueTest {
@@ -18,8 +21,6 @@ public class GameSliceQueueTest {
     private World world;
     private Vector2 playerPos;
     private Vector2 camerapos;
-
-
     private GameSliceQueue gsQueue;
 
     @Before

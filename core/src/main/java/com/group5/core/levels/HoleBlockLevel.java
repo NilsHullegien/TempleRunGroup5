@@ -3,6 +3,7 @@ package com.group5.core.levels;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.controllers.GameSlice;
+import com.group5.core.util.RandomValue;
 import com.group5.core.world.BlockObstacle;
 import com.group5.core.world.FloorTile;
 import com.group5.core.world.ShootingObstacle;
@@ -44,11 +45,12 @@ public class HoleBlockLevel extends GameSlice {
         getElems().add(new FloorTile(world, new Vector2(this.getStartPoint().x / 50, 0)));
         getElems().add(new FloorTile(world, new Vector2((this.getStartPoint().x + 1225) / 50, 0)));
         float range = (this.getEndPoint().x - 200 - this.getStartPoint().x) / 50;
-        if (Math.random() > 0.5) {
-            getElems().add(new BlockObstacle(world, new Vector2((float) ((this.getStartPoint().x) / 50 + range * Math.random()), 1.2f)));
+        if (RandomValue.get().nextDouble() > 0.5) {
+            getElems().add(new BlockObstacle(world,
+                    new Vector2((float) ((this.getStartPoint().x) / 50 + range * RandomValue.get().nextDouble()), 1.2f)));
         } else {
             getElems().add(new ShootingObstacle(
-                    world, new Vector2((float) ((this.getStartPoint().x) / 50 + (range + 1025) * Math.random()), 1.2f)));
+                    world, new Vector2((float) ((this.getStartPoint().x) / 50 + (range + 1025) * RandomValue.get().nextDouble()), 1.2f)));
         }
     }
 }
