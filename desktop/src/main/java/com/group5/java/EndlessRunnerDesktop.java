@@ -14,6 +14,7 @@ public abstract class EndlessRunnerDesktop {
      */
     public static void main(final String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.title = "\uD83D\uDC14";
         config.vSyncEnabled = true;
         config.resizable = true;
         new LwjglApplication(new EndlessRunner(), config);
