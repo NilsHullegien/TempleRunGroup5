@@ -164,7 +164,7 @@ public class DirectorTest {
     }
 
     @Test
-    public void directQueueExceptionTriggerTest() {
+    public void addGameSliceExceptionTriggerTest() {
         thrown.expect(Exception.class);
 
         director = new Director(0, 0, new Vector2(100, 100), world, camerapos);
@@ -172,7 +172,7 @@ public class DirectorTest {
     }
 
     @Test
-    public void directQueueOtherExceptionTest() throws Exception {
+    public void directQueueExceptionTest() throws Exception {
         thrown.expect(Exception.class);
         director = new Director(2, 0, new Vector2(100, 100), world, camerapos);
         int minimal = 1;
@@ -184,7 +184,6 @@ public class DirectorTest {
     public void GameSliceCastSwitch1Test() {
         RandomValue.get().setSeed(46L);
         director = new Director(2, 0, pos, world, camerapos);
-        System.out.println(director.getQueue().getLast().getClass());
         assertTrue(director.getQueue().getLast().getClass().equals(BlockChanceLevel.class));
     }
 
