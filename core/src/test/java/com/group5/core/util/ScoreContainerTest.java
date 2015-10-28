@@ -1,14 +1,16 @@
 package com.group5.core.util;
 
-import com.group5.core.GdxTestRunner;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import com.group5.core.GdxTestRunner;
 
 @RunWith(GdxTestRunner.class)
 public class ScoreContainerTest {
@@ -167,6 +169,21 @@ public class ScoreContainerTest {
         assertTrue(ScoreContainer.isHighScore(16));
         assertFalse(ScoreContainer.isHighScore(11));
         assertFalse(ScoreContainer.isHighScore(9));
+    }
+
+    @Test
+    public void getRankTest() {
+        System.out.println(ScoreContainer.getSortedList().size());
+        ScoreItem s1 = new ScoreItem(1, 100, "placeholder", "date");
+        ScoreContainer.addScore(s1.getScore(), s1.getName(), s1.getDate());
+        //Score will never be -1
+        assertNull(ScoreContainer.getRank(-1));
+        System.out.println(ScoreContainer.getRank(1));
+        System.out.println(ScoreContainer.getSortedList().size());
+        assertTrue(ScoreContainer.getRank(1).getDate().equals("date"));
+        assertTrue(ScoreContainer.getRank(1).getName().equals("placeholder"));
+        assertTrue(ScoreContainer.getRank(1).getScore() == 100);
+
     }
 
 }
