@@ -63,7 +63,7 @@ public class Director {
      * @return iterator with WorldObjects
      */
     public Iterator<WorldObject> getObjects(final boolean onlyonScreen) {
-        Iterator<GameSlice> ig;
+        Iterator<SequencedGameSlice> ig;
         if (onlyonScreen) {
             ig = queue.getOnScreenSlices();
         } else {
@@ -107,7 +107,7 @@ public class Director {
      */
     private void addGameSlice(final World w) {
         Logger.get().info("Director", "Adding GameSlice");
-        GameSlice g;
+        SequencedGameSlice g;
         if (queue.isEmpty()) {
             g = GameSliceCasting.cast(score, w);
         } else {

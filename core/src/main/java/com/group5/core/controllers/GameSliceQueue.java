@@ -14,7 +14,7 @@ public class GameSliceQueue {
     /**
      * * Implementation of the actual queue where the GameSlices are stored.
      */
-    private LinkedList<GameSlice> slicequeue;
+    private LinkedList<SequencedGameSlice> slicequeue;
     /**
      * Number of slices in the queue.
      */
@@ -26,7 +26,7 @@ public class GameSliceQueue {
      * @param num number of elements in the queue.
      */
     public GameSliceQueue(final int num) {
-        this.slicequeue = new LinkedList<GameSlice>();
+        this.slicequeue = new LinkedList<SequencedGameSlice>();
         this.slices = num;
     }
 
@@ -47,9 +47,9 @@ public class GameSliceQueue {
      */
     public int getPlayerinQueue() throws Exception {
         int count = 0;
-        Iterator<GameSlice> it = slicequeue.iterator();
+        Iterator<SequencedGameSlice> it = slicequeue.iterator();
         while (it.hasNext()) {
-            GameSlice curr = it.next();
+            SequencedGameSlice curr = it.next();
             if (curr.hasPlayer()) {
                 return count;
             }
@@ -65,7 +65,7 @@ public class GameSliceQueue {
      * @param g GameSlice to add
      * @throws IllegalStateException when a slice needs to be removed that can't be removed.
      */
-    public void addGameSlice(final GameSlice g) throws IllegalStateException {
+    public void addGameSlice(final SequencedGameSlice g) throws IllegalStateException {
         if (full()) {
             if (slicequeue.peekFirst().hasPlayer()) {
                 throw new IllegalStateException("Cannot remove slice that has player");
@@ -85,7 +85,7 @@ public class GameSliceQueue {
             return 0;
         }
         int i = 1;
-        Iterator<GameSlice> it = slicequeue.iterator();
+        Iterator<SequencedGameSlice> it = slicequeue.iterator();
         it.next();
         while (it.hasNext()) {
             i++;
@@ -114,8 +114,8 @@ public class GameSliceQueue {
         if (slice > slices || slice < 0) {
             throw new IndexOutOfBoundsException("that slice does not exist");
         }
-        Iterator<GameSlice> it = getSliceIterator();
-        GameSlice curr = it.next();
+        Iterator<SequencedGameSlice> it = getSliceIterator();
+        SequencedGameSlice curr = it.next();
         int count = 0;
         while (!(count == slice)) {
             curr = it.next();
@@ -129,9 +129,9 @@ public class GameSliceQueue {
      *
      * @return iterator of onscreen slices.
      */
-    public Iterator<GameSlice> getOnScreenSlices() {
-        LinkedList<GameSlice> ll = new LinkedList<GameSlice>();
-        for (GameSlice g : slicequeue) {
+    public Iterator<SequencedGameSlice> getOnScreenSlices() {
+        LinkedList<SequencedGameSlice> ll = new LinkedList<SequencedGameSlice>();
+        for (SequencedGameSlice g : slicequeue) {
             if (g.isonScreen()) {
                 ll.add(g);
             }
@@ -144,7 +144,7 @@ public class GameSliceQueue {
      *
      * @return sliceiterator
      */
-    public Iterator<GameSlice> getSliceIterator() {
+    public Iterator<SequencedGameSlice> getSliceIterator() {
         return slicequeue.iterator();
     }
 
@@ -155,7 +155,7 @@ public class GameSliceQueue {
      * @param camerapos Cameraposition
      */
     public void update(final Vector2 playerpos, final Vector2 camerapos) {
-        Iterator<GameSlice> it = getSliceIterator();
+        Iterator<SequencedGameSlice> it = getSliceIterator();
         while (it.hasNext()) {
             it.next().update(playerpos, camerapos);
         }
@@ -166,7 +166,7 @@ public class GameSliceQueue {
      *
      * @return GameSlice
      */
-    public GameSlice getLast() {
+    public SequencedGameSlice getLast() {
         return slicequeue.getLast();
     }
 
@@ -175,7 +175,7 @@ public class GameSliceQueue {
      *
      * @return GameSlice.
      */
-    public GameSlice getFirst() {
+    public SequencedGameSlice getFirst() {
         return slicequeue.getFirst();
     }
 }

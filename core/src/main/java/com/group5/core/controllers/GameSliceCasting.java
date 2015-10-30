@@ -5,8 +5,8 @@ import com.group5.core.levels.BlockChanceLevel;
 import com.group5.core.levels.BlockLevel;
 import com.group5.core.levels.HoleBlockLevel;
 import com.group5.core.levels.HoleLevel;
-import com.group5.core.levels.OnlyFloorLevel;
 import com.group5.core.levels.RiseUpLevel;
+import com.group5.core.levels.StartLevel;
 
 /**
  * Handles assigning the right gameslice to the current status of gameplay.
@@ -26,8 +26,8 @@ public abstract class GameSliceCasting {
      * @param score the current score
      * @return GameSlice
      */
-    public static GameSlice cast(final float score, final World world) {
-        return new OnlyFloorLevel(world);
+    public static StartGameSlice cast(final float score, final World world) {
+        return new StartLevel(world);
     }
 
     /**
@@ -38,7 +38,7 @@ public abstract class GameSliceCasting {
      * @param world  physicsworld
      * @return GameSlice
      */
-    public static GameSlice cast(final float score, final GameSlice before, final World world) {
+    public static SequencedGameSlice cast(final float score, final SequencedGameSlice before, final World world) {
         int withRndscore = (int) Math.round(score / 100 + Math.random() * 4);
         switch (withRndscore) {
             case 1:

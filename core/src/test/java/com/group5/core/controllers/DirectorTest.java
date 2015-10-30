@@ -71,7 +71,7 @@ public class DirectorTest {
         Vector2 playerpos = new Vector2(1, 1);
         director = new Director(1, 0, playerpos, world, camerapos);
         GameSliceQueue q = director.getQueue();
-        Iterator<GameSlice> it = q.getSliceIterator();
+        Iterator<SequencedGameSlice> it = q.getSliceIterator();
         assertEquals(director.getQueue().getPlayerinQueue(), 0);
     }
 
@@ -90,8 +90,8 @@ public class DirectorTest {
         currC = 1025;
         director = new Director(5, 0, pos, world, camerapos);
         int count = 0;
-        Iterator<GameSlice> it = director.getQueue().getSliceIterator();
-        GameSlice curr = it.next();
+        Iterator<SequencedGameSlice> it = director.getQueue().getSliceIterator();
+        SequencedGameSlice curr = it.next();
         assertEquals(curr.getStartPoint().x == 0, true);
     }
 
@@ -140,7 +140,7 @@ public class DirectorTest {
     public void directQueueWithoutAddGameSliceTest() {
         director = new Director(1, 0, new Vector2(0, 0), world, camerapos);
         assertTrue(director.getQueue().getFirst().hasPlayer());
-        GameSlice last = director.getQueue().getLast();
+        SequencedGameSlice last = director.getQueue().getLast();
         director.directQueue(55);
         assertTrue(last.equals(director.getQueue().getLast()));
     }
