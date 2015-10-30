@@ -11,7 +11,7 @@ import java.util.LinkedList;
 /**
  * GameSlice is a 2Dimensional rectangle in which objects are placed.
  */
-public abstract class GameSlice {
+public abstract class SequencedGameSlice {
     /**
      * Leftbottom corner of gs.
      */
@@ -34,27 +34,17 @@ public abstract class GameSlice {
     private boolean playerison;
 
     /**
-     * Constructor without previous gameslice.
-     *
-     * @param sP startpoint
-     * @param eP endpoint
-     */
-    public GameSlice(final Vector2 sP, final Vector2 eP) {
-        this.startPoint = sP;
-        this.endPoint = eP;
-        setElems(new LinkedList<WorldObject>());
-    }
-
-    /**
      * Constructor wit previous gameslice.
      *
      * @param before Gameslice before this one.
      * @param sP     startpoint
      * @param eP     endpoint
      */
-    public GameSlice(final GameSlice before, final Vector2 sP, final Vector2 eP) {
-        this.startPoint = new Vector2(before.getEndPoint().x + sP.x, sP.y);
-        this.endPoint = new Vector2(before.getEndPoint().x + eP.x, eP.y);
+    public SequencedGameSlice(final SequencedGameSlice before, final Vector2 sP, final Vector2 eP) {
+        if (before != null) {
+            this.startPoint = new Vector2(before.getEndPoint().x + sP.x, sP.y);
+            this.endPoint = new Vector2(before.getEndPoint().x + eP.x, eP.y);
+        }
         setElems(new LinkedList<WorldObject>());
     }
 
@@ -121,7 +111,20 @@ public abstract class GameSlice {
     public Vector2 getEndPoint() {
         return endPoint;
     }
-
+    /**
+     * Set the StartPoint.
+     * @param sP new startPoint
+     */
+    protected void setStartPoint(final Vector2 sP) {
+        this.startPoint = sP;
+    }
+    /**
+     * Set the Endpoint.
+     * @param eP new endPoint
+     */
+    protected void setEndPoint(final Vector2 eP) {
+        this.endPoint = eP;
+    }
     /**
      * Return all elements the GameSlice has.
      *

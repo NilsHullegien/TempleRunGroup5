@@ -2,7 +2,7 @@ package com.group5.core.levels;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.controllers.GameSlice;
+import com.group5.core.controllers.SequencedGameSlice;
 import com.group5.core.world.BlockObstacle;
 import com.group5.core.world.FloorTile;
 
@@ -11,25 +11,14 @@ import com.group5.core.world.FloorTile;
  * implementation works, we'll use decorators to
  * make the procedural levels much easier to create.
  */
-public class BlockLevel extends GameSlice {
-    /**
-     * constructor.
-     *
-     * @param world physicsworld
-     * @author Levi
-     */
-    public BlockLevel(final World world) {
-        super(new Vector2(0, 0), new Vector2(1025, 2000));
-        createElems(world);
-    }
-
+public class BlockLevel extends SequencedGameSlice {
     /**
      * constructor with previous GameSlice.
      *
      * @param before GameSlice
      * @param world  physicsworld
      */
-    public BlockLevel(final GameSlice before, final World world) {
+    public BlockLevel(final SequencedGameSlice before, final World world) {
         super(before, new Vector2(0, 0), new Vector2(1025, 2000));
         createElems(world);
     }

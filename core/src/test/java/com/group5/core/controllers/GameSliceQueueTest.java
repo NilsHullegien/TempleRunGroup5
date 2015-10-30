@@ -40,9 +40,9 @@ public class GameSliceQueueTest {
 
     @Test
     public void addGameSliceTest() {
-        GameSlice gs1 = GameSliceCasting.cast(0, world);
-        GameSlice gs2 = GameSliceCasting.cast(0, world);
-        GameSlice gs3 = GameSliceCasting.cast(0, world);
+        SequencedGameSlice gs1 = GameSliceCasting.cast(0, world);
+        SequencedGameSlice gs2 = GameSliceCasting.cast(0, world);
+        SequencedGameSlice gs3 = GameSliceCasting.cast(0, world);
         gsQueue.addGameSlice(gs1);
         gsQueue.addGameSlice(gs2);
         assertEquals(gsQueue.getFirst(), gs1);
@@ -57,11 +57,11 @@ public class GameSliceQueueTest {
 
     @Test
     public void getOnScreenSlicesTest() {
-        GameSlice gs1 = GameSliceCasting.cast(0, world);
-        GameSlice gs2 = GameSliceCasting.cast(0, world);
+        SequencedGameSlice gs1 = GameSliceCasting.cast(0, world);
+        SequencedGameSlice gs2 = GameSliceCasting.cast(0, world);
         gsQueue.addGameSlice(gs1);
         gsQueue.addGameSlice(gs2);
-        Iterator<GameSlice> iterator = gsQueue.getOnScreenSlices();
+        Iterator<SequencedGameSlice> iterator = gsQueue.getOnScreenSlices();
         assertFalse(iterator.hasNext());
         assertFalse(gsQueue.getFirst().isonScreen());
         assertFalse(gsQueue.getLast().isonScreen());
