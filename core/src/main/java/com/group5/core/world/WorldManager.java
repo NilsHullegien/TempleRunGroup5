@@ -277,16 +277,22 @@ public class WorldManager {
 
         @Override
         public void beginContact(final Contact contact) {
+            if ((contact.getFixtureA().getUserData() == player
+                    || contact.getFixtureB().getUserData() == player && player.isDead())
+                    && player.isDead()) {
+                player.kill();
+                return;
+            }
+
             if (contact.getFixtureA().getUserData() == player
                     && contact.getFixtureB().getUserData() instanceof Obstacle
                     || contact.getFixtureB().getUserData() == player
                     && contact.getFixtureA().getUserData() instanceof Obstacle) {
                 WorldManifold w = contact.getWorldManifold();
                 float angle = w.getNormal().angle();
-                if ((angle < 45
+                if (angle < 45
                         || angle > 135 && angle < 225
-                        || angle > 315)
-                        && !player.isDead()) {
+                        || angle > 315) {
                     player.kill();
                 }
             }

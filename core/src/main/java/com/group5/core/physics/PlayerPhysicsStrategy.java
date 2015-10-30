@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.EndlessRunner;
 
 /**
  * Physics strategy for player objects.
@@ -40,6 +41,7 @@ public class PlayerPhysicsStrategy extends PhysicsStrategy {
         def.position.set(position);
 
         Body body = world.createBody(def);
+        body.setFixedRotation(!EndlessRunner.get().shouldTumble());
         PolygonShape bodyShape = new PolygonShape();
         bodyShape.setAsBox(size.x / 2f, size.y / 2f, new Vector2(size.x / 2f, size.y / 2f), 0);
 
@@ -84,7 +86,8 @@ public class PlayerPhysicsStrategy extends PhysicsStrategy {
      */
     public void kill() {
         Body b = getBody();
-        World.setVelocityThreshold(100000000);
+        b.setFixedRotation(false);
+        World.setVelocityThreshold(Integer.MAX_VALUE);
         b.applyLinearImpulse(50, 400, b.getWorldCenter().x, b.getWorldCenter().y, true);
         maximumSpeed = Integer.MAX_VALUE;
     }

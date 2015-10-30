@@ -40,6 +40,11 @@ public class EndlessRunner extends Game {
     private boolean flashAtDeath = false;
 
     /**
+     * Whether player tumbling should be enabled in the game.
+     */
+    private boolean tumble = false;
+
+    /**
      * Background music for the game.
      */
     private Music backgroundMusic;
@@ -81,6 +86,15 @@ public class EndlessRunner extends Game {
     }
 
     /**
+     * Returns whether player tumbling should be enabled in the game.
+     *
+     * @return whether player tumbling should be enabled in the game
+     */
+    public boolean shouldTumble() {
+        return tumble;
+    }
+
+    /**
      * Loads a configuration file and sets relevant configuration in the game.
      */
     public void loadConfiguration() {
@@ -116,6 +130,13 @@ public class EndlessRunner extends Game {
                 flashAtDeath = true;
             } else if (!flashAtDeathSetting.equals("false")) {
                 Logger.get().error("Settings", "flash_at_death should have a valid boolean as its value");
+            }
+
+            String tumbleSetting = config.getProperty("tumble", "false");
+            if (tumbleSetting.equals("true")) {
+                tumble = true;
+            } else if (!tumbleSetting.equals("false")) {
+                Logger.get().error("Settings", "tumble should have a valid boolean as its value");
             }
         } catch (FileNotFoundException ex) {
             Logger.get().warning("Game", "Config file could not be found");
