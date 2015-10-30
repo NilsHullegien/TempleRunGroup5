@@ -75,4 +75,14 @@ public class FloorTileTest {
     public void getPositionTest() {
         assertEquals(f1.getPosition(), new Vector2(0.0f, 0.0f));
     }
+
+    @Test
+    public void getWidthTest() {
+        assertTrue(f1.getWidth() == 20.48f);
+    }
+
+    @Test
+    public void getHeightTest() {
+        assertTrue(f1.getHeight() == 1.28f);
+    }
 }
