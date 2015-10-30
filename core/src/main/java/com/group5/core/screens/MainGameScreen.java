@@ -30,7 +30,6 @@ import java.util.Random;
  * Main game screen.
  */
 public class MainGameScreen implements Screen {
-
     /**
      * A spritebatch to draw things with.
      */
