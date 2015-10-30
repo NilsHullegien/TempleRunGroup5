@@ -1,18 +1,27 @@
 package com.group5.core.controllers;
 
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.group5.core.GdxTestRunner;
-import com.group5.core.world.WorldObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Iterator;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.group5.core.GdxTestRunner;
+import com.group5.core.levels.BlockChanceLevel;
+import com.group5.core.levels.BlockLevel;
+import com.group5.core.levels.HoleBlockLevel;
+import com.group5.core.levels.HoleLevel;
+import com.group5.core.levels.RiseUpLevel;
+import com.group5.core.util.RandomValue;
+import com.group5.core.world.WorldObject;
 
 @RunWith(GdxTestRunner.class)
 public class DirectorTest {
@@ -23,7 +32,13 @@ public class DirectorTest {
 
     private Vector2 camerapos;
 
+    /**
+     * Director created in different methods to test different functionalities.
+     */
     private Director director;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -70,8 +85,6 @@ public class DirectorTest {
     public void testhasPlayer1() throws Exception {
         Vector2 playerpos = new Vector2(1, 1);
         director = new Director(1, 0, playerpos, world, camerapos);
-        GameSliceQueue q = director.getQueue();
-        Iterator<GameSlice> it = q.getSliceIterator();
         assertEquals(director.getQueue().getPlayerinQueue(), 0);
     }
 
@@ -89,7 +102,6 @@ public class DirectorTest {
     public void testStartpoints() {
         currC = 1025;
         director = new Director(5, 0, pos, world, camerapos);
-        int count = 0;
         Iterator<GameSlice> it = director.getQueue().getSliceIterator();
         GameSlice curr = it.next();
         assertEquals(curr.getStartPoint().x == 0, true);
@@ -149,5 +161,57 @@ public class DirectorTest {
     public void directQueueAddGameSliceTest() {
         director = new Director(5, 0, new Vector2(100, 100), world, camerapos);
         director.directQueue(1);
+    }
+
+    @Test
+    public void addGameSliceExceptionTriggerTest() {
+        thrown.expect(Exception.class);
+
+        director = new Director(0, 0, new Vector2(100, 100), world, camerapos);
+        director.directQueue(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void directQueueExceptionTest() throws Exception {
+        thrown.expect(Exception.class);
+        director = new Director(2, 0, new Vector2(100, 100), world, camerapos);
+        int minimal = 1;
+        director.directQueue(minimal);
+        assertTrue(director.getQueue().getPlayerinQueue() > minimal);
+    }
+
+    @Test
+    public void GameSliceCastSwitch1Test() {
+        RandomValue.get().setSeed(46L);
+        director = new Director(2, 0, pos, world, camerapos);
+        assertTrue(director.getQueue().getLast().getClass().equals(BlockChanceLevel.class));
+    }
+
+    @Test
+    public void GameSliceCastSwitch2Test() {
+        RandomValue.get().setSeed(50L);
+        director = new Director(2, 0, pos, world, camerapos);
+        assertTrue(director.getQueue().getLast().getClass().equals(BlockLevel.class));
+    }
+
+    @Test
+    public void GameSliceCastSwitch3Test() {
+        RandomValue.get().setSeed(51L);
+        director = new Director(2, 0, pos, world, camerapos);
+        assertTrue(director.getQueue().getLast().getClass().equals(HoleLevel.class));
+    }
+
+    @Test
+    public void GameSliceCastSwitch4Test() {
+        RandomValue.get().setSeed(48L);
+        director = new Director(2, 0, pos, world, camerapos);
+        assertTrue(director.getQueue().getLast().getClass().equals(RiseUpLevel.class));
+    }
+
+    @Test
+    public void GameSliceCastSwitchDefaultTest() {
+        RandomValue.get().setSeed(49L);
+        director = new Director(2, 0, pos, world, camerapos);
+        assertTrue(director.getQueue().getLast().getClass().equals(HoleBlockLevel.class));
     }
 }

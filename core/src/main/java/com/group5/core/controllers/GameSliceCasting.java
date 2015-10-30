@@ -7,6 +7,7 @@ import com.group5.core.levels.HoleBlockLevel;
 import com.group5.core.levels.HoleLevel;
 import com.group5.core.levels.OnlyFloorLevel;
 import com.group5.core.levels.RiseUpLevel;
+import com.group5.core.util.RandomValue;
 
 /**
  * Handles assigning the right gameslice to the current status of gameplay.
@@ -39,7 +40,7 @@ public abstract class GameSliceCasting {
      * @return GameSlice
      */
     public static GameSlice cast(final float score, final GameSlice before, final World world) {
-        int withRndscore = (int) Math.round(score / 100 + Math.random() * 4);
+        int withRndscore = (int) Math.round(score / 100 + RandomValue.get().nextDouble() * 4);
         switch (withRndscore) {
             case 1:
                 return new BlockChanceLevel(before, world);
@@ -49,8 +50,6 @@ public abstract class GameSliceCasting {
                 return new HoleLevel(before, world);
             case 4:
                 return new RiseUpLevel(before, world);
-            case 5:
-                return new HoleBlockLevel(before, world);
             default:
                 return new HoleBlockLevel(before, world);
         }
