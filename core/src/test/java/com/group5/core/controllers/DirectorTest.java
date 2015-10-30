@@ -1,18 +1,21 @@
 package com.group5.core.controllers;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Iterator;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group5.core.GdxTestRunner;
 import com.group5.core.world.WorldObject;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.Iterator;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(GdxTestRunner.class)
 public class DirectorTest {
@@ -23,7 +26,13 @@ public class DirectorTest {
 
     private Vector2 camerapos;
 
+    /**
+     * Director created in different methods to test different functionalities.
+     */
     private Director director;
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
@@ -89,7 +98,6 @@ public class DirectorTest {
     public void testStartpoints() {
         currC = 1025;
         director = new Director(5, 0, pos, world, camerapos);
-        int count = 0;
         Iterator<SequencedGameSlice> it = director.getQueue().getSliceIterator();
         SequencedGameSlice curr = it.next();
         assertEquals(curr.getStartPoint().x == 0, true);
@@ -133,7 +141,7 @@ public class DirectorTest {
             iteratorSize++;
             iterator.next();
         }
-        assertEquals(iteratorSize, 3);
+        assertEquals(iteratorSize, 1);
     }
 
     @Test
@@ -149,5 +157,22 @@ public class DirectorTest {
     public void directQueueAddGameSliceTest() {
         director = new Director(5, 0, new Vector2(100, 100), world, camerapos);
         director.directQueue(1);
+    }
+
+    @Test
+    public void addGameSliceExceptionTriggerTest() {
+        thrown.expect(Exception.class);
+
+        director = new Director(0, 0, new Vector2(100, 100), world, camerapos);
+        director.directQueue(Integer.MAX_VALUE);
+    }
+
+    @Test
+    public void directQueueExceptionTest() throws Exception {
+        thrown.expect(Exception.class);
+        director = new Director(2, 0, new Vector2(100, 100), world, camerapos);
+        int minimal = 1;
+        director.directQueue(minimal);
+        assertTrue(director.getQueue().getPlayerinQueue() > minimal);
     }
 }
