@@ -14,7 +14,7 @@ public abstract class EndlessRunnerDesktop {
      */
     public static void main(final String[] args) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        
+
         // Chicken emoji
         config.title = "\uD83D\uDC14";
         config.vSyncEnabled = true;
